@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="583.0" prefWidth="557.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.PacienteFormController">
+
+    <children>
+        <GridPane layoutX="14.0" layoutY="77.0" prefHeight="551.0" prefWidth="608.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="126.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="195.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="257.0" minWidth="10.0" prefWidth="197.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label text="Id" />
+                <Label text="Nome" GridPane.rowIndex="1" />
+                <Label text="Email" GridPane.rowIndex="6" />
+                <Label prefHeight="16.0" prefWidth="137.0" text="Data Nascimento" GridPane.rowIndex="4" />
+                <Label text="Logradouro" GridPane.rowIndex="7" />
+                <Label text="Sexo" GridPane.rowIndex="5" />
+                <Label text="CPF" GridPane.rowIndex="2" />
+                <Label text="RG" GridPane.rowIndex="3" />
+                <Label text="Bairro" GridPane.rowIndex="9" />
+                <Label text="Cidade" GridPane.rowIndex="8" />
+                <Label text="CEP" GridPane.rowIndex="10" />
+                <Label text="Estado" GridPane.rowIndex="11" />
+                <Label text="Telefone" GridPane.rowIndex="12" />
+                <Label text="WhatsApp" GridPane.rowIndex="13" />
+                <Label fx:id="labelErrorNome" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorCpf" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorRg" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorDataNascimento" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorSexo" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorEmail" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorLogradouro" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorCidade" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorBairro" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="9">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorCep" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="10">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorUf" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="11">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorTelefone" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="12">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="labelErrorWhatsApp" textAlignment="RIGHT" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="13">
+                    <GridPane.margin>
+                        <Insets left="10.0" />
+                    </GridPane.margin>
+                </Label>
+                <HBox prefHeight="100.0" prefWidth="200.0" spacing="8.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="14">
+                    <children>
+                        <Button fx:id="btSalve" mnemonicParsing="false" onAction="#onBtSaveAction" prefHeight="26.0" prefWidth="196.0" text="Save">
+                            <HBox.margin>
+                                <Insets bottom="1.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="btCancel" mnemonicParsing="false" onAction="#onBtCancelAction" prefHeight="26.0" prefWidth="185.0" text="Cancel">
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" top="10.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
+            <DatePicker fx:id="dpDataNascimento" promptText="Data Nascimento" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <JFXTextField fx:id="txtNome" labelFloat="true" promptText="Nome" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="txtCpf" labelFloat="true" promptText="CPF" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="txtEmail" labelFloat="true" promptText="E-Mail" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="txtLogradouro" labelFloat="true" promptText="Logradouro" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="txtCidade" labelFloat="true" promptText="Cidade" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="txtBairro" labelFloat="true" promptText="Bairro" GridPane.columnIndex="1" GridPane.rowIndex="9">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="txtCep" labelFloat="true" promptText="CEP" GridPane.columnIndex="1" GridPane.rowIndex="10">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="txtTelefone" labelFloat="true" promptText="Telefone" GridPane.columnIndex="1" GridPane.rowIndex="12">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="txtWhatsApp" labelFloat="true" promptText="WhatsApp" GridPane.columnIndex="1" GridPane.rowIndex="13">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXComboBox fx:id="comboBoxUf" prefHeight="26.0" prefWidth="198.0" promptText="Estado" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+            <JFXComboBox fx:id="comboBoxSexo" prefHeight="26.0" prefWidth="195.0" promptText="Sexo" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </GridPane.margin>
+            </JFXComboBox>
+            <JFXTextField fx:id="txtRg" labelFloat="true" promptText="RG" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            <JFXTextField fx:id="txtIdPaciente" editable="false" labelFloat="true" promptText="ID" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="3.0" top="10.0" />
+               </GridPane.margin></JFXTextField>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>

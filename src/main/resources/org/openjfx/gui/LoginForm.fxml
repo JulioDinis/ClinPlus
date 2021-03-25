@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane prefHeight="342.0" prefWidth="373.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.LoginFormController">
+    <children>
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="112.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../img/Clin+.png" />
+            </image>
+        </ImageView>
+        <JFXTextField fx:id="txtCodigo" focusColor="#5f6a8a" labelFloat="true" layoutX="96.0" layoutY="171.0" prefHeight="26.0" prefWidth="208.0" promptText="Codigo" styleClass="text-field" />
+        <JFXPasswordField fx:id="txtSenha" focusColor="#5f6a8a" labelFloat="true" layoutX="96.0" layoutY="224.0" prefHeight="26.0" prefWidth="208.0" promptText="Senha" styleClass="text-field" />
+        <JFXButton fx:id="jfxBtLogin" layoutX="96.0" layoutY="282.0" onAction="#onBtLoginAction" prefHeight="26.0" prefWidth="87.0" styleClass="login-button" text="Login" textFill="WHITE" />
+        <JFXButton fx:id="jfxBtCancelar" layoutX="217.0" layoutY="282.0" onAction="#onBtCancelarAction" prefHeight="26.0" prefWidth="87.0" styleClass="login-button" text="Cancelar" textFill="WHITE" />
+        <FontIcon iconLiteral="fa-key" iconSize="24" layoutX="69.0" layoutY="249.0" styleClass="glyph-icon" wrappingWidth="21.0" />
+        <FontIcon iconLiteral="fa-user" iconSize="24" layoutX="69.0" layoutY="196.0" styleClass="glyph-icon" wrappingWidth="21.0" />
+        <Text layoutX="137.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto" text="Acesso">
+            <font>
+                <Font size="26.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>
