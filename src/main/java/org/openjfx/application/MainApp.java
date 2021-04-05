@@ -47,7 +47,7 @@ public class MainApp extends Application implements DataChangeListener {
                 Funcionario funcionarioLogado = this.getFuncionarioLogado();
                 String funcao = funcionarioLogado.getFuncao();
                 System.out.println("Valor de função" + funcao);
-                if (funcao.equals("Administrador")) {
+                if (funcao.equals("Atendente")) {
                     System.out.println("login ADM");
                     caminhoDoFXML = "/org/openjfx/gui/MainAppView.fxml";
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
@@ -74,8 +74,8 @@ public class MainApp extends Application implements DataChangeListener {
                     // controller.setFuncionarioLogado(this.getFuncionarioLogado());
 
                 } else {
-                    System.out.println("login Atendente");
-                    caminhoDoFXML = "/org/openjfx/gui/TelaAtendente.fxml";
+                    System.out.println("login Invalido");
+                    caminhoDoFXML = "/org/openjfx/gui/LoginForm.fxml";
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
                     ScrollPane scrollPane = loader.load();
                     scrollPane.setFitToHeight(true);
@@ -83,8 +83,8 @@ public class MainApp extends Application implements DataChangeListener {
                     mainScene = new Scene(scrollPane);
                     primaryStage.setScene(mainScene);
                     primaryStage.setTitle("ClinPlus");
-                    TelaAtendenteController controller = loader.getController();
-                    // controller.setFuncionarioLogado(this.getFuncionarioLogado());
+                    LoginFormController controller = loader.getController();
+                    controller.setServices(new FuncionarioService());
                 }
                 mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                     public void handle(KeyEvent ke) {

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>WC Sign</title><g id="WC_Sign" data-name="WC Sign"><g id="_Group_" data-name="&lt;Group&gt;"><circle id="_Path_" data-name="&lt;Path&gt;" cx="6" cy="2.5" r="2" style="fill:none;stroke:#303c42;stroke-linecap:round;stroke-linejoin:round"/><path id="_Path_2" data-name="&lt;Path&gt;" d="M6,6.5A7.44,7.44,0,0,0,1.93,7.71a1,1,0,0,0-.43.83v7h2v8h5v-8h2v-7a1,1,0,0,0-.43-.83A7.44,7.44,0,0,0,6,6.5Z" style="fill:none;stroke:#303c42;stroke-linecap:round;stroke-linejoin:round"/><circle id="_Path_3" data-name="&lt;Path&gt;" cx="18" cy="2.5" r="2" style="fill:none;stroke:#303c42;stroke-linecap:round;stroke-linejoin:round"/><path id="_Path_4" data-name="&lt;Path&gt;" d="M18,6.5c-1.38,0-2.34.69-2.5,1.5-1.84,9.63-2,10.5-2,10.5h3v5h3v-5h3s-.16-.87-2-10.5C20.34,7.19,19.38,6.5,18,6.5Z" style="fill:none;stroke:#303c42;stroke-linecap:round;stroke-linejoin:round"/></g></g>
+	<metadata>
+		<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+			<rdf:Description about="https://iconscout.com/legal#licenses" dc:title="male; female; user; wc; toilet; sign; symbol" dc:description="male; female; user; wc; toilet; sign; symbol" dc:publisher="Iconscout" dc:date="2017-02-16" dc:format="image/svg+xml" dc:language="en">
+				<dc:creator>
+					<rdf:Bag>
+						<rdf:li>Alpár - Etele Méder</rdf:li>
+					</rdf:Bag>
+				</dc:creator>
+			</rdf:Description>
+		</rdf:RDF>
+    </metadata></svg>

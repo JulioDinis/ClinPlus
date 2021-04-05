@@ -84,6 +84,7 @@ public class FuncionarioFormController implements Initializable {
     private JFXTextField txtSalario;
 
 
+
     @FXML
     private Label labelErrorNome,
             labelErrorCpf,

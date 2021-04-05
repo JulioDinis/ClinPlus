@@ -1,5 +1,8 @@
 package org.openjfx.gui;
 
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,19 +11,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.openjfx.application.MainApp;
+import org.openjfx.application.ToolbarActionCallBack;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.model.entities.Funcionario;
 import org.openjfx.model.service.FuncionarioService;
 import org.openjfx.model.service.PacienteService;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-public class MainAppViewController implements Initializable {
+public class MainAppViewController implements Initializable, ToolbarActionCallBack {
     private Funcionario funcionarioLogado;
     @FXML
     private MenuItem menuItemFuncionario;
@@ -38,8 +45,16 @@ public class MainAppViewController implements Initializable {
     private Text textNomeDoUsuarioLogado;
 
     @FXML
+    private BorderPane borderPanePrincipal;
+    @FXML
+    private JFXHamburger hamburger;
+
+    @FXML
+    private JFXDrawer menuLateral;
+
+    @FXML
     public void onMenuItemPacienteAction() {
-        loadView("/org/openjfx/gui/PacienteList.fxml", (PacienteListController controller) -> {
+        buttonAction("/org/openjfx/gui/PacienteList.fxml", (PacienteListController controller) -> {
             controller.setPacienteService(new PacienteService());
             controller.updateTableView();
         });
@@ -47,7 +62,7 @@ public class MainAppViewController implements Initializable {
 
     @FXML
     public void onMenuItemFuncionarioAction() {
-        loadView("/org/openjfx/gui/FuncionarioList.fxml", (FuncionarioListController controller) -> {
+        buttonAction("/org/openjfx/gui/FuncionarioList.fxml", (FuncionarioListController controller) -> {
             controller.setFuncionarioService(new FuncionarioService());
             controller.updateTableView();
         });
@@ -63,8 +78,16 @@ public class MainAppViewController implements Initializable {
 
     @FXML
     public void onMenuItemAboutAction() {
-        loadView("/org/openjfx/gui/About.fxml", x -> {
+        buttonAction("/org/openjfx/gui/About.fxml", x -> {
         });
+    }
+
+    public BorderPane getBorderPanePrincipal() {
+        return borderPanePrincipal;
+    }
+
+    public void setBorderPanePrincipal(BorderPane borderPanePrincipal) {
+        this.borderPanePrincipal = borderPanePrincipal;
     }
 
     /**
@@ -72,7 +95,38 @@ public class MainAppViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.carregarMenu(true);
         // TODO
+    }
+
+    private void carregarMenu(boolean expandido) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/gui/Toolbar.fxml"));
+            VBox box = loader.load();
+            ToolbarController controller = loader.getController();
+            controller.setActionCallBack(this);
+
+            // não remover
+            menuLateral.setSidePane(box);
+
+        } catch (IOException ex) {
+            System.out.println("Deu merda");
+            System.out.println(ex);
+        }
+        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
+            System.out.println("botão clicaddo");
+            transition.setRate(transition.getRate() * -1);
+            transition.play();
+
+            if (menuLateral.isOpened()) {
+                menuLateral.close();
+            } else {
+                menuLateral.open();
+            }
+        });
     }
 
     public void setFuncionarioLogado(Funcionario funcionarioLogado) {
@@ -90,7 +144,7 @@ public class MainAppViewController implements Initializable {
      * @param absoluteName
      * @param initialingAction
      */
-    public synchronized <T> void loadView(String absoluteName, Consumer<T> initialingAction) {
+    public synchronized <T> void loadViewOk(String absoluteName, Consumer<T> initialingAction) {
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
@@ -120,6 +174,34 @@ public class MainAppViewController implements Initializable {
         }
 
     }
+
+    /**
+     * função parametrizada
+     *
+     * @param <T>
+     * @param absoluteName
+     * @param initialingAction
+     */
+    @Override
+    public synchronized <T> void buttonAction(String absoluteName, Consumer<T> initialingAction) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+            VBox newVBox = loader.load();
+            Scene mainScene = MainApp.getMainScene();
+            borderPanePrincipal.getCenter();
+            VBox mainVbox = (VBox) borderPanePrincipal.getCenter();
+            System.out.println(mainVbox);
+            mainVbox.getChildren().clear();
+            mainVbox.getChildren().addAll(newVBox.getChildren()); // Adiciona os node da tela about
+            T controller = loader.getController();
+            initialingAction.accept(controller);
+        } catch (Exception e) {
+            System.out.println("Deu erro aqui");
+            e.printStackTrace();
+            Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
 
 //    private synchronized void loadView2(String absoluteName) {
 //        try {

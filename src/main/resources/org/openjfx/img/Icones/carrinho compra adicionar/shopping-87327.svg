@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#303C42;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+<title>Cart Input</title>
+<g id="Cart_Input">
+	<g id="_Group_">
+		<path id="_Path_" class="st0" d="M1.5,2.5h1.4c0.7,0,1.3,0.4,1.4,1.1l3.2,10.9l-1.8,2.2c-0.2,0.2-0.2,0.4-0.2,0.7l0,0    c0,0.6,0.5,1.1,1.1,1.1h13.9" style="fill: none; stroke: #303C42; stroke-linecap: round; stroke-linejoin: round;"/>
+		<path id="_Path_2" class="st0" d="M7.5,14.5h10c0.6,0,1.1-0.3,1.4-0.9l3.5-7.4c0.1-0.1,0.1-0.3,0.1-0.5V5.6c0-0.6-0.5-1.1-1.1-1.1    h-3" style="fill: none; stroke: #303C42; stroke-linecap: round; stroke-linejoin: round;"/>
+		<line id="_Path_3" class="st0" x1="8.6" y1="4.5" x2="4.6" y2="4.5" style="fill: none; stroke: #303C42; stroke-linecap: round; stroke-linejoin: round;"/>
+		<circle id="_Path_4" class="st0" cx="7" cy="22" r="1.5" style="fill: none; stroke: #303C42; stroke-linecap: round; stroke-linejoin: round;"/>
+		<circle id="_Path_5" class="st0" cx="19" cy="22" r="1.5" style="fill: none; stroke: #303C42; stroke-linecap: round; stroke-linejoin: round;"/>
+		<g id="_Group_2">
+			<circle id="_Path_6" class="st0" cx="13.5" cy="5.5" r="5" style="fill: none; stroke: #303C42; stroke-linecap: round; stroke-linejoin: round;"/>
+		</g>
+		<polyline id="_Path_7" class="st0" points="15.5,6.5 13.5,8.5 11.5,6.5   " style="fill: none; stroke: #303C42; stroke-linecap: round; stroke-linejoin: round;"/>
+		<line id="_Path_8" class="st0" x1="13.5" y1="8.5" x2="13.5" y2="2.5" style="fill: none; stroke: #303C42; stroke-linecap: round; stroke-linejoin: round;"/>
+	</g>
+</g>
+
+	<metadata>
+		<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+			<rdf:Description about="https://iconscout.com/legal#licenses" dc:title="shopping; action; basket; shop; buy; user" dc:description="shopping; action; basket; shop; buy; user" dc:publisher="Iconscout" dc:date="2017-02-16" dc:format="image/svg+xml" dc:language="en">
+				<dc:creator>
+					<rdf:Bag>
+						<rdf:li>Alpár - Etele Méder</rdf:li>
+					</rdf:Bag>
+				</dc:creator>
+			</rdf:Description>
+		</rdf:RDF>
+    </metadata></svg>

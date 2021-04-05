@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="453.0" prefWidth="117.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ToolbarController">
+   <children>
+      <JFXButton accessibleText="Agenda" alignment="CENTER" contentDisplay="TOP" onAction="#abrirMenu" prefHeight="400.0" prefWidth="150.0" ripplerFill="#4d4a4a" style="-fx-border-color: #9b9b9b;" text="Agenda">
+         <graphic>
+            <ImageView fitHeight="59.0" fitWidth="75.0" opacity="0.75" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/Icones/calendario%20relogio%20rosa/calendar-64x64-303027.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </JFXButton>
+      <JFXButton fx:id="jFXbutPaciente" accessibleText="Paciente" alignment="CENTER" contentDisplay="TOP" onAction="#abrirMenu" prefHeight="400.0" prefWidth="150.0" ripplerFill="#4d4a4a" style="-fx-border-color: #9b9b9b;" text="Pacientes">
+         <graphic>
+            <ImageView fitHeight="59.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/Icones/usuario%20cheked/action-64x64-87412.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="H_RESIZE" />
+               </cursor>
+            </ImageView>
+         </graphic>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </JFXButton>
+      <JFXButton fx:id="jFXButEspecialista" accessibleText="Especialista" alignment="CENTER" contentDisplay="TOP" onAction="#abrirMenu" prefHeight="400.0" prefWidth="150.0" style="-fx-border-color: #9b9b9b;" text="Especialistas">
+         <graphic>
+            <ImageView fitHeight="59.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/Icones/doctor%20enfermeira/people-64x64-89667.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </JFXButton>
+      <JFXButton fx:id="jFXButProcedimento" accessibleText="Procedimento" alignment="CENTER" contentDisplay="TOP" onAction="#abrirMenu" prefHeight="400.0" prefWidth="150.0" style="-fx-border-color: #9b9b9b;" text="Procedimentos">
+         <graphic>
+            <ImageView fitHeight="59.0" fitWidth="75.0" opacity="0.81" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/Icones/icons8-bandage-64x64.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </JFXButton>
+      <JFXButton fx:id="jFXButRelatorio" accessibleText="Relatorio" alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="282.0" onAction="#abrirMenu" prefHeight="400.0" prefWidth="150.0" style="-fx-border-color: #9b9b9b;" text="Relatorios">
+         <graphic>
+            <ImageView fitHeight="59.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/Icones/relatorio%20medico%20/medical-64x64-87525.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+   </children>
+</VBox>
