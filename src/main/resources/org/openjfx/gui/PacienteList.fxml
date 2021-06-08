@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.PacienteListController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.PacienteListController">
     <children>
         <Label prefHeight="40.0" prefWidth="341.0" text="Pacientes Cadastrados" textAlignment="JUSTIFY">
             <font>
@@ -27,64 +28,31 @@
          </cursor>
         </Label>
         <ToolBar prefHeight="29.0" prefWidth="795.0">
-            <items>
-                <JFXButton fx:id="jFxBtNew" onAction="#onBtNewAction" prefHeight="55.0" prefWidth="80.0" style="-fx-background-color: #602bf2;" stylesheets="@css/style.css" textFill="#e4d5d5">
-                    <graphic>
-                        <FontIcon iconColor="#e4d5d5" iconLiteral="fa-user-plus" iconSize="40" wrappingWidth="28.0" />
-                    </graphic>
-                    <font>
-                        <Font size="17.0" />
-                    </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                </JFXButton>
-            </items>
             <VBox.margin>
                 <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
             </VBox.margin>
+         <items>
+            <JFXButton fx:id="btNew" contentDisplay="TOP" onAction="#onBtNewAction" prefHeight="103.0" prefWidth="144.0" style="-fx-border-color: grey; -fx-background-color: grey; -fx-text-fill: white; -fx-border-radius: 10px;" text="Adicionar" textAlignment="CENTER" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="91.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/Icones/plus%20adicionar%20circulo/plus-64x64-16483.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </JFXButton>
+            <Separator prefHeight="103.0" prefWidth="38.0" />
+            <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="98.0" prefWidth="213.0" text="Mostrar usuários inativos" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+               <graphic>
+                  <FontIcon fx:id="jFXImVieBtnAlternar" iconColor="#3eee73" iconLiteral="fa-toggle-off" iconSize="64" onMouseClicked="#onJFXImVieBtnAlternaClick" wrappingWidth="56.0" />
+               </graphic>
+            </Label>
+         </items>
         </ToolBar>
-        <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="614.0" style="-fx-background-color: #A9B9A9; -fx-border-color: white;" stylesheets="@css/style.css" VBox.vgrow="ALWAYS">
-            <VBox.margin>
-                <Insets left="10.0" right="10.0" />
-            </VBox.margin>
-         <children>
-            <JFXCheckBox text="ID">
-               <HBox.margin>
-                  <Insets left="20.0" right="10.0" />
-               </HBox.margin>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </JFXCheckBox>
-            <JFXCheckBox text="Nome">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </JFXCheckBox>
-            <JFXCheckBox text="CPF">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </JFXCheckBox>
-            <JFXCheckBox text="WhatsApp">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </JFXCheckBox>
-            <JFXCheckBox text="Email" />
-         </children>
-        </HBox>
-        <TableView fx:id="tableViewPaciente" prefHeight="377.0" prefWidth="940.0">
+        <TableView fx:id="tableViewPaciente" onSort="#onJFXImVieBtnAlternaClick" prefHeight="377.0" prefWidth="940.0">
             <columns>
                 <TableColumn fx:id="tableColumnId" prefWidth="100.0" text="ID" />
                 <TableColumn fx:id="tableColumnNome" prefWidth="150.0" text="Nome" />

@@ -32,6 +32,7 @@ import org.openjfx.model.entities.Funcionario;
 import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.service.PacienteService;
 
+import javax.swing.text.html.ImageView;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -90,6 +91,9 @@ public class PacienteListController implements Initializable, DataChangeListener
     @FXML
     JFXButton jFxBtNew;
 
+    @FXML
+    private FontIcon jFXImVieBtnAlternar;
+
     private ObservableList<Paciente> obsList;
 
     // eventos
@@ -106,9 +110,42 @@ public class PacienteListController implements Initializable, DataChangeListener
         System.out.println("Valor Alterado");
     }
 
+    @FXML
+    public void onJFXImVieBtnAlternaClick() {
+
+        if (jFXImVieBtnAlternar.getIconLiteral().equals("fa-toggle-off")) {
+            jFXImVieBtnAlternar.setIconLiteral("fa-toggle-on");
+            if (service == null) {
+                throw new IllegalStateException("Service was Null");
+            }
+
+            List<Paciente> list = service.findAll();
+            System.out.println(list);
+            obsList = FXCollections.observableArrayList(list);
+            tableViewPaciente.setItems(obsList);
+            initEditButtons();
+            initRemoveButtons();
+
+        } else {
+            jFXImVieBtnAlternar.setIconLiteral("fa-toggle-off");
+            if (service == null) {
+                throw new IllegalStateException("Service was Null");
+            }
+
+            List<Paciente> list = service.findAllAtivos();
+            System.out.println(list);
+            obsList = FXCollections.observableArrayList(list);
+            tableViewPaciente.setItems(obsList);
+            initEditButtons();
+            initRemoveButtons();
+        }
+
+    }
+
     public void setPacienteService(PacienteService service) {
         this.service = service;
     }
+
 
     /**
      * Initializes the controller class.
