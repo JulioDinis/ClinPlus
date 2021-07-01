@@ -86,7 +86,7 @@
 
                 {
 
-                    datePicker.setPromptText(format.toLowerCase());
+                   datePicker.setPromptText(format.toLowerCase());
                 }
 
                 @Override

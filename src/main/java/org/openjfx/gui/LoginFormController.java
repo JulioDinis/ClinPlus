@@ -169,6 +169,4 @@ public class LoginFormController implements Initializable {
             listener.onLogin(funcionario);
         }
     }
-
-
 }

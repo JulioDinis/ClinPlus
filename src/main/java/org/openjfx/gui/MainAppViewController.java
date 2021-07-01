@@ -21,6 +21,7 @@ import org.openjfx.gui.util.Alerts;
 import org.openjfx.model.entities.Funcionario;
 import org.openjfx.model.service.FuncionarioService;
 import org.openjfx.model.service.PacienteService;
+import org.openjfx.model.service.ProcedimentoService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -70,10 +71,12 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
 
     @FXML
     public void onMenuItemProcedimentoAction() {
-//        loadView("/org/openjfx/gui/ProcedimentoList.fxml", (ProcedimentoListController controller) -> {
-//            controller.setProcedimentoService(new ProcedimentoService());
-//            controller.updateTableView();
-//        });
+        buttonAction("/org/openjfx/gui/ProcedimentoList.fxml", (ProcedimentoListController controller) -> {
+            controller.setProcedimentoService(new ProcedimentoService());
+            controller.setFuncionarioLogado(this.funcionarioLogado);
+            controller.updateTableView();
+
+        });
     }
 
     @FXML

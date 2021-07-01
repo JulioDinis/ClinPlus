@@ -36,7 +36,7 @@
                <graphic>
                   <ImageView fitHeight="91.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/Icones/plus%20adicionar%20circulo/plus-64x64-16483.png" />
+                        <Image url="@../img/Icones/plus adicionar circulo/plus-64x64-16483.png" />
                      </image>
                   </ImageView>
                </graphic>

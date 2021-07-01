@@ -1,8 +1,8 @@
 
 * {
-    -fx-primary: #4d425f;
-    -fx-secondary: #FFFF8D;
-    -fx-primarytext: #8d8686;
+    -fx-primary: #999;
+    -fx-secondary: white;
+    -fx-primarytext: yellow;
     -fx-red: #FF3030;
 }
 

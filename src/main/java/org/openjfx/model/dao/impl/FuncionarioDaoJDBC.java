@@ -60,7 +60,6 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
     }
 
     private synchronized PreparedStatement createQuery(Funcionario funcionario, PreparedStatement statement) {
-
         try {
             statement.setString(1, funcionario.getNome());
             statement.setString(2, funcionario.getCpf());

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ProcedimentoListController">
+    <children>
+        <Label prefHeight="38.0" prefWidth="243.0" text="Procedimentos Cadastrados">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+            <padding>
+                <Insets top="5.0" />
+            </padding>
+        </Label>
+        <ToolBar prefHeight="40.0" prefWidth="200.0">
+            <items>
+                <JFXButton fx:id="btNew" onAction="#onBtNewAction" prefHeight="36.0" prefWidth="164.0" style="-fx-background-color: #602bf2;" stylesheets="@css/style.css" text="Adicionar" textFill="#e4d5d5">
+                    
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </JFXButton>
+            </items>
+            <VBox.margin>
+                <Insets left="10.0" right="10.0" />
+            </VBox.margin>
+        </ToolBar>
+        <HBox prefHeight="35.0" prefWidth="614.0">
+            <children>
+                <ComboBox fx:id="comboBoxBuscarPor" disable="true" prefHeight="26.0" prefWidth="163.0">
+                    <HBox.margin>
+                        <Insets bottom="4.0" top="4.0" />
+                    </HBox.margin>
+                </ComboBox>
+                <TextField fx:id="txtBusca" disable="true" onKeyReleased="#onTxtBuscaChange" prefHeight="26.0" prefWidth="407.0">
+                    <HBox.margin>
+                        <Insets bottom="4.0" left="15.0" top="4.0" />
+                    </HBox.margin>
+                </TextField>
+            </children>
+            <VBox.margin>
+                <Insets left="10.0" right="10.0" />
+            </VBox.margin>
+        </HBox>
+        <TableView fx:id="tableViewProcedimento" prefHeight="197.0" prefWidth="685.0">
+            <columns>
+                <TableColumn fx:id="tableColumnId" prefWidth="65.0" text="Codigo" />
+                <TableColumn fx:id="tableCollumDescricao" prefWidth="358.0" text="Descriçao" />
+                <TableColumn fx:id="tableColumValor" prefWidth="212.0" text="Valor" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="81.0" text="Editar" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="69.0" text="Excluir" />
+            </columns>
+            <VBox.margin>
+                <Insets left="10.0" right="10.0" />
+            </VBox.margin>
+        </TableView>
+    </children>
+</VBox>

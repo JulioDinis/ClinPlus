@@ -17,9 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -30,11 +28,12 @@ import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Funcionario;
 import org.openjfx.model.entities.Paciente;
+import org.openjfx.model.entities.Procedimento;
+import org.openjfx.model.service.FuncionarioService;
 import org.openjfx.model.service.PacienteService;
+import org.openjfx.model.service.ProcedimentoService;
 
-import javax.swing.text.html.ImageView;
 import java.net.URL;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -44,46 +43,32 @@ import java.util.ResourceBundle;
  *
  * @author julio
  */
-public class PacienteListController implements Initializable, DataChangeListener {
-    private PacienteService service;
+public class ProcedimentoListController implements Initializable, DataChangeListener {
 
+    private ProcedimentoService service;
+    private Funcionario funcionarioLogado;
 
     @FXML
     private TextField txtBusca;
 
     @FXML
-    private TableView<Paciente> tableViewPaciente;
+    private TableView<Procedimento> tableViewProcedimento;
     @FXML
-    private TableColumn<Paciente, Integer> tableColumnId;
+    private TableColumn<Procedimento, Integer> tableColumnId;
 
     @FXML
-    private TableColumn<Paciente, String> tableColumnNome;
+    private TableColumn<Procedimento, String> tableCollumDescricao;
     // Email, BirthDate, BaseSalary)
 
     @FXML
-    private TableColumn<Paciente, String> tableColumnEmail;
-    @FXML
-    private TableColumn<Paciente, Date> tableColumnDataNascimento;
-    @FXML
-    private TableColumn<Paciente, String> tableColumnSexo;
+    private TableColumn<Procedimento, Double> tableColumValor;
 
     @FXML
-    private TableColumn<Paciente, String> tableColumnCpf;
+    private TableColumn<Procedimento, Procedimento> tableColumnEDIT;
 
     @FXML
-    private TableColumn<Paciente, String> tableColumnCidade;
+    private TableColumn<Procedimento, Procedimento> tableColumnREMOVE;
 
-    @FXML
-    private TableColumn<Paciente, String> tableColumnWhatsApp;
-
-    @FXML
-    private TableColumn<Paciente, Paciente> tableColumnEDIT;
-
-    @FXML
-    private TableColumn<Paciente, Paciente> tableColumnREMOVE;
-
-    @FXML
-    private ComboBox<String> comboBoxBuscarPor;
 
     @FXML
     private Button btNew;
@@ -94,14 +79,15 @@ public class PacienteListController implements Initializable, DataChangeListener
     @FXML
     private FontIcon jFXImVieBtnAlternar;
 
-    private ObservableList<Paciente> obsList;
+    private ObservableList<Procedimento> obsList;
 
     // eventos
     @FXML
     public void onBtNewAction(ActionEvent event) {
-        Paciente paciente = new Paciente();
+        Procedimento procedimento = new Procedimento();
+        procedimento.setIdEspecialista(funcionarioLogado.getIdFuncionario());
         Stage parentStage = Utils.currentStage(event);
-        createDialogForm(paciente, "/org/openjfx/gui/PacienteForm.fxml", parentStage);
+        createDialogForm(procedimento, "/org/openjfx/gui/ProcedimentoForm.fxml", parentStage);
 
     }
 
@@ -119,10 +105,10 @@ public class PacienteListController implements Initializable, DataChangeListener
                 throw new IllegalStateException("Service was Null");
             }
 
-            List<Paciente> list = service.findAll();
+            List<Procedimento> list = service.findAll();
             System.out.println(list);
             obsList = FXCollections.observableArrayList(list);
-            tableViewPaciente.setItems(obsList);
+            tableViewProcedimento.setItems(obsList);
             initEditButtons();
             initRemoveButtons();
 
@@ -132,17 +118,17 @@ public class PacienteListController implements Initializable, DataChangeListener
                 throw new IllegalStateException("Service was Null");
             }
 
-            List<Paciente> list = service.findAllAtivos();
+            List<Procedimento> list = service.findAllAtivos();
             System.out.println(list);
             obsList = FXCollections.observableArrayList(list);
-            tableViewPaciente.setItems(obsList);
+            tableViewProcedimento.setItems(obsList);
             initEditButtons();
             initRemoveButtons();
         }
 
     }
 
-    public void setPacienteService(PacienteService service) {
+    public void setProcedimentoService(ProcedimentoService service) {
         this.service = service;
     }
 
@@ -156,23 +142,12 @@ public class PacienteListController implements Initializable, DataChangeListener
     }
 
     private synchronized void initializeNodes() {
-        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idPaciente"));
-        tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tableColumnDataNascimento.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
-        tableColumnCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));
-        tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        tableColumnSexo.setCellValueFactory(new PropertyValueFactory<>("sexo"));
-        tableColumnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-        tableColumnWhatsApp.setCellValueFactory(new PropertyValueFactory<>("whatsApp"));
-        // Formatar a data usando o método do utils
-        Utils.formatTableColumnDate(tableColumnDataNascimento, "dd/MM/yyyy");
-
-//        tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
-//        // Formata o Salario usando o método do utils
-//        Utils.formatTableColumnDouble(tableColumnBaseSalary, 2);
+        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idProcedimento"));
+        tableCollumDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        tableColumValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         Stage stage = (Stage) MainApp.getMainScene().getWindow();
 
-        tableViewPaciente.prefHeightProperty().bind(stage.heightProperty());
+        tableViewProcedimento.prefHeightProperty().bind(stage.heightProperty());
 
     }
 
@@ -181,29 +156,28 @@ public class PacienteListController implements Initializable, DataChangeListener
             throw new IllegalStateException("Service was Null");
         }
 
-        List<Paciente> list = service.findAllAtivos();
+        List<Procedimento> list = service.findAllAtivos();
         System.out.println(list);
         obsList = FXCollections.observableArrayList(list);
-        tableViewPaciente.setItems(obsList);
+        tableViewProcedimento.setItems(obsList);
         initEditButtons();
         initRemoveButtons();
     }
 
-    private void createDialogForm(Paciente paciente, String absolutName, Stage parentStage) {
+    private void createDialogForm(Procedimento procedimento, String absolutName, Stage parentStage) {
         try {
             System.out.println("errossss");
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
 
-            PacienteFormController controller = loader.getController();
-            controller.setPaciente(paciente);
-            controller.setServices(new PacienteService(), new PacienteService());
-            controller.loadComboBox();
+            ProcedimentoForm controller = loader.getController();
+            controller.setEntity(procedimento);
+            controller.setService(new ProcedimentoService(), new ProcedimentoService());
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Insira os dados do Paciente");
+            dialogStage.setTitle("Insira os dados do Procedimento");
             dialogStage.setScene(new Scene(pane));
             dialogStage.setResizable(false);
             dialogStage.initOwner(parentStage);
@@ -232,12 +206,12 @@ public class PacienteListController implements Initializable, DataChangeListener
      */
     private void initEditButtons() {
         tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnEDIT.setCellFactory(param -> new TableCell<Paciente, Paciente>() {
+        tableColumnEDIT.setCellFactory(param -> new TableCell<Procedimento, Procedimento>() {
             private final FontIcon editarIcone = new FontIcon("fa-edit");
             private final JFXButton button = new JFXButton("Editar", editarIcone);
 
             @Override
-            protected void updateItem(Paciente obj, boolean empty) {
+            protected void updateItem(Procedimento obj, boolean empty) {
                 super.updateItem(obj, empty);
                 if (obj == null) {
                     setGraphic(null);
@@ -249,18 +223,18 @@ public class PacienteListController implements Initializable, DataChangeListener
                 // seta a action do button
                 button.setOnAction(
                         event -> createDialogForm(
-                                obj, "/org/openjfx/gui/PacienteForm.fxml", Utils.currentStage(event)));
+                                obj, "/org/openjfx/gui/ProcedimentoForm.fxml", Utils.currentStage(event)));
             }
         });
     }
 
     private void initRemoveButtons() {
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnREMOVE.setCellFactory(param -> new TableCell<Paciente, Paciente>() {
+        tableColumnREMOVE.setCellFactory(param -> new TableCell<Procedimento, Procedimento>() {
             private JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
 
             @Override
-            protected void updateItem(Paciente obj, boolean empty) {
+            protected void updateItem(Procedimento obj, boolean empty) {
                 super.updateItem(obj, empty);
 
                 if (obj == null) {
@@ -273,7 +247,7 @@ public class PacienteListController implements Initializable, DataChangeListener
         });
     }
 
-    private void removeEntity(Paciente paciente) {
+    private void removeEntity(Procedimento procedimento) {
 
         Optional<ButtonType> result = Alerts.
                 showConfirmation("Confirmation", "Tem certeza que deseja excluir o Paciente?");
@@ -282,7 +256,7 @@ public class PacienteListController implements Initializable, DataChangeListener
                 throw new IllegalStateException("Service was Null");
             }
             try {
-                service.remove(paciente);
+                service.remove(procedimento);
                 updateTableView();
             } catch (DbIntegrityException e) {
                 e.printStackTrace();
@@ -292,4 +266,11 @@ public class PacienteListController implements Initializable, DataChangeListener
         }
     }
 
+    public Funcionario getFuncionarioLogado() {
+        return funcionarioLogado;
+    }
+
+    public void setFuncionarioLogado(Funcionario funcionarioLogado) {
+        this.funcionarioLogado = funcionarioLogado;
+    }
 }

@@ -6,14 +6,11 @@ import org.openjfx.model.dao.PacienteDao;
 import org.openjfx.model.entities.Paciente;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PacienteDaoJDBC implements PacienteDao {
-    private Connection connection;
+    private final Connection connection;
 
     public PacienteDaoJDBC(Connection newConnetion) {
         this.connection = newConnetion;
@@ -56,27 +53,6 @@ public class PacienteDaoJDBC implements PacienteDao {
 
     }
 
-    private synchronized PreparedStatement createQuery(Paciente paciente, PreparedStatement statement) {
-        try {
-            statement.setString(1, paciente.getNome());
-            statement.setString(2, paciente.getCpf());
-            statement.setString(3, paciente.getRg());
-            statement.setDate(4, new Date(paciente.getDataNascimento().getTime()));
-            statement.setString(5, paciente.getSexo());
-            statement.setString(6, paciente.getEmail());
-            statement.setString(7, paciente.getLogradouro());
-            statement.setString(8, paciente.getCidade());
-            statement.setString(9, paciente.getBairro());
-            statement.setString(10, paciente.getCep());
-            statement.setString(11, paciente.getUf());
-            statement.setString(12, paciente.getTelefone());
-            statement.setString(13, paciente.getWhatsApp());
-            return statement;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DbException(e.getMessage());
-        }
-    }
 
     @Override
     public void update(Paciente paciente) {
@@ -92,9 +68,9 @@ public class PacienteDaoJDBC implements PacienteDao {
 
             createQuery(paciente, statement);
             System.out.println(statement);
-            try{
+            try {
                 statement.setInt(14, paciente.getIdPaciente());
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
 
@@ -152,28 +128,6 @@ public class PacienteDaoJDBC implements PacienteDao {
             DB.closeStatement(statement);
             DB.closeResultSet(rs);
         }
-    }
-
-    private Paciente instantiatePaciente(ResultSet rs) throws SQLException {
-        Paciente paciente = new Paciente();
-
-        paciente.setIdPessoa(rs.getInt("id_pessoa"));
-        paciente.setIdPaciente(rs.getInt("id_paciente"));
-        paciente.setNome(rs.getString("nome"));
-        paciente.setLogradouro(rs.getString("logradouro"));
-        paciente.setBairro(rs.getString("bairro"));
-        paciente.setCidade(rs.getString("cidade"));
-        paciente.setCep(rs.getString("cep"));
-        paciente.setUf(rs.getString("uf"));
-        paciente.setSexo(rs.getString("sexo"));
-        paciente.setRg(rs.getString("rg"));
-        paciente.setCpf(rs.getString("cpf"));
-        paciente.setTelefone(rs.getString("telefone"));
-        paciente.setWhatsApp(rs.getString("whats_app"));
-        paciente.setEmail(rs.getString("email"));
-        paciente.setDataNascimento(new java.util.Date(rs.getTimestamp("data_nascimento").getTime()));
-
-        return paciente;
     }
 
     //    private Department instantiateDepartment(ResultSet rs) throws SQLException {
@@ -237,5 +191,50 @@ public class PacienteDaoJDBC implements PacienteDao {
             DB.closeResultSet(rs);
         }
     }
+
+    private synchronized PreparedStatement createQuery(Paciente paciente, PreparedStatement statement) {
+        try {
+            statement.setString(1, paciente.getNome());
+            statement.setString(2, paciente.getCpf());
+            statement.setString(3, paciente.getRg());
+            statement.setDate(4, new Date(paciente.getDataNascimento().getTime()));
+            statement.setString(5, paciente.getSexo());
+            statement.setString(6, paciente.getEmail());
+            statement.setString(7, paciente.getLogradouro());
+            statement.setString(8, paciente.getCidade());
+            statement.setString(9, paciente.getBairro());
+            statement.setString(10, paciente.getCep());
+            statement.setString(11, paciente.getUf());
+            statement.setString(12, paciente.getTelefone());
+            statement.setString(13, paciente.getWhatsApp());
+            return statement;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DbException(e.getMessage());
+        }
+    }
+
+    private Paciente instantiatePaciente(ResultSet rs) throws SQLException {
+        Paciente paciente = new Paciente();
+
+        paciente.setIdPessoa(rs.getInt("id_pessoa"));
+        paciente.setIdPaciente(rs.getInt("id_paciente"));
+        paciente.setNome(rs.getString("nome"));
+        paciente.setLogradouro(rs.getString("logradouro"));
+        paciente.setBairro(rs.getString("bairro"));
+        paciente.setCidade(rs.getString("cidade"));
+        paciente.setCep(rs.getString("cep"));
+        paciente.setUf(rs.getString("uf"));
+        paciente.setSexo(rs.getString("sexo"));
+        paciente.setRg(rs.getString("rg"));
+        paciente.setCpf(rs.getString("cpf"));
+        paciente.setTelefone(rs.getString("telefone"));
+        paciente.setWhatsApp(rs.getString("whats_app"));
+        paciente.setEmail(rs.getString("email"));
+        paciente.setDataNascimento(new java.util.Date(rs.getTimestamp("data_nascimento").getTime()));
+
+        return paciente;
+    }
+
 
 }
