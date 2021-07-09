@@ -20,6 +20,8 @@ import org.openjfx.model.entities.Funcionario;
 import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.service.FuncionarioService;
 
+import java.util.function.Consumer;
+
 public class MainApp extends Application implements DataChangeListener {
 
 
@@ -38,53 +40,65 @@ public class MainApp extends Application implements DataChangeListener {
     @Override
     public void start(Stage primaryStage) {
         try {
+
             Funcionario funcionario = new Funcionario();
             String caminhoDoFXML = "";
             createDialogForm(funcionario, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
+
             if (this.getFuncionarioLogado() == null) {
+
                 createDialogForm(funcionario, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
+
             } else {
+
                 Funcionario funcionarioLogado = this.getFuncionarioLogado();
                 String funcao = funcionarioLogado.getFuncao();
-                System.out.println("Valor de função" + funcao);
+
+                caminhoDoFXML = "/org/openjfx/gui/MainAppView.fxml";
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
+                ScrollPane scrollPane = loader.load();
+                scrollPane.setFitToHeight(true);
+                scrollPane.setFitToWidth(true);
+
+                mainScene = new Scene(scrollPane);
+                primaryStage.setScene(mainScene);
+
+                primaryStage.setTitle("ClinPlus - Painel Administrativo");
+                MainAppViewController controller = loader.getController();
+                controller.setFuncionarioLogado(this.getFuncionarioLogado());
+
                 if (funcao.equals("Atendente")) {
-                    System.out.println("login ADM");
-                    caminhoDoFXML = "/org/openjfx/gui/MainAppView.fxml";
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
-                    ScrollPane scrollPane = loader.load();
-                    scrollPane.setFitToHeight(true);
-                    scrollPane.setFitToWidth(true);
-                    mainScene = new Scene(scrollPane);
-                    primaryStage.setScene(mainScene);
-                    primaryStage.setTitle("ClinPlus - Painel Administrativo");
-                    MainAppViewController controller = loader.getController();
-                    controller.setFuncionarioLogado(this.getFuncionarioLogado());
+
+                    System.out.println("###>>> Login Atendente <<<###");
+
+                    controller.buttonAction("/org/openjfx/gui/TelaAtendente.fxml",
+                            (TelaAtendenteController telaAtendenteController) -> {
+//                              controller.setFuncionarioService(new FuncionarioService());
+//                              controller.setFuncionarioLogado(this.funcionarioLogado);
+//                              controller.updateTableView();
+                                telaAtendenteController.subscribeDataChangeListener(controller);
+                            });
 
                 } else if (funcao.equals("Especialista")) {
-                    System.out.println("login Especialista");
-                    caminhoDoFXML = "/org/openjfx/gui/TelaEspecialista.fxml";
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
-                    ScrollPane scrollPane = loader.load();
-                    scrollPane.setFitToHeight(true);
-                    scrollPane.setFitToWidth(true);
-                    mainScene = new Scene(scrollPane);
-                    primaryStage.setScene(mainScene);
-                    primaryStage.setTitle("ClinPlus - Painel Atendimento");
-                    TelaEspecialistaController controller = loader.getController();
-                    // controller.setFuncionarioLogado(this.getFuncionarioLogado());
+                    System.out.println("###>>> Login Especialista <<<###");
+
+                    controller.buttonAction("/org/openjfx/gui/TelaEspecialista.fxml",
+                            (TelaEspecialistaController telaEspecialistaController) -> {
+
+                            });
 
                 } else {
-                    System.out.println("login Invalido");
-                    caminhoDoFXML = "/org/openjfx/gui/LoginForm.fxml";
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
-                    ScrollPane scrollPane = loader.load();
-                    scrollPane.setFitToHeight(true);
-                    scrollPane.setFitToWidth(true);
-                    mainScene = new Scene(scrollPane);
-                    primaryStage.setScene(mainScene);
-                    primaryStage.setTitle("ClinPlus");
-                    LoginFormController controller = loader.getController();
-                    controller.setServices(new FuncionarioService());
+//                    System.out.println("login Invalido");
+//                    caminhoDoFXML = "/org/openjfx/gui/LoginForm.fxml";
+//                    FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
+//                    ScrollPane scrollPane = loader.load();
+//                    scrollPane.setFitToHeight(true);
+//                    scrollPane.setFitToWidth(true);
+//                    mainScene = new Scene(scrollPane);
+//                    primaryStage.setScene(mainScene);
+//                    primaryStage.setTitle("ClinPlus");
+//                    LoginFormController controller = loader.getController();
+//                    controller.setServices(new FuncionarioService());
                 }
                 mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                     public void handle(KeyEvent ke) {
@@ -138,6 +152,17 @@ public class MainApp extends Application implements DataChangeListener {
 
     @Override
     public void onLogin(Funcionario funcionario) {
+        System.out.println("###################### NOTIFICAÇÂO DE LOGIN #############");
         this.setFuncionarioLogado(funcionario);
+    }
+
+    @Override
+    public void onLogout() {
+
+    }
+
+    @Override
+    public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
+
     }
 }

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProcedimentoForm {
+public class ProcedimentoFormController {
     private Procedimento entity;
     private ProcedimentoService service;
     private ProcedimentoService procedimentoService;

@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 /**
  * FXML Controller class
@@ -188,6 +189,16 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 
     }
 
+    @Override
+    public void onLogout() {
+
+    }
+
+    @Override
+    public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
+
+    }
+
 
     /**
      * Método para colocar um button dentro da tabela
@@ -252,5 +263,9 @@ public class FuncionarioListController implements Initializable, DataChangeListe
             }
 
         }
+    }
+
+    public void setFuncionarioLogado(Funcionario funcionarioLogado) {
+        System.out.println("OII");
     }
 }

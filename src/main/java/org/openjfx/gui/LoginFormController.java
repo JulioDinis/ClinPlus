@@ -106,6 +106,7 @@ public class LoginFormController implements Initializable {
     }
 
     public void subscribeDataChangeListener(DataChangeListener listener) {
+        System.out.println("ADD --> " + listener);
         dataChangeListener.add(listener);
     }
 
@@ -164,7 +165,6 @@ public class LoginFormController implements Initializable {
     }
 
     private void notifyDataChangeListeners(Funcionario funcionario) {
-        System.out.println(funcionario);
         for (DataChangeListener listener : dataChangeListener) {
             listener.onLogin(funcionario);
         }

@@ -6,8 +6,12 @@
 package org.openjfx.gui;
 
 import javafx.fxml.Initializable;
+import org.openjfx.gui.listener.DataChangeListener;
+import org.openjfx.model.entities.Funcionario;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -17,6 +21,8 @@ import java.util.ResourceBundle;
  */
 public class AboutController implements Initializable {
 
+
+
     /**
      * Initializes the controller class.
      */
@@ -24,5 +30,7 @@ public class AboutController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+
+
 
 }

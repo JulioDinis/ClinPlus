@@ -1,6 +1,8 @@
 package org.openjfx.gui;
 
 import javafx.fxml.Initializable;
+import org.openjfx.gui.listener.DataChangeListener;
+import org.openjfx.model.entities.Funcionario;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,5 +19,12 @@ public class TelaEspecialistaController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void setFuncionarioLogado(Funcionario funcionarioLogado) {
+    }
+
+    public void subscribeDataChangeListener(DataChangeListener listener) {
+        // add lista
     }
 }

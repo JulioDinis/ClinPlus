@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.openjfx.application.MainApp;
 import org.openjfx.application.ToolbarActionCallBack;
+import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.model.entities.Funcionario;
 import org.openjfx.model.service.FuncionarioService;
@@ -28,7 +29,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-public class MainAppViewController implements Initializable, ToolbarActionCallBack {
+public class MainAppViewController implements Initializable, ToolbarActionCallBack, DataChangeListener {
     private Funcionario funcionarioLogado;
     @FXML
     private MenuItem menuItemFuncionario;
@@ -73,8 +74,18 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     public void onMenuItemProcedimentoAction() {
         buttonAction("/org/openjfx/gui/ProcedimentoList.fxml", (ProcedimentoListController controller) -> {
             controller.setProcedimentoService(new ProcedimentoService());
-            controller.setFuncionarioLogado(this.funcionarioLogado);
+            //  controller.setFuncionarioLogado(this.funcionarioLogado);
             controller.updateTableView();
+
+        });
+    }
+
+    @FXML
+    public void onMenuItemOrcamentoAction() {
+        buttonAction("/org/openjfx/gui/TelaOrcamento.fxml", (TelaOrcamentoController controller) -> {
+            controller.setService(new ProcedimentoService());
+            controller.setFuncionarioLogado(this.funcionarioLogado);
+            controller.updateList();
 
         });
     }
@@ -85,20 +96,13 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
         });
     }
 
-    public BorderPane getBorderPanePrincipal() {
-        return borderPanePrincipal;
-    }
-
-    public void setBorderPanePrincipal(BorderPane borderPanePrincipal) {
-        this.borderPanePrincipal = borderPanePrincipal;
-    }
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.carregarMenu(true);
+        //this.carregarMenu(true);
+
         // TODO
     }
 
@@ -133,10 +137,37 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     }
 
     public void setFuncionarioLogado(Funcionario funcionarioLogado) {
+        System.out.println("Chamou" + funcionarioLogado);
         this.funcionarioLogado = funcionarioLogado;
-
-        if (this.funcionarioLogado != null)
+        if (this.funcionarioLogado != null) {
             textNomeDoUsuarioLogado.setText(this.funcionarioLogado.getNome());
+        }
+
+
+    }
+
+    @FXML
+    public void logout() {
+        this.funcionarioLogado = null;
+    }
+
+    @FXML
+    public void onLogoClick() {
+        System.out.println("Carregando..." + this.funcionarioLogado.getFuncao());
+        if (this.funcionarioLogado.getFuncao().equals("Atendente")) {
+            buttonAction("/org/openjfx/gui/TelaAtendente.fxml",
+                    (TelaAtendenteController controller) -> {
+                        controller.subscribeDataChangeListener(this);
+                    });
+        } else {
+            buttonAction("/org/openjfx/gui/TelaEspecialista.fxml",
+                    (TelaEspecialistaController controller) -> {
+//                controller.setFuncionarioService(new FuncionarioService());
+                        controller.setFuncionarioLogado(this.funcionarioLogado);
+                        controller.subscribeDataChangeListener(this);
+//                controller.updateTableView();
+                    });
+        }
     }
     // Carrega a view - o synchronized garante que o carregamento não será interrompido no meio
 
@@ -147,7 +178,8 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
      * @param absoluteName
      * @param initialingAction
      */
-    public synchronized <T> void loadViewOk(String absoluteName, Consumer<T> initialingAction) {
+    public synchronized <T> void loadView(String absoluteName, Consumer<T> initialingAction) {
+
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
@@ -187,48 +219,48 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
      */
     @Override
     public synchronized <T> void buttonAction(String absoluteName, Consumer<T> initialingAction) {
+//        System.out.println("Carregando " + absoluteName);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
             VBox newVBox = loader.load();
             Scene mainScene = MainApp.getMainScene();
             borderPanePrincipal.getCenter();
             VBox mainVbox = (VBox) borderPanePrincipal.getCenter();
-            System.out.println(mainVbox);
             mainVbox.getChildren().clear();
             mainVbox.getChildren().addAll(newVBox.getChildren()); // Adiciona os node da tela about
             T controller = loader.getController();
+
             initialingAction.accept(controller);
+//            System.out.println("...Carregado");
         } catch (Exception e) {
-            System.out.println("Deu erro aqui");
+//            System.out.println("Deu erro aqui");
             e.printStackTrace();
             Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
 
-//    private synchronized void loadView2(String absoluteName) {
-//        try {
-//
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//            VBox newVBox = loader.load();
-//            // Carrega o Scene Principal
-//            Scene mainScene = Main.getMainScene();
-//            // Pega o VBox da classe principal onde será inserido os node
-//            VBox mainVbox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-//
-//            // Guarda o node da barra de menu
-//            Node mainMenu = mainVbox.getChildren().get(0);
-//            mainVbox.getChildren().clear(); //limpa o VBox da Main
-//            mainVbox.getChildren().add(mainMenu); // Adiciona o node da Barra de Menu
-//            mainVbox.getChildren().addAll(newVBox.getChildren()); // Adiciona os node da tela about
-//
-//            DepartmentListController controller = loader.getController();
-//            controller.setDepartmentService(new DepartmentService());
-//            controller.updateTableView();
-//
-//        } catch (Exception e) {
-//            Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
-//        }
-//
-//    }
+
+    // Listeners
+    @Override
+    public void onDataChange() {
+
+    }
+
+    @Override
+    public void onLogin(Funcionario p) {
+
+    }
+
+    @Override
+    public void onLogout() {
+
+    }
+
+    @Override
+    public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
+        // Arrumar para funcionar com qualquer tela (USAR T)
+        System.out.println("*********************** TELA ALTERADA ******************************");
+        buttonAction(resource, initialingAction);
+    }
 }

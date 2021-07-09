@@ -27,16 +27,14 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Funcionario;
-import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.entities.Procedimento;
-import org.openjfx.model.service.FuncionarioService;
-import org.openjfx.model.service.PacienteService;
 import org.openjfx.model.service.ProcedimentoService;
 
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 /**
  * FXML Controller class
@@ -47,6 +45,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
 
     private ProcedimentoService service;
     private Funcionario funcionarioLogado;
+    private ObservableList<Procedimento> obsList;
 
     @FXML
     private TextField txtBusca;
@@ -79,7 +78,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     @FXML
     private FontIcon jFXImVieBtnAlternar;
 
-    private ObservableList<Procedimento> obsList;
+
 
     // eventos
     @FXML
@@ -170,7 +169,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
 
-            ProcedimentoForm controller = loader.getController();
+            ProcedimentoFormController controller = loader.getController();
             controller.setEntity(procedimento);
             controller.setService(new ProcedimentoService(), new ProcedimentoService());
             controller.subscribeDataChangeListener(this);
@@ -199,6 +198,16 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     @Override
     public void onLogin(Funcionario funcionario) {
         throw new IllegalStateException("Service was Null");
+    }
+
+    @Override
+    public void onLogout() {
+
+    }
+
+    @Override
+    public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
+
     }
 
     /**

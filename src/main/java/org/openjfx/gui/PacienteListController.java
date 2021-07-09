@@ -27,6 +27,7 @@ import org.openjfx.application.MainApp;
 import org.openjfx.db.DbIntegrityException;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
+import org.openjfx.gui.util.CreateDialog;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Funcionario;
 import org.openjfx.model.entities.Paciente;
@@ -38,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 /**
  * FXML Controller class
@@ -101,7 +103,14 @@ public class PacienteListController implements Initializable, DataChangeListener
     public void onBtNewAction(ActionEvent event) {
         Paciente paciente = new Paciente();
         Stage parentStage = Utils.currentStage(event);
-        createDialogForm(paciente, "/org/openjfx/gui/PacienteForm.fxml", parentStage);
+        CreateDialog createDialog = new CreateDialog();
+        createDialog.createDialogForm(paciente, "/org/openjfx/gui/PacienteForm.fxml",(PacienteFormController controller) ->{
+            controller.setPaciente(paciente);
+            controller.setServices(new PacienteService(), new PacienteService());
+            controller.loadComboBox();
+            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
+        }, parentStage);
 
     }
 
@@ -180,7 +189,6 @@ public class PacienteListController implements Initializable, DataChangeListener
         if (service == null) {
             throw new IllegalStateException("Service was Null");
         }
-
         List<Paciente> list = service.findAllAtivos();
         System.out.println(list);
         obsList = FXCollections.observableArrayList(list);
@@ -191,17 +199,16 @@ public class PacienteListController implements Initializable, DataChangeListener
 
     private void createDialogForm(Paciente paciente, String absolutName, Stage parentStage) {
         try {
-            System.out.println("errossss");
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
-
+            // Controller
             PacienteFormController controller = loader.getController();
             controller.setPaciente(paciente);
             controller.setServices(new PacienteService(), new PacienteService());
             controller.loadComboBox();
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
-
+            // Stage
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Insira os dados do Paciente");
             dialogStage.setScene(new Scene(pane));
@@ -225,6 +232,16 @@ public class PacienteListController implements Initializable, DataChangeListener
     @Override
     public void onLogin(Funcionario funcionario) {
         throw new IllegalStateException("Service was Null");
+    }
+
+    @Override
+    public void onLogout() {
+
+    }
+
+    @Override
+    public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
+
     }
 
     /**
@@ -258,11 +275,9 @@ public class PacienteListController implements Initializable, DataChangeListener
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumnREMOVE.setCellFactory(param -> new TableCell<Paciente, Paciente>() {
             private JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
-
             @Override
             protected void updateItem(Paciente obj, boolean empty) {
                 super.updateItem(obj, empty);
-
                 if (obj == null) {
                     setGraphic(null);
                     return;

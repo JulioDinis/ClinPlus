@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ProcedimentoListController">
     <children>
         <Label prefHeight="38.0" prefWidth="243.0" text="Procedimentos Cadastrados">
@@ -26,7 +27,7 @@
             <items>
                 <JFXButton fx:id="btNew" onAction="#onBtNewAction" prefHeight="36.0" prefWidth="164.0" style="-fx-background-color: #602bf2;" stylesheets="@css/style.css" text="Adicionar" textFill="#e4d5d5">
                     
-                    <font>
+                          <font>
                         <Font size="17.0" />
                     </font>
                 </JFXButton>
