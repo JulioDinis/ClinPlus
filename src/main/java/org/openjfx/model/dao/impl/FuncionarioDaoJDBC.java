@@ -1,15 +1,12 @@
 package org.openjfx.model.dao.impl;
 
-import com.google.common.hash.Hashing;
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
 import org.openjfx.model.dao.FuncionarioDao;
-import org.openjfx.model.entities.Funcionario;
+import org.openjfx.model.entities.Colaborador;
 
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
     }
 
     @Override
-    public synchronized void insert(Funcionario funcionario) {
+    public synchronized void insert(Colaborador colaborador) {
         System.out.println("Yeeppp");
         PreparedStatement statement = null;
         try {
@@ -33,7 +30,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
                     Statement.RETURN_GENERATED_KEYS
             );
 
-            createQuery(funcionario, statement);
+            createQuery(colaborador, statement);
 
             Integer linhasAfetadas = statement.executeUpdate();
 
@@ -41,8 +38,8 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
                 ResultSet rs = statement.getGeneratedKeys();
                 if (rs.next()) {
                     int idPessoa = rs.getInt(1);
-                    funcionario.setIdPessoa(idPessoa);
-                    funcionario.setIdFuncionario(idPessoa);
+                    colaborador.setIdPessoa(idPessoa);
+                    colaborador.setIdFuncionario(idPessoa);
                 }
                 DB.closeResultSet(rs);
             } else {
@@ -59,24 +56,24 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 
     }
 
-    private synchronized PreparedStatement createQuery(Funcionario funcionario, PreparedStatement statement) {
+    private synchronized PreparedStatement createQuery(Colaborador colaborador, PreparedStatement statement) {
         try {
-            statement.setString(1, funcionario.getNome());
-            statement.setString(2, funcionario.getCpf());
-            statement.setString(3, funcionario.getRg());
-            statement.setDate(4, new Date(funcionario.getDataNascimento().getTime()));
-            statement.setString(5, funcionario.getSexo());
-            statement.setString(6, funcionario.getEmail());
-            statement.setString(7, funcionario.getLogradouro());
-            statement.setString(8, funcionario.getCidade());
-            statement.setString(9, funcionario.getBairro());
-            statement.setString(10, funcionario.getCep());
-            statement.setString(11, funcionario.getUf());
-            statement.setString(12, funcionario.getTelefone());
-            statement.setString(13, funcionario.getFuncao());
-            statement.setString(14, funcionario.getEspecialidade());
-            statement.setString(15, funcionario.getSenha());
-            statement.setDouble(16, funcionario.getSalario());
+            statement.setString(1, colaborador.getNome());
+            statement.setString(2, colaborador.getCpf());
+            statement.setString(3, colaborador.getRg());
+            statement.setDate(4, new Date(colaborador.getDataNascimento().getTime()));
+            statement.setString(5, colaborador.getSexo());
+            statement.setString(6, colaborador.getEmail());
+            statement.setString(7, colaborador.getLogradouro());
+            statement.setString(8, colaborador.getCidade());
+            statement.setString(9, colaborador.getBairro());
+            statement.setString(10, colaborador.getCep());
+            statement.setString(11, colaborador.getUf());
+            statement.setString(12, colaborador.getTelefone());
+            statement.setString(13, colaborador.getFuncao());
+            statement.setString(14, colaborador.getEspecialidade());
+            statement.setString(15, colaborador.getSenha());
+            statement.setDouble(16, colaborador.getSalario());
             return statement;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +82,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
     }
 
     @Override
-    public void update(Funcionario funcionario) {
+    public void update(Colaborador colaborador) {
         System.out.println("Chegou aqui");
         PreparedStatement statement = null;
         try {
@@ -96,16 +93,16 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
                             + "cep = ?,uf = ?,telefone = ?, funcao = ?, especialidade = ?, senha = ?, salario = ? "
                             + "WHERE id_funcionario = ?");
 
-            createQuery(funcionario, statement);
+            createQuery(colaborador, statement);
 
             try {
-                statement.setInt(17, funcionario.getIdFuncionario());
+                statement.setInt(17, colaborador.getIdFuncionario());
             } catch (SQLException e) {
                 System.out.println(statement);
                 e.printStackTrace();
             }
 
-            System.out.println(funcionario.getIdFuncionario());
+            System.out.println(colaborador.getIdFuncionario());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -138,7 +135,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
     }
 
     @Override
-    public Funcionario findById(Integer idFuncionario) {
+    public Colaborador findById(Integer idFuncionario) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         try {
@@ -150,8 +147,8 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
             statement.setInt(1, idFuncionario);
             rs = statement.executeQuery();
             if (rs.next()) {
-                Funcionario funcionario = instantiateFuncionario(rs);
-                return funcionario;
+                Colaborador colaborador = instantiateFuncionario(rs);
+                return colaborador;
             }
             return null;
         } catch (SQLException e) {
@@ -162,31 +159,31 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
         }
     }
 
-    private Funcionario instantiateFuncionario(ResultSet rs) throws SQLException {
-        Funcionario funcionario = new Funcionario();
+    private Colaborador instantiateFuncionario(ResultSet rs) throws SQLException {
+        Colaborador colaborador = new Colaborador();
 
-        funcionario.setIdPessoa(rs.getInt("id_pessoa"));
-        funcionario.setIdFuncionario(rs.getInt("id_funcionario"));
-        funcionario.setNome(rs.getString("nome"));
-        funcionario.setLogradouro(rs.getString("logradouro"));
-        funcionario.setBairro(rs.getString("bairro"));
-        funcionario.setCidade(rs.getString("cidade"));
-        funcionario.setCep(rs.getString("cep"));
-        funcionario.setUf(rs.getString("uf"));
-        funcionario.setSexo(rs.getString("sexo"));
-        funcionario.setRg(rs.getString("rg"));
-        funcionario.setCpf(rs.getString("cpf"));
-        funcionario.setTelefone(rs.getString("telefone"));
-        funcionario.setFuncao(rs.getString("funcao"));
-        funcionario.setEmail(rs.getString("email"));
-        funcionario.setEspecialidade(rs.getString("especialidade"));
-        funcionario.setSalario(rs.getDouble("salario"));
-        funcionario.setDataContrato(rs.getDate("data_contrato"));
-        funcionario.setDataDesligamento(rs.getDate("data_desligamento"));
-        funcionario.setAtivo(rs.getBoolean("ativo"));
-        funcionario.setDataNascimento(new java.util.Date(rs.getTimestamp("data_nascimento").getTime()));
+        colaborador.setIdPessoa(rs.getInt("id_pessoa"));
+        colaborador.setIdFuncionario(rs.getInt("id_funcionario"));
+        colaborador.setNome(rs.getString("nome"));
+        colaborador.setLogradouro(rs.getString("logradouro"));
+        colaborador.setBairro(rs.getString("bairro"));
+        colaborador.setCidade(rs.getString("cidade"));
+        colaborador.setCep(rs.getString("cep"));
+        colaborador.setUf(rs.getString("uf"));
+        colaborador.setSexo(rs.getString("sexo"));
+        colaborador.setRg(rs.getString("rg"));
+        colaborador.setCpf(rs.getString("cpf"));
+        colaborador.setTelefone(rs.getString("telefone"));
+        colaborador.setFuncao(rs.getString("funcao"));
+        colaborador.setEmail(rs.getString("email"));
+        colaborador.setEspecialidade(rs.getString("especialidade"));
+        colaborador.setSalario(rs.getDouble("salario"));
+        colaborador.setDataContrato(rs.getDate("data_contrato"));
+        colaborador.setDataDesligamento(rs.getDate("data_desligamento"));
+        colaborador.setAtivo(rs.getBoolean("ativo"));
+        colaborador.setDataNascimento(new java.util.Date(rs.getTimestamp("data_nascimento").getTime()));
 
-        return funcionario;
+        return colaborador;
     }
 
     //    private Department instantiateDepartment(ResultSet rs) throws SQLException {
@@ -197,7 +194,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 //    }
 
     @Override
-    public List<Funcionario> findAll() {
+    public List<Colaborador> findAll() {
         PreparedStatement statement = null;
         ResultSet rs = null;
         try {
@@ -206,12 +203,12 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 
             rs = statement.executeQuery();
 
-            List<Funcionario> list = new ArrayList<>();
+            List<Colaborador> list = new ArrayList<>();
 
             while (rs.next()) {
 
-                Funcionario funcionario = instantiateFuncionario(rs);
-                list.add(funcionario);
+                Colaborador colaborador = instantiateFuncionario(rs);
+                list.add(colaborador);
             }
             return list;
         } catch (SQLException e) {
@@ -223,7 +220,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
     }
 
     @Override
-    public List<Funcionario> findAllAtivos() {
+    public List<Colaborador> findAllAtivos() {
         PreparedStatement statement = null;
         ResultSet rs = null;
         try {
@@ -235,12 +232,12 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
             statement.setBoolean(1, true);
             rs = statement.executeQuery();
 
-            List<Funcionario> list = new ArrayList<>();
+            List<Colaborador> list = new ArrayList<>();
 
             while (rs.next()) {
 
-                Funcionario funcionario = instantiateFuncionario(rs);
-                list.add(funcionario);
+                Colaborador colaborador = instantiateFuncionario(rs);
+                list.add(colaborador);
             }
             return list;
         } catch (SQLException e) {
@@ -252,7 +249,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
     }
 
     @Override
-    public Funcionario logar(Integer idFuncionario, String senha) {
+    public Colaborador logar(Integer idFuncionario, String senha) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         try {
@@ -268,12 +265,12 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
             statement.setBoolean(3, true);
             rs = statement.executeQuery();
 
-            List<Funcionario> list = new ArrayList<>();
+            List<Colaborador> list = new ArrayList<>();
             System.out.println(list);
             while (rs.next()) {
 
-                Funcionario funcionario = instantiateFuncionario(rs);
-                list.add(funcionario);
+                Colaborador colaborador = instantiateFuncionario(rs);
+                list.add(colaborador);
             }
             if (list.isEmpty()) {
                 return null;

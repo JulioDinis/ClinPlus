@@ -5,8 +5,7 @@
  */
 package org.openjfx.gui.listener;
 
-import org.openjfx.model.entities.Funcionario;
-import org.openjfx.model.entities.Paciente;
+import org.openjfx.model.entities.Colaborador;
 
 import java.util.function.Consumer;
 
@@ -17,7 +16,7 @@ public interface DataChangeListener {
 
     void onDataChange();
 
-    void onLogin(Funcionario p);
+    void onLogin(Colaborador p);
 
     void onLogout();
 

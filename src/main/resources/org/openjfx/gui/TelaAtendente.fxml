@@ -75,7 +75,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="jfxButtonLogout" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onLogout" prefHeight="80.0" prefWidth="100.0" ripplerFill="#6f30d9" style="-fx-background-color: #C4C4C4;" text="Sair">
+                  <JFXButton fx:id="jfxButtonLogout" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonLogoutClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#6f30d9" style="-fx-background-color: #C4C4C4;" text="Sair">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

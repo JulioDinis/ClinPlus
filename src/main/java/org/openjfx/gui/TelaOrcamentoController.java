@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import org.openjfx.model.entities.Funcionario;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.service.ProcedimentoService;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TelaOrcamentoController {
     private ProcedimentoService service;
-    private Funcionario funcionarioLogado;
+    private Colaborador colaboradorLogado;
     private ObservableList<Procedimento> obsList;
 
     @FXML
@@ -32,9 +32,9 @@ public class TelaOrcamentoController {
     public TelaOrcamentoController() {
     }
 
-    public TelaOrcamentoController(ProcedimentoService service, Funcionario funcionarioLogado, ListView<Procedimento> listViewProcedimento, TableView<Procedimento> tableViewProcedimento, TableColumn<Procedimento, String> tableColumnDescricao, TableColumn<Procedimento, Double> tableColumnValor) {
+    public TelaOrcamentoController(ProcedimentoService service, Colaborador colaboradorLogado, ListView<Procedimento> listViewProcedimento, TableView<Procedimento> tableViewProcedimento, TableColumn<Procedimento, String> tableColumnDescricao, TableColumn<Procedimento, Double> tableColumnValor) {
         this.service = service;
-        this.funcionarioLogado = funcionarioLogado;
+        this.colaboradorLogado = colaboradorLogado;
         this.listViewProcedimento = listViewProcedimento;
         this.tableViewProcedimento = tableViewProcedimento;
         this.tableColumnDescricao = tableColumnDescricao;
@@ -49,12 +49,12 @@ public class TelaOrcamentoController {
         this.service = service;
     }
 
-    public Funcionario getFuncionarioLogado() {
-        return funcionarioLogado;
+    public Colaborador getFuncionarioLogado() {
+        return colaboradorLogado;
     }
 
-    public void setFuncionarioLogado(Funcionario funcionarioLogado) {
-        this.funcionarioLogado = funcionarioLogado;
+    public void setFuncionarioLogado(Colaborador colaboradorLogado) {
+        this.colaboradorLogado = colaboradorLogado;
     }
 
     public ListView<Procedimento> getListViewProcedimento() {

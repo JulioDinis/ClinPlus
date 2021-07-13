@@ -6,12 +6,8 @@
 package org.openjfx.gui;
 
 import javafx.fxml.Initializable;
-import org.openjfx.gui.listener.DataChangeListener;
-import org.openjfx.model.entities.Funcionario;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**

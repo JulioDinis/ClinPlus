@@ -1,23 +1,22 @@
 package org.openjfx.model.dao;
 
-import org.openjfx.model.entities.Funcionario;
-import org.openjfx.model.entities.Paciente;
+import org.openjfx.model.entities.Colaborador;
 
 import java.util.List;
 
 public interface FuncionarioDao {
-    void insert(Funcionario funcionario);
+    void insert(Colaborador colaborador);
 
-    void update(Funcionario funcionario);
+    void update(Colaborador colaborador);
 
     void deleteById(Integer idFuncionario);
 
-    Funcionario findById(Integer idFuncionario);
+    Colaborador findById(Integer idFuncionario);
 
-    List<Funcionario> findAll();
+    List<Colaborador> findAll();
 
-    List<Funcionario> findAllAtivos();
+    List<Colaborador> findAllAtivos();
 
-    Funcionario logar(Integer idFuncionario, String senha);
+    Colaborador logar(Integer idFuncionario, String senha);
 
 }

@@ -17,9 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -29,11 +27,10 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.CreateDialog;
 import org.openjfx.gui.util.Utils;
-import org.openjfx.model.entities.Funcionario;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.service.PacienteService;
 
-import javax.swing.text.html.ImageView;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -230,7 +227,7 @@ public class PacienteListController implements Initializable, DataChangeListener
     }
 
     @Override
-    public void onLogin(Funcionario funcionario) {
+    public void onLogin(Colaborador colaborador) {
         throw new IllegalStateException("Service was Null");
     }
 

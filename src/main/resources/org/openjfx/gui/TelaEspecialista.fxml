@@ -15,7 +15,7 @@
          <bottom>
             <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="BOTTOM_RIGHT">
                <children>
-                  <JFXButton alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #C4C4C4;" text="Agenda" textAlignment="CENTER">
+                  <JFXButton fx:id="jfxButtonAgenda" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonAgendaClick" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #C4C4C4;" text="Agenda" textAlignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -23,14 +23,14 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                      <graphic>
-                        <ImageView fitHeight="42.0" fitWidth="65.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="52.0" fitWidth="46.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/Icones/agenda-especialista.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="120.0" ripplerFill="RED" style="-fx-background-color: #C4C4C4;" text="Procedimentos">
+                  <JFXButton fx:id="jfxButtonProcedimento" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonProcedimentoClick" prefHeight="80.0" prefWidth="120.0" ripplerFill="RED" style="-fx-background-color: #C4C4C4;" text="Procedimentos">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -45,7 +45,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #C4C4C4;" text="Histórico ">
+                  <JFXButton fx:id="jfxButtonHistorico" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonHistoricoClick" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #C4C4C4;" text="Histórico ">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -60,7 +60,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #C4C4C4;" text="Orçamento">
+                  <JFXButton fx:id="jfxButtonOrcamento" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonOrcamentoClick" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #C4C4C4;" text="Orçamento">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -75,7 +75,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #C4C4C4;" text="Sair">
+                  <JFXButton fx:id="jfxButtonLogout" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonLogoutClick" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #C4C4C4;" text="Sair">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

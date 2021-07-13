@@ -12,10 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ProcedimentoListController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="961.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ProcedimentoListController">
     <children>
-        <Label prefHeight="38.0" prefWidth="243.0" text="Procedimentos Cadastrados">
+        <Label alignment="CENTER" prefHeight="38.0" prefWidth="300.0" text="Procedimentos Cadastrados">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -53,13 +52,14 @@
                 <Insets left="10.0" right="10.0" />
             </VBox.margin>
         </HBox>
-        <TableView fx:id="tableViewProcedimento" prefHeight="197.0" prefWidth="685.0">
+        <TableView fx:id="tableViewProcedimento" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="308.0" prefWidth="941.0">
             <columns>
                 <TableColumn fx:id="tableColumnId" prefWidth="65.0" text="Codigo" />
                 <TableColumn fx:id="tableCollumDescricao" prefWidth="358.0" text="Descriçao" />
                 <TableColumn fx:id="tableColumValor" prefWidth="212.0" text="Valor" />
             <TableColumn fx:id="tableColumnEDIT" prefWidth="81.0" text="Editar" />
             <TableColumn fx:id="tableColumnREMOVE" prefWidth="69.0" text="Excluir" />
+            <TableColumn fx:id="tableColumnEspecialista" prefWidth="154.0" text="Especialista" />
             </columns>
             <VBox.margin>
                 <Insets left="10.0" right="10.0" />

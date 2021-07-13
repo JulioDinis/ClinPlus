@@ -10,17 +10,12 @@ import org.openjfx.db.DbException;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
-import org.openjfx.model.entities.Funcionario;
-import org.openjfx.model.entities.Paciente;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.exeption.ValidationException;
-import org.openjfx.model.service.PacienteService;
 import org.openjfx.model.service.ProcedimentoService;
 
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ProcedimentoFormController {
@@ -38,6 +33,7 @@ public class ProcedimentoFormController {
     private JFXTextField txtValor;
     @FXML
     private Label labelEspecialista;
+    private Colaborador colaborador;
 
     @FXML
     public void onBtCancelAction(ActionEvent event) {
@@ -61,7 +57,7 @@ public class ProcedimentoFormController {
             Utils.currentStage(event).close();
         } catch (ValidationException e) {
             //           e.printStackTrace(); it is ok
-       //     setErrosMensagens(e.getErrors());
+            //     setErrosMensagens(e.getErrors());
 
         } catch (DbException e) {
             e.printStackTrace();
@@ -102,11 +98,10 @@ public class ProcedimentoFormController {
         } else {
             txtValor.setText(entity.getValor().toString());
         }
-        if(entity.getIdEspecialista() == null){
+        if (entity.getIdEspecialista() == null) {
             labelEspecialista.setText("null");
-        }
-        else
-            labelEspecialista.setText(entity.getIdEspecialista().toString());
+        } else
+            labelEspecialista.setText(this.colaborador.getNome() + " | " + this.colaborador.getEspecialidade());
 
     }
 
@@ -119,9 +114,14 @@ public class ProcedimentoFormController {
         System.out.println(obj);
         return obj;
     }
+
     private void notifyDataChangeListeners() {
         for (DataChangeListener listener : dataChangeListener) {
             listener.onDataChange();
         }
+    }
+
+    public void setColaborador(Colaborador colaboradorLogado) {
+        this.colaborador = colaboradorLogado;
     }
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Funcionario extends Pessoa implements Serializable {
+public class Colaborador extends Pessoa implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -16,12 +16,12 @@ public class Funcionario extends Pessoa implements Serializable {
     private Date dataContrato;
     private Date dataDesligamento;
 
-    public Funcionario(Integer idPessoa, String nome, String cpf, String rg, Date dataNascimento, String sexo, String email, String logradouro, String cidade, String bairro, String cep, String uf, String telefone, boolean ativo, Integer idFuncionario) {
+    public Colaborador(Integer idPessoa, String nome, String cpf, String rg, Date dataNascimento, String sexo, String email, String logradouro, String cidade, String bairro, String cep, String uf, String telefone, boolean ativo, Integer idFuncionario) {
         super(idPessoa, nome, cpf, rg, dataNascimento, sexo, email, logradouro, cidade, bairro, cep, uf, telefone, ativo);
         this.idFuncionario = idFuncionario;
     }
 
-    public Funcionario() {
+    public Colaborador() {
     }
 
     public static long getSerialVersionUID() {
@@ -87,9 +87,9 @@ public class Funcionario extends Pessoa implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Funcionario)) return false;
+        if (!(o instanceof Colaborador)) return false;
         if (!super.equals(o)) return false;
-        Funcionario that = (Funcionario) o;
+        Colaborador that = (Colaborador) o;
         return Objects.equals(getIdFuncionario(), that.getIdFuncionario()) && Objects.equals(getFuncao(), that.getFuncao()) && Objects.equals(getEspecialidade(), that.getEspecialidade()) && Objects.equals(getSenha(), that.getSenha()) && Objects.equals(getSalario(), that.getSalario()) && Objects.equals(getDataContrato(), that.getDataContrato()) && Objects.equals(getDataDesligamento(), that.getDataDesligamento());
     }
 
@@ -100,7 +100,7 @@ public class Funcionario extends Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "Funcionario{" +
+        return "Colaborador{" +
                 "idFuncionario=" + idFuncionario +
                 ", funcao='" + funcao + '\'' +
                 ", especialidade='" + especialidade + '\'' +

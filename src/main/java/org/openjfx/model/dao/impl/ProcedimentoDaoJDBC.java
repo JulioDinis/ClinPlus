@@ -135,13 +135,9 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
         try {
             statement = connection.prepareStatement(
                     "SELECT * FROM Procedimento ORDER BY descricao");
-
             rs = statement.executeQuery();
-
             List<Procedimento> list = new ArrayList<>();
-
             while (rs.next()) {
-
                 Procedimento Procedimento = instantiateProcedimento(rs);
                 list.add(Procedimento);
             }
@@ -157,6 +153,33 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
     @Override
     public List<Procedimento> findAllAtivos() {
         return null;
+    }
+
+    @Override
+    public List<Procedimento> findByEspecilistaId(Integer idEspecialista) {
+
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * "
+                            + "FROM Procedimento "
+                            + "WHERE id_especialista = ?");
+
+            statement.setInt(1, idEspecialista);
+            rs = statement.executeQuery();
+            List<Procedimento> list = new ArrayList<>();
+            while (rs.next()) {
+                Procedimento Procedimento = instantiateProcedimento(rs);
+                list.add(Procedimento);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+        }
     }
 
 

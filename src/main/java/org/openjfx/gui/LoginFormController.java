@@ -19,14 +19,12 @@ import org.openjfx.db.DbException;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
-import org.openjfx.model.entities.Funcionario;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.exeption.ValidationException;
 import org.openjfx.model.service.FuncionarioService;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -36,7 +34,7 @@ import java.util.*;
  */
 public class LoginFormController implements Initializable {
 
-    private Funcionario entity;
+    private Colaborador entity;
     private FuncionarioService service;
     private FuncionarioService funcionarioService;
     private List<DataChangeListener> dataChangeListener = new ArrayList<>();
@@ -66,7 +64,7 @@ public class LoginFormController implements Initializable {
             entity = getFormData();
             service.logar(entity);
 
-            Funcionario logado = service.logar(entity);
+            Colaborador logado = service.logar(entity);
             if (logado == null) {
                 ValidationException exception = new ValidationException("Validation error");
 
@@ -97,7 +95,7 @@ public class LoginFormController implements Initializable {
 
     }
 
-    public void setFuncionario(Funcionario entity) {
+    public void setFuncionario(Colaborador entity) {
         this.entity = entity;
     }
 
@@ -135,8 +133,8 @@ public class LoginFormController implements Initializable {
 
     }
 
-    private synchronized Funcionario getFormData() {
-        Funcionario obj = new Funcionario();
+    private synchronized Colaborador getFormData() {
+        Colaborador obj = new Colaborador();
 
         ValidationException exception = new ValidationException("Validation error");
 
@@ -164,9 +162,9 @@ public class LoginFormController implements Initializable {
 
     }
 
-    private void notifyDataChangeListeners(Funcionario funcionario) {
+    private void notifyDataChangeListeners(Colaborador colaborador) {
         for (DataChangeListener listener : dataChangeListener) {
-            listener.onLogin(funcionario);
+            listener.onLogin(colaborador);
         }
     }
 }

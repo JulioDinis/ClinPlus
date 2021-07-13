@@ -4,12 +4,15 @@ import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import org.openjfx.gui.listener.DataChangeListener;
-import org.openjfx.model.entities.Funcionario;
+import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.service.AgendaService;
+import org.openjfx.model.service.FinanceiroService;
 import org.openjfx.model.service.FuncionarioService;
 import org.openjfx.model.service.PacienteService;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
@@ -60,29 +63,25 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
 
     @FXML
     public void onJfxButtonAgendaClick() {
-        notifyDataChangeListeners("/org/openjfx/gui/FuncionarioList.fxml",
-                (FuncionarioListController controller) -> {
-                    controller.setFuncionarioService(new FuncionarioService());
-                    controller.updateTableView();
+        notifyDataChangeListeners("/org/openjfx/gui/TelaAgenda.fxml",
+                (TelaAgendaController controller) -> {
+                    controller.setAgendaService(new AgendaService());
+                    controller.updateAgenda();
                 });
     }
 
     @FXML
     public void onJfxButtonFinanceiroClick() {
-        notifyDataChangeListeners("/org/openjfx/gui/FuncionarioList.fxml",
-                (FuncionarioListController controller) -> {
-                    controller.setFuncionarioService(new FuncionarioService());
+        notifyDataChangeListeners("/org/openjfx/gui/TelaFinanceiro.fxml",
+                (TelaFinanceiroController controller) -> {
+                    controller.setFinanceiroService(new FinanceiroService());
                     controller.updateTableView();
                 });
     }
 
     @FXML
     public void onJfxButtonLogoutClick() {
-        notifyDataChangeListeners("/org/openjfx/gui/FuncionarioList.fxml",
-                (FuncionarioListController controller) -> {
-                    controller.setFuncionarioService(new FuncionarioService());
-                    controller.updateTableView();
-                });
+        this.notifyLogOut();
     }
 
     @Override
@@ -96,7 +95,7 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
     }
 
     @Override
-    public void onLogin(Funcionario p) {
+    public void onLogin(Colaborador p) {
 
     }
 
@@ -110,17 +109,21 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
 
     }
 
-    public void subscribeDataChangeListener(DataChangeListener listener) {
+    public void subscribeDataChangeListener(DataChangeListener... listener) {
         System.out.println("ADD --> " + listener);
-        dataChangeListener.add(listener);
+        Arrays.stream(listener).forEach(listen -> dataChangeListener.add(listen));
     }
 
     private <T> void notifyDataChangeListeners(String resource, Consumer<T> initialingAction) {
-        System.out.println("Solicitado ==>" + resource);
+        System.out.println("<< Notificado >>" + resource);
         for (DataChangeListener listener : dataChangeListener) {
             listener.onClickTela(resource, initialingAction);
         }
     }
 
-
+    private void notifyLogOut() {
+        for (DataChangeListener listener : dataChangeListener) {
+            listener.onLogout();
+        }
+    }
 }

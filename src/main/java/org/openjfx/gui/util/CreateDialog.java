@@ -6,11 +6,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.openjfx.gui.PacienteFormController;
 import org.openjfx.gui.listener.DataChangeListener;
-import org.openjfx.model.entities.Funcionario;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Paciente;
-import org.openjfx.model.service.PacienteService;
 
 import java.util.function.Consumer;
 
@@ -52,7 +50,7 @@ public class CreateDialog implements DataChangeListener {
     }
 
     @Override
-    public void onLogin(Funcionario p) {
+    public void onLogin(Colaborador p) {
 
     }
 

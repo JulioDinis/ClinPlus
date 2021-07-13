@@ -2,8 +2,7 @@ package org.openjfx.model.service;
 
 import org.openjfx.model.dao.DaoFactory;
 import org.openjfx.model.dao.FuncionarioDao;
-import org.openjfx.model.entities.Funcionario;
-import org.openjfx.model.entities.Funcionario;
+import org.openjfx.model.entities.Colaborador;
 
 import java.util.List;
 
@@ -12,32 +11,32 @@ import java.util.List;
  */
 public class FuncionarioService {
 
-    private FuncionarioDao dao = DaoFactory.createFuncionarioDao("Funcionario Service");
+    private FuncionarioDao dao = DaoFactory.createFuncionarioDao("Colaborador Service");
 
-    public List<Funcionario> findAll() {
+    public List<Colaborador> findAll() {
 
         return dao.findAll();
     }
 
-    public List<Funcionario> findAllAtivos() {
+    public List<Colaborador> findAllAtivos() {
         return dao.findAllAtivos();
     }
 
-    public void saveOrUpdate(Funcionario funcionario) {
+    public void saveOrUpdate(Colaborador colaborador) {
         System.out.println("Chegou aqui");
-        if (funcionario.getIdFuncionario() == null) {
+        if (colaborador.getIdFuncionario() == null) {
             System.out.println("Chegou no insert");
-            dao.insert(funcionario);
+            dao.insert(colaborador);
         } else {
-            dao.update(funcionario);
+            dao.update(colaborador);
         }
 
     }
 
-    public void remove(Funcionario obj) {
+    public void remove(Colaborador obj) {
         dao.deleteById(obj.getIdFuncionario());
     }
-    public Funcionario logar(Funcionario funcionario){
-        return dao.logar(funcionario.getIdFuncionario(), funcionario.getSenha());
+    public Colaborador logar(Colaborador colaborador){
+        return dao.logar(colaborador.getIdFuncionario(), colaborador.getSenha());
     }
 }

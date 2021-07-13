@@ -1,9 +1,7 @@
 package org.openjfx.model.dao;
 
 import org.openjfx.db.DB;
-import org.openjfx.model.dao.impl.FuncionarioDaoJDBC;
-import org.openjfx.model.dao.impl.PacienteDaoJDBC;
-import org.openjfx.model.dao.impl.ProcedimentoDaoJDBC;
+import org.openjfx.model.dao.impl.*;
 
 public class DaoFactory {
     public static PacienteDao createPacienteDao(String creator) {
@@ -11,9 +9,27 @@ public class DaoFactory {
     }
 
     public static FuncionarioDao createFuncionarioDao(String creator) {
-        return new FuncionarioDaoJDBC(DB.getConnection("Dao Factory - Create Funcionario DAO  | Pedido By: " + creator)) {
+        return new FuncionarioDaoJDBC(DB.getConnection("Dao Factory - Create Colaborador DAO  | Pedido By: " + creator)) {
         };
     }
+    public static AgendaDao createAgendaDao(String creator) {
+        return new AgendaDaoJDBC(DB.getConnection("Dao Factory - Create Procedimento DAO  | Pedido By: " + creator)) {
+        };
+    }
+    public static AporteDao createAporteDao(String creator) {
+        return new AporteDaoJDBC(DB.getConnection("Dao Factory - Create Procedimento DAO  | Pedido By: " + creator)) {
+        };
+    }
+
+    public static CaixaMensalDao createCaixaMensalDao(String creator) {
+        return new CaixaMensalDaoJDBC(DB.getConnection("Dao Factory - Create Procedimento DAO  | Pedido By: " + creator)) {
+        };
+    }
+    public static ItensTratamentoDao createItensTratamentoDao(String creator) {
+        return new ItensTratamentoDaoJDBC(DB.getConnection("Dao Factory - Create Procedimento DAO  | Pedido By: " + creator)) {
+        };
+    }
+
     public static ProcedimentoDao createProcedimentoDao(String creator) {
         return new ProcedimentoDaoJDBC(DB.getConnection("Dao Factory - Create Procedimento DAO  | Pedido By: " + creator)) {
         };

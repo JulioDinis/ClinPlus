@@ -1,8 +1,6 @@
 package org.openjfx.model.entities;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
 
 public class Procedimento implements Serializable {
 

@@ -26,8 +26,7 @@ import org.openjfx.db.DbIntegrityException;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
-import org.openjfx.model.entities.Funcionario;
-import org.openjfx.model.entities.Paciente;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.FuncionarioService;
 
 import java.net.URL;
@@ -50,35 +49,35 @@ public class FuncionarioListController implements Initializable, DataChangeListe
     private TextField txtBusca;
 
     @FXML
-    private TableView<Funcionario> tableViewFuncionario;
+    private TableView<Colaborador> tableViewFuncionario;
     @FXML
-    private TableColumn<Funcionario, Integer> tableColumnId;
+    private TableColumn<Colaborador, Integer> tableColumnId;
 
     @FXML
-    private TableColumn<Funcionario, String> tableColumnNome;
+    private TableColumn<Colaborador, String> tableColumnNome;
     // Email, BirthDate, BaseSalary)
 
     @FXML
-    private TableColumn<Funcionario, String> tableColumnEmail;
+    private TableColumn<Colaborador, String> tableColumnEmail;
     @FXML
-    private TableColumn<Funcionario, Date> tableColumnDataNascimento;
+    private TableColumn<Colaborador, Date> tableColumnDataNascimento;
     @FXML
-    private TableColumn<Funcionario, String> tableColumnSexo;
+    private TableColumn<Colaborador, String> tableColumnSexo;
 
     @FXML
-    private TableColumn<Funcionario, String> tableColumnCpf;
+    private TableColumn<Colaborador, String> tableColumnCpf;
 
     @FXML
-    private TableColumn<Funcionario, String> tableColumnCidade;
+    private TableColumn<Colaborador, String> tableColumnCidade;
 
     @FXML
-    private TableColumn<Funcionario, String> tableColumnTelefone;
+    private TableColumn<Colaborador, String> tableColumnTelefone;
 
     @FXML
-    private TableColumn<Funcionario, Funcionario> tableColumnEDIT;
+    private TableColumn<Colaborador, Colaborador> tableColumnEDIT;
 
     @FXML
-    private TableColumn<Funcionario, Funcionario> tableColumnREMOVE;
+    private TableColumn<Colaborador, Colaborador> tableColumnREMOVE;
 
     @FXML
     private ComboBox<String> comboBoxBuscarPor;
@@ -89,14 +88,14 @@ public class FuncionarioListController implements Initializable, DataChangeListe
     @FXML
     JFXButton jFxBtNew;
 
-    private ObservableList<Funcionario> obsList;
+    private ObservableList<Colaborador> obsList;
 
     // eventos
     @FXML
     public void onBtNewAction(ActionEvent event) {
-        Funcionario funcionario = new Funcionario();
+        Colaborador colaborador = new Colaborador();
         Stage parentStage = Utils.currentStage(event);
-        createDialogForm(funcionario, "/org/openjfx/gui/FuncionarioForm.fxml", parentStage);
+        createDialogForm(colaborador, "/org/openjfx/gui/FuncionarioForm.fxml", parentStage);
 
     }
 
@@ -143,7 +142,7 @@ public class FuncionarioListController implements Initializable, DataChangeListe
             throw new IllegalStateException("Service was Null");
         }
 
-        List<Funcionario> list = service.findAllAtivos();
+        List<Colaborador> list = service.findAllAtivos();
         System.out.println(list);
         obsList = FXCollections.observableArrayList(list);
         tableViewFuncionario.setItems(obsList);
@@ -151,14 +150,14 @@ public class FuncionarioListController implements Initializable, DataChangeListe
         initRemoveButtons();
     }
 
-    private void createDialogForm(Funcionario funcionario, String absolutName, Stage parentStage) {
+    private void createDialogForm(Colaborador colaborador, String absolutName, Stage parentStage) {
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
 
             FuncionarioFormController controller = loader.getController();
-            controller.setFuncionario(funcionario);
+            controller.setFuncionario(colaborador);
             controller.setServices(new FuncionarioService(), new FuncionarioService());
             controller.loadComboBox();
             controller.subscribeDataChangeListener(this);
@@ -185,7 +184,7 @@ public class FuncionarioListController implements Initializable, DataChangeListe
     }
 
     @Override
-    public void onLogin(Funcionario funcionario) {
+    public void onLogin(Colaborador colaborador) {
 
     }
 
@@ -205,12 +204,12 @@ public class FuncionarioListController implements Initializable, DataChangeListe
      */
     private void initEditButtons() {
         tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnEDIT.setCellFactory(param -> new TableCell<Funcionario, Funcionario>() {
+        tableColumnEDIT.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
             private final FontIcon editarIcone = new FontIcon("fa-edit");
             private final JFXButton button = new JFXButton("Editar", editarIcone);
 
             @Override
-            protected void updateItem(Funcionario obj, boolean empty) {
+            protected void updateItem(Colaborador obj, boolean empty) {
                 super.updateItem(obj, empty);
                 if (obj == null) {
                     setGraphic(null);
@@ -229,11 +228,11 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 
     private void initRemoveButtons() {
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnREMOVE.setCellFactory(param -> new TableCell<Funcionario, Funcionario>() {
+        tableColumnREMOVE.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
             private JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
 
             @Override
-            protected void updateItem(Funcionario obj, boolean empty) {
+            protected void updateItem(Colaborador obj, boolean empty) {
                 super.updateItem(obj, empty);
 
                 if (obj == null) {
@@ -246,16 +245,16 @@ public class FuncionarioListController implements Initializable, DataChangeListe
         });
     }
 
-    private void removeEntity(Funcionario funcionario) {
+    private void removeEntity(Colaborador colaborador) {
 
         Optional<ButtonType> result = Alerts.
-                showConfirmation("Confirmation", "Tem certeza que deseja excluir o Funcionario?");
+                showConfirmation("Confirmation", "Tem certeza que deseja excluir o Colaborador?");
         if (result.get() == ButtonType.OK) {
             if (service == null) {
                 throw new IllegalStateException("Service was Null");
             }
             try {
-                service.remove(funcionario);
+                service.remove(colaborador);
                 updateTableView();
             } catch (DbIntegrityException e) {
                 e.printStackTrace();
@@ -265,7 +264,7 @@ public class FuncionarioListController implements Initializable, DataChangeListe
         }
     }
 
-    public void setFuncionarioLogado(Funcionario funcionarioLogado) {
+    public void setFuncionarioLogado(Colaborador colaboradorLogado) {
         System.out.println("OII");
     }
 }

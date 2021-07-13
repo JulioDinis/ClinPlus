@@ -37,4 +37,8 @@ public class ProcedimentoService {
     public void remove(Procedimento obj) {
         dao.deleteById(obj.getIdProcedimento());
     }
+
+    public List<Procedimento> findByEspecialista(Integer id) {
+        return  dao.findByEspecilistaId(id);
+    }
 }

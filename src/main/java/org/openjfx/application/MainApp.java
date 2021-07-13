@@ -1,8 +1,6 @@
 package org.openjfx.application;
 
 import javafx.application.Application;
-import javafx.beans.property.ObjectProperty;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,9 +13,7 @@ import javafx.stage.Stage;
 import org.openjfx.gui.*;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
-import org.openjfx.gui.util.Utils;
-import org.openjfx.model.entities.Funcionario;
-import org.openjfx.model.entities.Paciente;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.FuncionarioService;
 
 import java.util.function.Consumer;
@@ -26,33 +22,38 @@ public class MainApp extends Application implements DataChangeListener {
 
 
     private static Scene mainScene;
-    private Funcionario funcionarioLogado;
+    private static Stage stage;
+    private Colaborador colaboradorLogado;
 
-    public Funcionario getFuncionarioLogado() {
-        return funcionarioLogado;
+    public Colaborador getFuncionarioLogado() {
+        return colaboradorLogado;
     }
 
-    public void setFuncionarioLogado(Funcionario funcionarioLogado) {
-        this.funcionarioLogado = funcionarioLogado;
+    public void setFuncionarioLogado(Colaborador colaboradorLogado) {
+        this.colaboradorLogado = colaboradorLogado;
     }
 
 
     @Override
     public void start(Stage primaryStage) {
-        try {
+        this.stage = primaryStage;
+        this.login(this.stage);
+    }
 
-            Funcionario funcionario = new Funcionario();
+    private void login(Stage primaryStage) {
+        try {
+            Colaborador colaborador = new Colaborador();
             String caminhoDoFXML = "";
-            createDialogForm(funcionario, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
+            createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
 
             if (this.getFuncionarioLogado() == null) {
 
-                createDialogForm(funcionario, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
+                createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
 
             } else {
 
-                Funcionario funcionarioLogado = this.getFuncionarioLogado();
-                String funcao = funcionarioLogado.getFuncao();
+                Colaborador colaboradorLogado = this.getFuncionarioLogado();
+                String funcao = colaboradorLogado.getFuncao();
 
                 caminhoDoFXML = "/org/openjfx/gui/MainAppView.fxml";
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
@@ -65,7 +66,10 @@ public class MainApp extends Application implements DataChangeListener {
 
                 primaryStage.setTitle("ClinPlus - Painel Administrativo");
                 MainAppViewController controller = loader.getController();
+
                 controller.setFuncionarioLogado(this.getFuncionarioLogado());
+                controller.setParent(this);
+
 
                 if (funcao.equals("Atendente")) {
 
@@ -74,17 +78,19 @@ public class MainApp extends Application implements DataChangeListener {
                     controller.buttonAction("/org/openjfx/gui/TelaAtendente.fxml",
                             (TelaAtendenteController telaAtendenteController) -> {
 //                              controller.setFuncionarioService(new FuncionarioService());
-//                              controller.setFuncionarioLogado(this.funcionarioLogado);
+//                              controller.setFuncionarioLogado(this.colaboradorLogado);
 //                              controller.updateTableView();
-                                telaAtendenteController.subscribeDataChangeListener(controller);
+                                telaAtendenteController.subscribeDataChangeListener(controller, this);
+
                             });
 
                 } else if (funcao.equals("Especialista")) {
                     System.out.println("###>>> Login Especialista <<<###");
-
                     controller.buttonAction("/org/openjfx/gui/TelaEspecialista.fxml",
                             (TelaEspecialistaController telaEspecialistaController) -> {
-
+                                telaEspecialistaController.setEspecialistaLogado(this.getFuncionarioLogado());
+                                telaEspecialistaController.subscribeDataChangeListener(controller);
+                                telaEspecialistaController.subscribeDataChangeListener(this);
                             });
 
                 } else {
@@ -120,14 +126,14 @@ public class MainApp extends Application implements DataChangeListener {
         launch(args);
     }
 
-    private void createDialogForm(Funcionario funcionario, String absolutName, Stage parentStage) {
+    private void createDialogForm(Colaborador colaborador, String absolutName, Stage parentStage) {
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
 
             LoginFormController controller = loader.getController();
-            controller.setFuncionario(funcionario);
+            controller.setFuncionario(colaborador);
             controller.setServices(new FuncionarioService());
             controller.subscribeDataChangeListener(this);
 
@@ -151,14 +157,17 @@ public class MainApp extends Application implements DataChangeListener {
     }
 
     @Override
-    public void onLogin(Funcionario funcionario) {
-        System.out.println("###################### NOTIFICAÇÂO DE LOGIN #############");
-        this.setFuncionarioLogado(funcionario);
+    public void onLogin(Colaborador colaborador) {
+        System.out.println("###################### NOTIFICAÇÃO DE LOGIN #############");
+        this.setFuncionarioLogado(colaborador);
     }
 
     @Override
     public void onLogout() {
-
+        System.out.println("Logout Solicitado");
+        this.stage.close();
+        this.colaboradorLogado = null;
+        login(this.stage);
     }
 
     @Override

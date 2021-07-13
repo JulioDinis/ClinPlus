@@ -26,7 +26,7 @@ import org.openjfx.db.DbIntegrityException;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
-import org.openjfx.model.entities.Funcionario;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.service.ProcedimentoService;
 
@@ -44,7 +44,7 @@ import java.util.function.Consumer;
 public class ProcedimentoListController implements Initializable, DataChangeListener {
 
     private ProcedimentoService service;
-    private Funcionario funcionarioLogado;
+    private Colaborador colaboradorLogado;
     private ObservableList<Procedimento> obsList;
 
     @FXML
@@ -54,11 +54,10 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     private TableView<Procedimento> tableViewProcedimento;
     @FXML
     private TableColumn<Procedimento, Integer> tableColumnId;
-
+    @FXML
+    private TableColumn<Procedimento, Integer> tableColumnEspecialista;
     @FXML
     private TableColumn<Procedimento, String> tableCollumDescricao;
-    // Email, BirthDate, BaseSalary)
-
     @FXML
     private TableColumn<Procedimento, Double> tableColumValor;
 
@@ -79,12 +78,11 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     private FontIcon jFXImVieBtnAlternar;
 
 
-
     // eventos
     @FXML
     public void onBtNewAction(ActionEvent event) {
         Procedimento procedimento = new Procedimento();
-        procedimento.setIdEspecialista(funcionarioLogado.getIdFuncionario());
+        procedimento.setIdEspecialista(colaboradorLogado.getIdFuncionario());
         Stage parentStage = Utils.currentStage(event);
         createDialogForm(procedimento, "/org/openjfx/gui/ProcedimentoForm.fxml", parentStage);
 
@@ -144,6 +142,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idProcedimento"));
         tableCollumDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tableColumValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        tableColumnEspecialista.setCellValueFactory(new PropertyValueFactory<>("idEspecialista"));
         Stage stage = (Stage) MainApp.getMainScene().getWindow();
 
         tableViewProcedimento.prefHeightProperty().bind(stage.heightProperty());
@@ -155,12 +154,22 @@ public class ProcedimentoListController implements Initializable, DataChangeList
             throw new IllegalStateException("Service was Null");
         }
 
-        List<Procedimento> list = service.findAllAtivos();
-        System.out.println(list);
-        obsList = FXCollections.observableArrayList(list);
-        tableViewProcedimento.setItems(obsList);
-        initEditButtons();
-        initRemoveButtons();
+
+        if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
+            List<Procedimento> list = service.findByEspecialista(this.getFuncionarioLogado().getIdFuncionario());
+            obsList = FXCollections.observableArrayList(list);
+            tableViewProcedimento.setItems(obsList);
+            initEditButtons();
+            initRemoveButtons();
+            this.tableColumnEspecialista.setVisible(false);
+        } else {
+            List<Procedimento> list = service.findAll();
+            obsList = FXCollections.observableArrayList(list);
+            tableViewProcedimento.setItems(obsList);
+            this.btNew.setDisable(true);
+            this.tableColumnEDIT.setVisible(false);
+            this.tableColumnREMOVE.setVisible(false);
+        }
     }
 
     private void createDialogForm(Procedimento procedimento, String absolutName, Stage parentStage) {
@@ -171,6 +180,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
 
             ProcedimentoFormController controller = loader.getController();
             controller.setEntity(procedimento);
+            controller.setColaborador(this.colaboradorLogado);
             controller.setService(new ProcedimentoService(), new ProcedimentoService());
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
@@ -196,7 +206,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     }
 
     @Override
-    public void onLogin(Funcionario funcionario) {
+    public void onLogin(Colaborador colaborador) {
         throw new IllegalStateException("Service was Null");
     }
 
@@ -214,6 +224,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
      * Método para colocar um button dentro da tabela
      */
     private void initEditButtons() {
+
         tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumnEDIT.setCellFactory(param -> new TableCell<Procedimento, Procedimento>() {
             private final FontIcon editarIcone = new FontIcon("fa-edit");
@@ -235,6 +246,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
                                 obj, "/org/openjfx/gui/ProcedimentoForm.fxml", Utils.currentStage(event)));
             }
         });
+
     }
 
     private void initRemoveButtons() {
@@ -254,6 +266,9 @@ public class ProcedimentoListController implements Initializable, DataChangeList
                 button.setOnAction(event -> removeEntity(obj));
             }
         });
+        if (!this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
+            this.tableColumnEDIT.setVisible(false);
+        }
     }
 
     private void removeEntity(Procedimento procedimento) {
@@ -275,11 +290,11 @@ public class ProcedimentoListController implements Initializable, DataChangeList
         }
     }
 
-    public Funcionario getFuncionarioLogado() {
-        return funcionarioLogado;
+    public Colaborador getFuncionarioLogado() {
+        return colaboradorLogado;
     }
 
-    public void setFuncionarioLogado(Funcionario funcionarioLogado) {
-        this.funcionarioLogado = funcionarioLogado;
+    public void setFuncionarioLogado(Colaborador colaboradorLogado) {
+        this.colaboradorLogado = colaboradorLogado;
     }
 }

@@ -7,7 +7,6 @@ package org.openjfx.gui;
 
 import com.google.common.hash.Hashing;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -23,7 +22,7 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Constraints;
 import org.openjfx.gui.util.Utils;
-import org.openjfx.model.entities.Funcionario;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.exeption.ValidationException;
 import org.openjfx.model.service.FuncionarioService;
 
@@ -41,7 +40,7 @@ import java.util.*;
  */
 public class FuncionarioFormController implements Initializable {
 
-    private Funcionario entity;
+    private Colaborador entity;
     private FuncionarioService service;
     private FuncionarioService funcionarioService;
     private List<DataChangeListener> dataChangeListener = new ArrayList<>();
@@ -136,7 +135,7 @@ public class FuncionarioFormController implements Initializable {
         Utils.currentStage(event).close();
     }
 
-    public void setFuncionario(Funcionario entity) {
+    public void setFuncionario(Colaborador entity) {
         this.entity = entity;
     }
 
@@ -208,8 +207,8 @@ public class FuncionarioFormController implements Initializable {
 
     }
 
-    private synchronized Funcionario getFormData() {
-        Funcionario obj = new Funcionario();
+    private synchronized Colaborador getFormData() {
+        Colaborador obj = new Colaborador();
 
         ValidationException exception = new ValidationException("Validation error");
 
