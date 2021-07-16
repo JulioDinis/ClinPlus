@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -27,6 +28,7 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.service.FuncionarioService;
 
 import java.net.URL;
@@ -83,7 +85,7 @@ public class FuncionarioListController implements Initializable, DataChangeListe
     private ComboBox<String> comboBoxBuscarPor;
 
     @FXML
-    private Button btNew;
+    private Pane paneBusca;
 
     @FXML
     JFXButton jFxBtNew;
@@ -96,12 +98,20 @@ public class FuncionarioListController implements Initializable, DataChangeListe
         Colaborador colaborador = new Colaborador();
         Stage parentStage = Utils.currentStage(event);
         createDialogForm(colaborador, "/org/openjfx/gui/FuncionarioForm.fxml", parentStage);
-
     }
-
     @FXML
     public void onTxtBuscaChange() {
         System.out.println("Valor Alterado");
+        if (service == null) {
+            throw new IllegalStateException("Service was Null");
+        }else{
+            List<Colaborador> list = service.findByName(txtBusca.getText());
+            System.out.println(list);
+            obsList = FXCollections.observableArrayList(list);
+            tableViewFuncionario.setItems(obsList);
+            initEditButtons();
+            initRemoveButtons();
+        }
     }
 
     public void setFuncionarioService(FuncionarioService service) {
@@ -132,8 +142,7 @@ public class FuncionarioListController implements Initializable, DataChangeListe
 //        // Formata o Salario usando o método do utils
 //        Utils.formatTableColumnDouble(tableColumnBaseSalary, 2);
         Stage stage = (Stage) MainApp.getMainScene().getWindow();
-
-        tableViewFuncionario.prefHeightProperty().bind(stage.heightProperty());
+        //   tableViewFuncionario.prefHeightProperty().bind(stage.heightProperty());
 
     }
 

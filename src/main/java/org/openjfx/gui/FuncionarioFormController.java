@@ -217,15 +217,11 @@ public class FuncionarioFormController implements Initializable {
         if (isValido(txtNome, "nome", exception)) {
             obj.setNome(txtNome.getText());
         }
-
-
         if (isValido(txtCpf, "cpf", exception)) {
             obj.setCpf(txtCpf.getText());
         }
-
         if (isValido(txtRg, "rg", exception))
             obj.setRg(txtRg.getText());
-
         if (dpDataNascimento.getValue() == null) {
             exception.addError("dataNascimento", "Seleciona a data de nascimento");
         } else {
@@ -245,17 +241,13 @@ public class FuncionarioFormController implements Initializable {
         if (isValido(txtLogradouro, "logradouro", exception)) {
             obj.setLogradouro(txtLogradouro.getText());
         }
-
         if (isValido(txtCidade, "cidade", exception)) {
             obj.setCidade(txtCidade.getText());
         }
-
         if (isValido(txtBairro, "bairro", exception))
             obj.setBairro(txtBairro.getText());
-
         if (isValido(txtCep, "cep", exception))
             obj.setCep(txtCep.getText());
-
         if (comboBoxUf.getSelectionModel().isEmpty()) {
             exception.addError("uf", "Selecione uma das opções");
         } else {
@@ -264,7 +256,6 @@ public class FuncionarioFormController implements Initializable {
         }
         if (isValido(txtTelefone, "telefone", exception))
             obj.setTelefone(txtTelefone.getText());
-
         if (isValido(txtFuncao, "funcao", exception))
             obj.setFuncao(txtFuncao.getText());
         if (isValido(txtEspecialidade, "especialidade", exception)) {

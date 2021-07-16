@@ -1,6 +1,7 @@
 package org.openjfx.model.dao;
 
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.entities.Paciente;
 
 import java.util.List;
 
@@ -19,4 +20,5 @@ public interface FuncionarioDao {
 
     Colaborador logar(Integer idFuncionario, String senha);
 
+    List<Colaborador> findByName(String name);
 }

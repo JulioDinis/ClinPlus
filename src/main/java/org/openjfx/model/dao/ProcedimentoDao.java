@@ -13,4 +13,6 @@ public interface ProcedimentoDao {
     List<Procedimento> findAllAtivos();
 
     List<Procedimento> findByEspecilistaId(Integer id);
+    List<Procedimento> findByDescricao(String descricao);
+    List<Procedimento> findByDescricaoAndId(String descricao, Integer id);
 }

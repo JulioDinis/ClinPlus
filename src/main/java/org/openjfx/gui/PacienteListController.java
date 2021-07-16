@@ -88,7 +88,7 @@ public class PacienteListController implements Initializable, DataChangeListener
     private Button btNew;
 
     @FXML
-    JFXButton jFxBtNew;
+    private JFXButton jfxButtonBuscar;
 
     @FXML
     private FontIcon jFXImVieBtnAlternar;
@@ -110,10 +110,24 @@ public class PacienteListController implements Initializable, DataChangeListener
         }, parentStage);
 
     }
+    @FXML
+    public void onJfxButtonBuscarClick(ActionEvent event) {
+        System.out.println("Buscar por: -> " + txtBusca.getText());
+    }
 
     @FXML
     public void onTxtBuscaChange() {
         System.out.println("Valor Alterado");
+        if (service == null) {
+            throw new IllegalStateException("Service was Null");
+        }else{
+            List<Paciente> list = service.findByName(txtBusca.getText());
+            System.out.println(list);
+            obsList = FXCollections.observableArrayList(list);
+            tableViewPaciente.setItems(obsList);
+            initEditButtons();
+            initRemoveButtons();
+        }
     }
 
     @FXML
@@ -181,6 +195,7 @@ public class PacienteListController implements Initializable, DataChangeListener
         tableViewPaciente.prefHeightProperty().bind(stage.heightProperty());
 
     }
+
 
     public void updateTableView() {
         if (service == null) {

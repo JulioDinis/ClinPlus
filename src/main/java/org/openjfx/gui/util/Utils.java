@@ -44,48 +44,41 @@
         }
 
         public static <T> void formatTableColumnDate(TableColumn<T, Date> tableColumn, String format) {
-            tableColumn.setCellFactory(column -> {
-                TableCell<T, Date> cell = new TableCell<T, Date>() {
-                    private SimpleDateFormat sdf = new SimpleDateFormat(format);
+            tableColumn.setCellFactory(column -> new TableCell<>() {
+                private final SimpleDateFormat sdf = new SimpleDateFormat(format);
 
-                    @Override
-                    protected void updateItem(Date item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setText(null);
-                        } else {
-                            setText(sdf.format(item));
-                        }
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        setText(sdf.format(item));
                     }
-                };
-                return cell;
+                }
             });
         }
 
         public static <T> void formatTableColumnDouble(TableColumn<T, Double> tableColumn, int decimalPlaces) {
-            tableColumn.setCellFactory(column -> {
-                TableCell<T, Double> cell = new TableCell<T, Double>() {
-                    @Override
-                    protected void updateItem(Double item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setText(null);
-                        } else {
-                            Locale.setDefault(Locale.US);
-                            setText(String.format("%." + decimalPlaces + "f", item));
-                        }
+            tableColumn.setCellFactory(column -> new TableCell<>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        Locale.setDefault(Locale.US);
+                        setText(String.format("%." + decimalPlaces + "f", item));
                     }
-                };
-                return cell;
+                }
             });
         }
 
         public static void formatDatePicker(DatePicker datePicker, String format) {
-            datePicker.setConverter(new StringConverter<LocalDate>() {
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(format);
+            datePicker.setConverter(new StringConverter<>() {
+                final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(format);
 
                 {
-
                     datePicker.setPromptText(format.toLowerCase());
                 }
 
@@ -149,18 +142,13 @@
          */
         public static List<String> getSiglaEstados() {
             HashMap<String, String> estados = getEstados();
-
             Set<Map.Entry<String, String>> fields = estados.entrySet();
-
             Iterator<Map.Entry<String, String>> iterator = fields.iterator();
-
             List<String> siglasEstados = new ArrayList<>();
-
             while (iterator.hasNext()) {
-                Map.Entry<String, String> entry = (Map.Entry) iterator.next();
+                Map.Entry<String, String> entry = iterator.next();
                 siglasEstados.add(String.format("%s - %s", entry.getKey(), entry.getValue()));
             }
-
             Collections.sort(siglasEstados);
             return siglasEstados;
         }
@@ -171,7 +159,6 @@
             listSexo.add("Feminino");
             return listSexo;
         }
-
     }
 
 

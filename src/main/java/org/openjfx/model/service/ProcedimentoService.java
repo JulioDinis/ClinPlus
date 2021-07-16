@@ -39,6 +39,14 @@ public class ProcedimentoService {
     }
 
     public List<Procedimento> findByEspecialista(Integer id) {
-        return  dao.findByEspecilistaId(id);
+        return dao.findByEspecilistaId(id);
+    }
+
+    public List<Procedimento> findByDescricao(String descricao) {
+        return dao.findByDescricao(descricao);
+    }
+
+    public List<Procedimento> findByDescricaoAndId(String descricao, Integer id) {
+        return dao.findByDescricaoAndId(descricao, id);
     }
 }

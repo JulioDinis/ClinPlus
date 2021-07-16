@@ -34,6 +34,8 @@ public class ProcedimentoFormController {
     @FXML
     private Label labelEspecialista;
     private Colaborador colaborador;
+    @FXML
+    private Label labelCodigo;
 
     @FXML
     public void onBtCancelAction(ActionEvent event) {
@@ -92,6 +94,7 @@ public class ProcedimentoFormController {
         if (this.entity == null) {
             throw new IllegalStateException("Entity was null");
         }
+        labelCodigo.setText(String.valueOf((entity.getIdProcedimento()==null)?"Novo":entity.getIdProcedimento()));
         txtDescricao.setText(entity.getDescricao());
         if (entity.getValor() == null) {
             txtValor.setText("");
@@ -108,6 +111,7 @@ public class ProcedimentoFormController {
     private synchronized Procedimento getFormData() {
         Procedimento obj = new Procedimento();
 
+        obj.setIdProcedimento(Integer.parseInt(labelCodigo.getText()));
         obj.setDescricao(txtDescricao.getText());
         obj.setIdEspecialista(entity.getIdEspecialista());
         obj.setValor(Double.parseDouble(txtValor.getText()));

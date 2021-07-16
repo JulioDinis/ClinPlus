@@ -192,6 +192,32 @@ public class PacienteDaoJDBC implements PacienteDao {
         }
     }
 
+    @Override
+    public List<Paciente> findByName(String name) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM paciente " +
+                            "WHERE nome like ? " +
+                            "and ativo = true " +
+                            "ORDER BY nome");
+            statement.setString(1, "%"+name+"%");
+            rs = statement.executeQuery();
+            List<Paciente> list = new ArrayList<>();
+            while (rs.next()) {
+                Paciente paciente = instantiatePaciente(rs);
+                list.add(paciente);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+        }
+    }
+
     private synchronized PreparedStatement createQuery(Paciente paciente, PreparedStatement statement) {
         try {
             statement.setString(1, paciente.getNome());

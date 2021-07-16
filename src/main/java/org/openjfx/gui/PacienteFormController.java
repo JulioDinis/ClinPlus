@@ -47,8 +47,6 @@ public class PacienteFormController implements Initializable {
     private ObservableList<String> obsListUF;
 
     @FXML
-    private JFXTextField txtIdPaciente;
-    @FXML
     private JFXTextField txtNome;
     @FXML
     private JFXTextField txtCpf;
@@ -74,34 +72,10 @@ public class PacienteFormController implements Initializable {
     private JFXTextField txtTelefone;
     @FXML
     private JFXTextField txtWhatsApp;
+    @FXML
+    private Label labelCodigo;
 
 
-    @FXML
-    private Label labelErrorNome;
-    @FXML
-    private Label labelErrorCpf;
-    @FXML
-    private Label labelErrorRg;
-    @FXML
-    private Label labelErrorDataNascimento;
-    @FXML
-    private Label labelErrorSexo;
-    @FXML
-    private Label labelErrorEmail;
-    @FXML
-    private Label labelErrorLogradouro;
-    @FXML
-    private Label labelErrorCidade;
-    @FXML
-    private Label labelErrorBairro;
-    @FXML
-    private Label labelErrorCep;
-    @FXML
-    private Label labelErrorUf;
-    @FXML
-    private Label labelErrorTelefone;
-    @FXML
-    private Label labelErrorWhatsApp;
 
     @FXML
     private Button btSalve;
@@ -110,7 +84,6 @@ public class PacienteFormController implements Initializable {
 
     @FXML
     public void onBtSaveAction(ActionEvent event) {
-
         if (entity == null) {
             throw new IllegalStateException("Entity was null");
         }
@@ -120,7 +93,6 @@ public class PacienteFormController implements Initializable {
         try {
             entity = getFormData();
             service.saveOrUpdate(entity);
-
             notifyDataChangeListeners();
             Utils.currentStage(event).close();
         } catch (ValidationException e) {
@@ -163,7 +135,6 @@ public class PacienteFormController implements Initializable {
     }
 
     private void initializeNodes() {
-        Constraints.setTextFieldInteger(txtIdPaciente);
         Constraints.setTextFieldMaxLength(txtNome, 70);
         Constraints.setTextFieldMaxLength(txtEmail, 60);
         Utils.formatDatePicker(dpDataNascimento, "dd/MM/yyyy");
@@ -173,7 +144,7 @@ public class PacienteFormController implements Initializable {
         if (entity == null) {
             throw new IllegalStateException("Entity was null");
         }
-        txtIdPaciente.setText(String.valueOf(entity.getIdPaciente()));
+        labelCodigo.setText(String.valueOf((entity.getIdPaciente()==null)?"Novo":entity.getIdPaciente()));
         txtNome.setText(entity.getNome());
         txtCpf.setText(entity.getCpf());
         txtRg.setText(entity.getRg());
@@ -186,7 +157,6 @@ public class PacienteFormController implements Initializable {
                     )
             );
         }
-
         if (entity.getSexo() == null) {
             comboBoxSexo.getSelectionModel().selectFirst();
         } else {
@@ -197,7 +167,6 @@ public class PacienteFormController implements Initializable {
         txtCidade.setText(entity.getCidade());
         txtBairro.setText(entity.getBairro());
         txtCep.setText(entity.getCep());
-
         if (entity.getUf() == null) {
             comboBoxUf.getSelectionModel().selectFirst();
         } else {
@@ -205,7 +174,6 @@ public class PacienteFormController implements Initializable {
         }
         txtTelefone.setText(entity.getTelefone());
         txtWhatsApp.setText(entity.getWhatsApp());
-
     }
 
     private synchronized Paciente getFormData() {
@@ -213,7 +181,7 @@ public class PacienteFormController implements Initializable {
 
         ValidationException exception = new ValidationException("Validation error");
 
-        obj.setIdPaciente(Utils.tryParseToInt(txtIdPaciente.getText()));
+        obj.setIdPaciente(Utils.tryParseToInt(labelCodigo.getText()));
 
         if (isValido(txtNome, "nome", exception)) {
             obj.setNome(txtNome.getText());
@@ -294,12 +262,10 @@ public class PacienteFormController implements Initializable {
 
     private Boolean isValido(JFXTextField textField, String key, ValidationException exception) {
         Boolean valido = true;
-
         if (textField.getText() == null) {
             valido = false;
         } else if (textField.getText().trim().equals(""))
             valido = false;
-
         if (valido) {
             System.out.println("Componente - " + key + " =>" + valido);
         } else

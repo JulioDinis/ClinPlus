@@ -11,4 +11,6 @@ public interface PacienteDao {
     Paciente findById(Integer idPaciente);
     List<Paciente> findAll();
     List<Paciente> findAllAtivos();
+
+    List<Paciente> findByName(String name);
 }

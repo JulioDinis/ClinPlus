@@ -4,6 +4,7 @@ import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
 import org.openjfx.model.dao.FuncionarioDao;
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.entities.Paciente;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -276,6 +277,32 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
                 return null;
             } else
                 return list.get(0);
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    @Override
+    public List<Colaborador> findByName(String name) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM funcionario " +
+                            "WHERE nome like ? " +
+                            "and ativo = true " +
+                            "ORDER BY nome");
+            statement.setString(1, "%"+name+"%");
+            rs = statement.executeQuery();
+            List<Colaborador> list = new ArrayList<>();
+            while (rs.next()) {
+                Colaborador colaborador = instantiateFuncionario(rs);
+                list.add(colaborador);
+            }
+            return list;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {

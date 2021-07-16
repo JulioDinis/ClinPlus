@@ -27,6 +27,7 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.service.ProcedimentoService;
 
@@ -90,7 +91,21 @@ public class ProcedimentoListController implements Initializable, DataChangeList
 
     @FXML
     public void onTxtBuscaChange() {
-        System.out.println("Valor Alterado");
+        if (service == null) {
+            throw new IllegalStateException("Service was Null");
+        } else {
+            List<Procedimento> list;
+            if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
+                list = service.findByDescricaoAndId(txtBusca.getText(), this.getFuncionarioLogado().getIdFuncionario());
+            } else {
+                list = service.findByDescricao(txtBusca.getText());
+            }
+//            System.out.println(list);
+            obsList = FXCollections.observableArrayList(list);
+            tableViewProcedimento.setItems(obsList);
+            initEditButtons();
+            initRemoveButtons();
+        }
     }
 
     @FXML

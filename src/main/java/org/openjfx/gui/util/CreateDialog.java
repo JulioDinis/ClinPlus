@@ -18,16 +18,8 @@ public class CreateDialog implements DataChangeListener {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
-            // Controller
             T controller = loader.getController();
             initialingAction.accept(controller);
-//            PacienteFormController controller = loader.getController();
-//            controller.setPaciente(paciente);
-//            controller.setServices(new PacienteService(), new PacienteService());
-//            controller.loadComboBox();
-//            controller.subscribeDataChangeListener(this);
-//            controller.updateFormData();
-            // Stage
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Insira os dados do Paciente");
             dialogStage.setScene(new Scene(pane));

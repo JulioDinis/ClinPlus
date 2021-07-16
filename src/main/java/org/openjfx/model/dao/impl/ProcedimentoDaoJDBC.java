@@ -3,6 +3,7 @@ package org.openjfx.model.dao.impl;
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
 import org.openjfx.model.dao.ProcedimentoDao;
+import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.entities.Procedimento;
 
 import java.sql.*;
@@ -182,6 +183,56 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
         }
     }
 
+    @Override
+    public List<Procedimento> findByDescricao(String descricao) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM procedimento " +
+                            "WHERE descricao like ? " +
+                            "ORDER BY descricao");
+            statement.setString(1, "%" + descricao + "%");
+            rs = statement.executeQuery();
+            List<Procedimento> list = new ArrayList<>();
+            while (rs.next()) {
+                Procedimento procedimento = instantiateProcedimento(rs);
+                list.add(procedimento);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+        }
+    }
+    @Override
+    public List<Procedimento> findByDescricaoAndId(String descricao, Integer id) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM procedimento " +
+                            "WHERE descricao like ?  " +
+                            "and id_especialista = ? " +
+                            "ORDER BY descricao");
+            statement.setString(1, "%" + descricao + "%");
+            statement.setInt(2, id);
+            rs = statement.executeQuery();
+            List<Procedimento> list = new ArrayList<>();
+            while (rs.next()) {
+                Procedimento procedimento = instantiateProcedimento(rs);
+                list.add(procedimento);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+        }
+    }
 
     private synchronized PreparedStatement createQuery(Procedimento Procedimento, PreparedStatement statement) {
         try {

@@ -36,4 +36,8 @@ public class PacienteService {
     public void remove(Paciente obj) {
         dao.deleteById(obj.getIdPaciente());
     }
+
+    public List<Paciente> findByName(String name) {
+        return dao.findByName(name);
+    }
 }

@@ -74,9 +74,6 @@ public class LoginFormController implements Initializable {
                 notifyDataChangeListeners(logado);
                 Utils.currentStage(event).close();
             }
-//            service.saveOrUpdate(entity);
-//            notifyDataChangeListeners();
-//
         } catch (ValidationException e) {
             //           e.printStackTrace(); it is ok
             setErrosMensagens(e.getErrors());
@@ -90,9 +87,7 @@ public class LoginFormController implements Initializable {
 
     @FXML
     public void onBtCancelarAction(ActionEvent event) {
-
         Utils.currentStage(event).close();
-
     }
 
     public void setFuncionario(Colaborador entity) {
@@ -121,11 +116,9 @@ public class LoginFormController implements Initializable {
     private void setErrosMensagens(Map<String, String> errors) {
         Set<String> fields = errors.keySet();
         System.out.println("ERROS  ------------------------------->" + fields);
-
         // Com operador ternário.
         txtCodigo.setStyle(fields.contains("login") ? "-fx-border-color: red" : "-fx-border-color: light gray");
         txtCodigo.setFocusColor(fields.contains("login") ? Color.valueOf("red") : Color.LIGHTGRAY);
-
         txtCodigo.setStyle(fields.contains("codigo") ? "-fx-border-color: red" : "-fx-border-color: light gray");
         txtCodigo.setFocusColor(fields.contains("dodigo") ? Color.valueOf("red") : Color.LIGHTGRAY);
         txtSenha.setStyle(fields.contains("senha") ? "-fx-border-color: red" : "-fx-border-color: light gray");
@@ -135,31 +128,22 @@ public class LoginFormController implements Initializable {
 
     private synchronized Colaborador getFormData() {
         Colaborador obj = new Colaborador();
-
         ValidationException exception = new ValidationException("Validation error");
-
         obj.setIdFuncionario(Utils.tryParseToInt(txtCodigo.getText()));
-
-
         if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty()) {
             obj.setIdFuncionario(Integer.parseInt(txtCodigo.getText()));
         }
-
         if (txtSenha.getText() == null || txtSenha.getText().isEmpty()) {
             exception.addError("senha", "Digite a senha");
         } else {
             obj.setSenha(Hashing.sha256()
                     .hashString(txtSenha.getText(), StandardCharsets.UTF_8).toString());
         }
-
-
         if (exception.getErrors().size() > 0) {
             throw exception;
         }
-
         System.out.println(obj);
         return obj;
-
     }
 
     private void notifyDataChangeListeners(Colaborador colaborador) {

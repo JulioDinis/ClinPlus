@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ProcedimentoFormController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ProcedimentoFormController">
    <top>
       <GridPane prefHeight="205.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -24,7 +24,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="labelEspecialista" prefHeight="16.0" prefWidth="380.0" text="Label" GridPane.columnSpan="2">
+            <Label fx:id="labelEspecialista" prefHeight="16.0" prefWidth="380.0" text="Label">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
@@ -39,6 +39,8 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </JFXTextField>
+            <Label prefHeight="16.0" prefWidth="68.0" text="Código:" GridPane.columnIndex="1" />
+            <Label fx:id="labelCodigo" alignment="TOP_LEFT" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </top>

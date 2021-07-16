@@ -234,6 +234,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             mainVbox.getChildren().addAll(newVBox.getChildren()); // Adiciona os node da tela about
             T controller = loader.getController();
             initialingAction.accept(controller);
+
         } catch (Exception e) {
             e.printStackTrace();
             Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);

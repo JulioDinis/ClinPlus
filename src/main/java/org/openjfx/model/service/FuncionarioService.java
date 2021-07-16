@@ -3,6 +3,7 @@ package org.openjfx.model.service;
 import org.openjfx.model.dao.DaoFactory;
 import org.openjfx.model.dao.FuncionarioDao;
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.entities.Paciente;
 
 import java.util.List;
 
@@ -38,5 +39,9 @@ public class FuncionarioService {
     }
     public Colaborador logar(Colaborador colaborador){
         return dao.logar(colaborador.getIdFuncionario(), colaborador.getSenha());
+    }
+
+    public List<Colaborador> findByName(String name) {
+        return dao.findByName(name);
     }
 }

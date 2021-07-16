@@ -45,7 +45,6 @@ public class MainApp extends Application implements DataChangeListener {
             Colaborador colaborador = new Colaborador();
             String caminhoDoFXML = "";
             createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
-
             if (this.getFuncionarioLogado() == null) {
 
                 createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
@@ -94,17 +93,6 @@ public class MainApp extends Application implements DataChangeListener {
                             });
 
                 } else {
-//                    System.out.println("login Invalido");
-//                    caminhoDoFXML = "/org/openjfx/gui/LoginForm.fxml";
-//                    FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
-//                    ScrollPane scrollPane = loader.load();
-//                    scrollPane.setFitToHeight(true);
-//                    scrollPane.setFitToWidth(true);
-//                    mainScene = new Scene(scrollPane);
-//                    primaryStage.setScene(mainScene);
-//                    primaryStage.setTitle("ClinPlus");
-//                    LoginFormController controller = loader.getController();
-//                    controller.setServices(new FuncionarioService());
                 }
                 mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                     public void handle(KeyEvent ke) {
@@ -128,15 +116,12 @@ public class MainApp extends Application implements DataChangeListener {
 
     private void createDialogForm(Colaborador colaborador, String absolutName, Stage parentStage) {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
-
             LoginFormController controller = loader.getController();
             controller.setFuncionario(colaborador);
             controller.setServices(new FuncionarioService());
             controller.subscribeDataChangeListener(this);
-
             Stage dialogStage = new Stage();
             dialogStage.setScene(new Scene(pane));
             dialogStage.setResizable(false);
@@ -144,7 +129,6 @@ public class MainApp extends Application implements DataChangeListener {
             dialogStage.initOwner(parentStage);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
-
         } catch (Exception e) {
             System.out.println("ERRO AQUI");
             e.printStackTrace();
