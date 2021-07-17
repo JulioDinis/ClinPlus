@@ -44,9 +44,8 @@ public class MainApp extends Application implements DataChangeListener {
         try {
             Colaborador colaborador = new Colaborador();
             String caminhoDoFXML = "";
-            createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
+            //          createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
             if (this.getFuncionarioLogado() == null) {
-
                 createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
 
             } else {

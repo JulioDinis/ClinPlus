@@ -135,13 +135,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
         tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         // Formatar a data usando o método do utils
         Utils.formatTableColumnDate(tableColumnDataNascimento, "dd/MM/yyyy");
-
-//        tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
-//        // Formata o Salario usando o método do utils
-//        Utils.formatTableColumnDouble(tableColumnBaseSalary, 2);
         Stage stage = (Stage) MainApp.getMainScene().getWindow();
-        //   tableViewFuncionario.prefHeightProperty().bind(stage.heightProperty());
-
     }
 
     public void updateTableView() {
@@ -159,17 +153,14 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 
     private void createDialogForm(Colaborador colaborador, String absolutName, Stage parentStage) {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
-
             ColaboradorFormController controller = loader.getController();
             controller.setFuncionario(colaborador);
             controller.setServices(new ColaboradorService(), new ColaboradorService());
             controller.loadComboBox();
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
-
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Insira os dados do Funcionário");
             dialogStage.setScene(new Scene(pane));
@@ -177,7 +168,6 @@ public class ColaboradorListController implements Initializable, DataChangeListe
             dialogStage.initOwner(parentStage);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
-
         } catch (Exception e) {
             System.out.println("ERRO AQUI");
             e.printStackTrace();
@@ -214,7 +204,6 @@ public class ColaboradorListController implements Initializable, DataChangeListe
         tableColumnEDIT.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
             private final FontIcon editarIcone = new FontIcon("fa-edit");
             private final JFXButton button = new JFXButton("Editar", editarIcone);
-
             @Override
             protected void updateItem(Colaborador obj, boolean empty) {
                 super.updateItem(obj, empty);
@@ -224,7 +213,6 @@ public class ColaboradorListController implements Initializable, DataChangeListe
                 }
                 // coloca o botão na tabela
                 setGraphic(button);
-
                 // seta a action do button
                 button.setOnAction(
                         event -> createDialogForm(
@@ -237,11 +225,9 @@ public class ColaboradorListController implements Initializable, DataChangeListe
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumnREMOVE.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
             private JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
-
             @Override
             protected void updateItem(Colaborador obj, boolean empty) {
                 super.updateItem(obj, empty);
-
                 if (obj == null) {
                     setGraphic(null);
                     return;
@@ -253,7 +239,6 @@ public class ColaboradorListController implements Initializable, DataChangeListe
     }
 
     private void removeEntity(Colaborador colaborador) {
-
         Optional<ButtonType> result = Alerts.
                 showConfirmation("Confirmation", "Tem certeza que deseja excluir o Colaborador?");
         if (result.get() == ButtonType.OK) {
@@ -267,7 +252,6 @@ public class ColaboradorListController implements Initializable, DataChangeListe
                 e.printStackTrace();
                 Alerts.showAlert("Erro removing object", null, e.getMessage(), Alert.AlertType.INFORMATION);
             }
-
         }
     }
 

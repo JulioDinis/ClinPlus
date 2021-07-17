@@ -1,11 +1,13 @@
 package org.openjfx.model.entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 public class Colaborador extends Pessoa implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Integer idFuncionario;
@@ -83,6 +85,7 @@ public class Colaborador extends Pessoa implements Serializable {
     public void setDataDesligamento(Date dataDesligamento) {
         this.dataDesligamento = dataDesligamento;
     }
+
 
     @Override
     public boolean equals(Object o) {
