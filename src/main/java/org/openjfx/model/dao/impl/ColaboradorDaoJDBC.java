@@ -2,19 +2,18 @@ package org.openjfx.model.dao.impl;
 
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
-import org.openjfx.model.dao.FuncionarioDao;
+import org.openjfx.model.dao.ColaboradorDao;
 import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.entities.Paciente;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FuncionarioDaoJDBC implements FuncionarioDao {
+public class ColaboradorDaoJDBC implements ColaboradorDao {
     private Connection connection;
 
-    public FuncionarioDaoJDBC(Connection newConnetion) {
+    public ColaboradorDaoJDBC(Connection newConnetion) {
         this.connection = newConnetion;
     }
 

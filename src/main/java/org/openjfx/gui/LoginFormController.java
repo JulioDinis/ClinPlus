@@ -21,7 +21,7 @@ import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.exeption.ValidationException;
-import org.openjfx.model.service.FuncionarioService;
+import org.openjfx.model.service.ColaboradorService;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -35,8 +35,8 @@ import java.util.*;
 public class LoginFormController implements Initializable {
 
     private Colaborador entity;
-    private FuncionarioService service;
-    private FuncionarioService funcionarioService;
+    private ColaboradorService service;
+    private ColaboradorService colaboradorService;
     private List<DataChangeListener> dataChangeListener = new ArrayList<>();
     private ObservableList<String> obsListSexo;
     private ObservableList<String> obsListUF;
@@ -94,7 +94,7 @@ public class LoginFormController implements Initializable {
         this.entity = entity;
     }
 
-    public void setServices(FuncionarioService service) {
+    public void setServices(ColaboradorService service) {
         this.service = service;
     }
 

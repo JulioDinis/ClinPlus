@@ -6,8 +6,8 @@ import javafx.fxml.Initializable;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.AgendaService;
+import org.openjfx.model.service.ColaboradorService;
 import org.openjfx.model.service.FinanceiroService;
-import org.openjfx.model.service.FuncionarioService;
 import org.openjfx.model.service.PacienteService;
 
 import java.net.URL;
@@ -55,8 +55,8 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
     @FXML
     public void onJfxButtonEspecialistaClick() {
         notifyDataChangeListeners("/org/openjfx/gui/FuncionarioList.fxml",
-                (FuncionarioListController controller) -> {
-                    controller.setFuncionarioService(new FuncionarioService());
+                (ColaboradorListController controller) -> {
+                    controller.setFuncionarioService(new ColaboradorService());
                     controller.updateTableView();
                 });
     }

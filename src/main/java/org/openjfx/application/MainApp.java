@@ -14,7 +14,7 @@ import org.openjfx.gui.*;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.service.FuncionarioService;
+import org.openjfx.model.service.ColaboradorService;
 
 import java.util.function.Consumer;
 
@@ -76,7 +76,7 @@ public class MainApp extends Application implements DataChangeListener {
 
                     controller.buttonAction("/org/openjfx/gui/TelaAtendente.fxml",
                             (TelaAtendenteController telaAtendenteController) -> {
-//                              controller.setFuncionarioService(new FuncionarioService());
+//                              controller.setFuncionarioService(new ColaboradorService());
 //                              controller.setFuncionarioLogado(this.colaboradorLogado);
 //                              controller.updateTableView();
                                 telaAtendenteController.subscribeDataChangeListener(controller, this);
@@ -120,7 +120,7 @@ public class MainApp extends Application implements DataChangeListener {
             Pane pane = loader.load();
             LoginFormController controller = loader.getController();
             controller.setFuncionario(colaborador);
-            controller.setServices(new FuncionarioService());
+            controller.setServices(new ColaboradorService());
             controller.subscribeDataChangeListener(this);
             Stage dialogStage = new Stage();
             dialogStage.setScene(new Scene(pane));

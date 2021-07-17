@@ -2,7 +2,6 @@ package org.openjfx.gui;
 
 import javafx.fxml.Initializable;
 import org.openjfx.model.service.AgendaService;
-import org.openjfx.model.service.FuncionarioService;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -18,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -28,8 +27,7 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.entities.Paciente;
-import org.openjfx.model.service.FuncionarioService;
+import org.openjfx.model.service.ColaboradorService;
 
 import java.net.URL;
 import java.util.Date;
@@ -43,9 +41,9 @@ import java.util.function.Consumer;
  *
  * @author julio
  */
-public class FuncionarioListController implements Initializable, DataChangeListener {
+public class ColaboradorListController implements Initializable, DataChangeListener {
 
-    private FuncionarioService service;
+    private ColaboradorService service;
 
     @FXML
     private TextField txtBusca;
@@ -114,7 +112,7 @@ public class FuncionarioListController implements Initializable, DataChangeListe
         }
     }
 
-    public void setFuncionarioService(FuncionarioService service) {
+    public void setFuncionarioService(ColaboradorService service) {
         this.service = service;
     }
 
@@ -165,9 +163,9 @@ public class FuncionarioListController implements Initializable, DataChangeListe
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
 
-            FuncionarioFormController controller = loader.getController();
+            ColaboradorFormController controller = loader.getController();
             controller.setFuncionario(colaborador);
-            controller.setServices(new FuncionarioService(), new FuncionarioService());
+            controller.setServices(new ColaboradorService(), new ColaboradorService());
             controller.loadComboBox();
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();

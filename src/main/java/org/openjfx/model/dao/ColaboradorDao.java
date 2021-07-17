@@ -5,7 +5,7 @@ import org.openjfx.model.entities.Paciente;
 
 import java.util.List;
 
-public interface FuncionarioDao {
+public interface ColaboradorDao {
     void insert(Colaborador colaborador);
 
     void update(Colaborador colaborador);

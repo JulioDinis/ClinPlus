@@ -20,7 +20,7 @@ import org.openjfx.application.ToolbarActionCallBack;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.service.FuncionarioService;
+import org.openjfx.model.service.ColaboradorService;
 import org.openjfx.model.service.PacienteService;
 import org.openjfx.model.service.ProcedimentoService;
 
@@ -65,8 +65,8 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
 
     @FXML
     public void onMenuItemFuncionarioAction() {
-        buttonAction("/org/openjfx/gui/FuncionarioList.fxml", (FuncionarioListController controller) -> {
-            controller.setFuncionarioService(new FuncionarioService());
+        buttonAction("/org/openjfx/gui/FuncionarioList.fxml", (ColaboradorListController controller) -> {
+            controller.setFuncionarioService(new ColaboradorService());
             controller.updateTableView();
         });
     }

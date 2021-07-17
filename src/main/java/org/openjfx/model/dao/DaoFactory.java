@@ -8,8 +8,8 @@ public class DaoFactory {
         return new PacienteDaoJDBC(DB.getConnection("Dao Factory - Create Paciente DAO  | Pedido By: " + creator));
     }
 
-    public static FuncionarioDao createFuncionarioDao(String creator) {
-        return new FuncionarioDaoJDBC(DB.getConnection("Dao Factory - Create Colaborador DAO  | Pedido By: " + creator)) {
+    public static ColaboradorDao createFuncionarioDao(String creator) {
+        return new ColaboradorDaoJDBC(DB.getConnection("Dao Factory - Create Colaborador DAO  | Pedido By: " + creator)) {
         };
     }
     public static AgendaDao createAgendaDao(String creator) {

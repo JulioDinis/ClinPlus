@@ -1,18 +1,17 @@
 package org.openjfx.model.service;
 
 import org.openjfx.model.dao.DaoFactory;
-import org.openjfx.model.dao.FuncionarioDao;
+import org.openjfx.model.dao.ColaboradorDao;
 import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.entities.Paciente;
 
 import java.util.List;
 
 /**
  * @author julio
  */
-public class FuncionarioService {
+public class ColaboradorService {
 
-    private FuncionarioDao dao = DaoFactory.createFuncionarioDao("Colaborador Service");
+    private ColaboradorDao dao = DaoFactory.createFuncionarioDao("Colaborador Service");
 
     public List<Colaborador> findAll() {
 

@@ -60,8 +60,8 @@ public class TelaEspecialistaController implements Initializable {
     @FXML
     public void onJfxButtonHistoricoClick() {
         notifyDataChangeListeners("/org/openjfx/gui/FuncionarioList.fxml",
-                (FuncionarioListController controller) -> {
-                    controller.setFuncionarioService(new FuncionarioService());
+                (ColaboradorListController controller) -> {
+                    controller.setFuncionarioService(new ColaboradorService());
                     controller.updateTableView();
                 });
     }
