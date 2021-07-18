@@ -63,11 +63,9 @@ public class LoginFormController implements Initializable {
         try {
             entity = getFormData();
             service.logar(entity);
-
             Colaborador logado = service.logar(entity);
             if (logado == null) {
                 ValidationException exception = new ValidationException("Validation error");
-
                 exception.addError("login", "Credenciais recusadas");
                 setErrosMensagens(exception.getErrors());
             } else {
@@ -77,7 +75,6 @@ public class LoginFormController implements Initializable {
         } catch (ValidationException e) {
             //           e.printStackTrace(); it is ok
             setErrosMensagens(e.getErrors());
-
         } catch (DbException e) {
             e.printStackTrace();
             Alerts.showAlert("Error Saving object", null, e.getMessage(), Alert.AlertType.ERROR);
