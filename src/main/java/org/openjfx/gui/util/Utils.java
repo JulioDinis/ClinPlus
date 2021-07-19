@@ -12,7 +12,12 @@
     import javafx.scene.control.TableColumn;
     import javafx.stage.Stage;
     import javafx.util.StringConverter;
+    import org.openjfx.db.DB;
+    import org.openjfx.model.service.JasperService;
 
+    import java.io.FileNotFoundException;
+    import java.sql.Connection;
+    import java.sql.SQLException;
     import java.text.SimpleDateFormat;
     import java.time.LocalDate;
     import java.time.format.DateTimeFormatter;
@@ -158,6 +163,20 @@
             listSexo.add("Masculino");
             listSexo.add("Feminino");
             return listSexo;
+        }
+
+        public static void abrirJrxm(String url)  {
+            Connection connection = DB.getConnection("Report");
+            JasperService service = new JasperService();
+//            service.abrirJasperView("/org/openjfx/relatorios/jrxml/Colaboradores2.jrxml", connection);
+
+            service.abrirJasperView(url, connection);
+
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 

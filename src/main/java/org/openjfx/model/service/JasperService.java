@@ -1,8 +1,11 @@
 package org.openjfx.model.service;
 
+import javafx.scene.control.Alert;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
+import org.openjfx.gui.util.Alerts;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,35 +22,26 @@ public class JasperService {
         this.params.put(key, value);
     }
 
-    public void abrirJasperView(String jrxml, Connection connection) throws FileNotFoundException {
+    public void abrirJasperView(String jrxml, Connection connection) {
 
         JasperReport report = compilarJrxml(jrxml);
         System.out.println(report);
 
 
-//        try {
-////            JasperPrint print = JasperFillManager.fillReport(report, this.params, connection);
-////            JasperViewer viewer = new JasperViewer(print);
-////            viewer.setVisible(true);
-//        } catch (JRException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            JasperPrint print = JasperFillManager.fillReport(report, this.params, connection);
+            JasperViewer viewer = new JasperViewer(print,  false);
+            viewer.setVisible(true);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    private JasperReport compilarJrxml(String arquivo) throws FileNotFoundException {
-
-        System.out.println("Abrir -->" + arquivo);
-        InputStream report = new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return 0;
-            }
-        };
-
-        report = getClass().getClassLoader().getResourceAsStream("org/openjfx/application/texto.txt");
-        System.out.println(report);
-
+    private JasperReport compilarJrxml(String arquivo) {
+        System.out.println(getClass().getClassLoader());
+        InputStream report = getClass().getResourceAsStream(arquivo);
         if (report != null) {
             try {
                 return JasperCompileManager.compileReport(report);
@@ -55,7 +49,7 @@ public class JasperService {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("Não conseguiu abrir!");
+            System.out.println("Falha ao Carregar Imagem");
         }
 
         return null;

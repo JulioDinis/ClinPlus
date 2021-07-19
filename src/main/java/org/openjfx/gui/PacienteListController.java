@@ -89,6 +89,9 @@ public class PacienteListController implements Initializable, DataChangeListener
 
     @FXML
     private JFXButton jfxButtonBuscar;
+    @FXML
+    private JFXButton jfxButtonPacientesInativos;
+
 
     @FXML
     private FontIcon jFXImVieBtnAlternar;
@@ -113,6 +116,10 @@ public class PacienteListController implements Initializable, DataChangeListener
     @FXML
     public void onJfxButtonBuscarClick(ActionEvent event) {
         System.out.println("Buscar por: -> " + txtBusca.getText());
+    }
+    @FXML
+    public void onJfxButtonPacientesInativosClick(ActionEvent event){
+        Utils.abrirJrxm("/org/openjfx/relatorios/jrxml/Colaboradores2.jrxml");
     }
 
     @FXML

@@ -27,6 +27,12 @@
                         <MenuItem mnemonicParsing="false" onAction="#onMenuItemOrcamentoAction" text="Orcamento" />
                             </items>
                         </Menu>
+                  <Menu mnemonicParsing="false" text="Relatorios">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Funcionarios" />
+                        <MenuItem mnemonicParsing="false" text="Pacientes" />
+                    </items>
+                  </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
                                 <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#onMenuItemAboutAction" text="About" />

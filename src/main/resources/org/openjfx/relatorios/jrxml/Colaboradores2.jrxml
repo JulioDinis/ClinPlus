@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Colaboradores" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1eb9e6f0-f141-4c33-8d9f-080613876f26">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Colaboradores 02" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1eb9e6f0-f141-4c33-8d9f-080613876f26">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter"/>
 	<style name="estilo_cores_alternada" mode="Opaque" forecolor="#080808" backcolor="#B0E7EB">
@@ -37,7 +37,19 @@ from funcionario]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="50" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="50" uuid="084784e5-fb0e-4fa3-a973-1dfe51f86b68"/>
+				<imageExpression><![CDATA["org/openjfx/img/Clin+.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="50" y="15" width="505" height="30" uuid="1afa5bb6-8321-4ec5-98cd-63940c1d0e4c"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Colaboradores Cadastrados]]></text>
+			</staticText>
+		</band>
 	</title>
 	<pageHeader>
 		<band height="35" splitType="Stretch"/>
@@ -73,13 +85,14 @@ from funcionario]]>
 				<text><![CDATA[Data de Nascimento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="437" y="0" width="138" height="30" forecolor="#FFFFFF" backcolor="#6666E3" uuid="2ee7e566-a185-44c6-aab7-b8e57d2fbef9">
+				<reportElement mode="Opaque" x="437" y="0" width="118" height="30" forecolor="#FFFFFF" backcolor="#6666E3" uuid="2ee7e566-a185-44c6-aab7-b8e57d2fbef9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e540d178-0045-4c22-8e9f-175172312529"/>
 				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="5"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[email]]></text>
+				<text><![CDATA[E-mail]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -134,10 +147,10 @@ from funcionario]]>
 				<textFieldExpression><![CDATA[$F{data_nascimento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="estilo_cores_alternada" x="437" y="0" width="138" height="30" uuid="f014c672-a55d-42bd-b11a-71fb166ee3d0">
+				<reportElement style="estilo_cores_alternada" x="437" y="0" width="118" height="30" uuid="f014c672-a55d-42bd-b11a-71fb166ee3d0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e540d178-0045-4c22-8e9f-175172312529"/>
 				</reportElement>
-				<box>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="5">
 					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#D6D6D6"/>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#D6D6D6"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
