@@ -21,4 +21,10 @@ public class ItensTratamento implements Serializable {
     private Integer quantidade;
     private LocalDate dataExecucao;
     private Double valor;
+
+    public ItensTratamento(Procedimento procedimento, Integer quantidade) {
+        this.procedimento = procedimento;
+        this.quantidade = quantidade;
+        this.valor = procedimento.getValor();
+    }
 }

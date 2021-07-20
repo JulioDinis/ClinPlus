@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.OrcamentoListController">
+   <children>
+      <SplitPane dividerPositions="0.5" layoutX="208.0" layoutY="141.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="291.0">
+               <children>
+                  <TableView fx:id="tableViewProcedimento" layoutX="29.0" layoutY="73.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                    <columns>
+                      <TableColumn fx:id="tableCollumDescricao" prefWidth="130.0" text="Descricao" />
+                      <TableColumn fx:id="tableColumValor" prefWidth="165.0" text="Valor" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="-Infinity" prefHeight="498.0" prefWidth="318.0" />
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

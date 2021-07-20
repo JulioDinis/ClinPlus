@@ -98,7 +98,6 @@ public class MainApp extends Application implements DataChangeListener {
                         System.out.println("Key Pressed: " + ke.getCode());
                     }
                 });
-                primaryStage.setAlwaysOnTop(true);
                 primaryStage.show();
             }
         } catch (Exception e) {

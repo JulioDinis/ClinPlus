@@ -3,6 +3,7 @@ package org.openjfx.gui;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,13 +14,20 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.openjfx.application.MainApp;
 import org.openjfx.application.ToolbarActionCallBack;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
+import org.openjfx.gui.util.CreateDialog;
+import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.entities.Procedimento;
+import org.openjfx.model.entities.Tratamento;
 import org.openjfx.model.service.ColaboradorService;
 import org.openjfx.model.service.PacienteService;
 import org.openjfx.model.service.ProcedimentoService;
@@ -75,18 +83,20 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     public void onMenuItemProcedimentoAction() {
         buttonAction("/org/openjfx/gui/ProcedimentoList.fxml", (ProcedimentoListController controller) -> {
             controller.setProcedimentoService(new ProcedimentoService());
-              controller.setFuncionarioLogado(this.colaboradorLogado);
+            controller.setFuncionarioLogado(this.colaboradorLogado);
             controller.updateTableView();
 
         });
     }
 
     @FXML
-    public void onMenuItemOrcamentoAction() {
-        buttonAction("/org/openjfx/gui/TelaOrcamento.fxml", (TelaOrcamentoController controller) -> {
-            controller.setService(new ProcedimentoService());
+    public void onMenuItemOrcamentoAction( ActionEvent event) {
+
+        buttonAction("/org/openjfx/gui/OrcamentoList.fxml", (OrcamentoListController controller) -> {
+            controller.setProcedimentoService(new ProcedimentoService());
             controller.setFuncionarioLogado(this.colaboradorLogado);
-            controller.updateList();
+//            controller.updateList();
+            controller.updateTableView();
 
         });
     }
@@ -162,12 +172,10 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
                     (TelaAtendenteController controller) -> {
                         controller.subscribeDataChangeListener(this);
                         controller.subscribeDataChangeListener(this.parent);
-
                     });
         } else {
             buttonAction("/org/openjfx/gui/TelaEspecialista.fxml",
                     (TelaEspecialistaController controller) -> {
-
                         controller.setEspecialistaLogado(this.colaboradorLogado);
                         controller.subscribeDataChangeListener(this);
                         controller.subscribeDataChangeListener(this.parent);
@@ -234,7 +242,6 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             mainVbox.getChildren().addAll(newVBox.getChildren()); // Adiciona os node da tela about
             T controller = loader.getController();
             initialingAction.accept(controller);
-
         } catch (Exception e) {
             e.printStackTrace();
             Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
@@ -263,5 +270,27 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
         // Arrumar para funcionar com qualquer tela (USAR T)
         System.out.println("*********************** TELA ALTERADA ******************************");
         buttonAction(resource, initialingAction);
+    }
+    private void createDialogForm( String absolutName, Stage parentStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
+            Pane pane = loader.load();
+            OrcamentoListController controller = loader.getController();
+            controller.setProcedimentoService(new ProcedimentoService());
+            controller.setFuncionarioLogado(this.colaboradorLogado);
+//          controller.updateList();
+            controller.updateTableView();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Insira os dados do Procedimento");
+            dialogStage.setScene(new Scene(pane));
+            dialogStage.setResizable(false);
+            dialogStage.initOwner(parentStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.showAndWait();
+        } catch (Exception e) {
+            System.out.println("ERRO EM -> " + getClass());
+            e.printStackTrace();
+            Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 }

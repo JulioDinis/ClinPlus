@@ -82,6 +82,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     // eventos
     @FXML
     public void onBtNewAction(ActionEvent event) {
+        System.out.println(event);
         Procedimento procedimento = new Procedimento();
         procedimento.setIdEspecialista(colaboradorLogado.getIdFuncionario());
         Stage parentStage = Utils.currentStage(event);
@@ -100,7 +101,6 @@ public class ProcedimentoListController implements Initializable, DataChangeList
             } else {
                 list = service.findByDescricao(txtBusca.getText());
             }
-//            System.out.println(list);
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             initEditButtons();
@@ -168,8 +168,6 @@ public class ProcedimentoListController implements Initializable, DataChangeList
         if (service == null) {
             throw new IllegalStateException("Service was Null");
         }
-
-
         if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
             List<Procedimento> list = service.findByEspecialista(this.getFuncionarioLogado().getIdFuncionario());
             obsList = FXCollections.observableArrayList(list);
@@ -192,14 +190,12 @@ public class ProcedimentoListController implements Initializable, DataChangeList
             System.out.println("errossss");
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
-
             ProcedimentoFormController controller = loader.getController();
             controller.setEntity(procedimento);
             controller.setColaborador(this.colaboradorLogado);
             controller.setService(new ProcedimentoService(), new ProcedimentoService());
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
-
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Insira os dados do Procedimento");
             dialogStage.setScene(new Scene(pane));
@@ -207,7 +203,6 @@ public class ProcedimentoListController implements Initializable, DataChangeList
             dialogStage.initOwner(parentStage);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
-
         } catch (Exception e) {
             System.out.println("ERRO AQUI");
             e.printStackTrace();
@@ -227,24 +222,20 @@ public class ProcedimentoListController implements Initializable, DataChangeList
 
     @Override
     public void onLogout() {
-
     }
 
     @Override
     public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
-
     }
 
     /**
      * Método para colocar um button dentro da tabela
      */
     private void initEditButtons() {
-
         tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumnEDIT.setCellFactory(param -> new TableCell<Procedimento, Procedimento>() {
             private final FontIcon editarIcone = new FontIcon("fa-edit");
             private final JFXButton button = new JFXButton("Editar", editarIcone);
-
             @Override
             protected void updateItem(Procedimento obj, boolean empty) {
                 super.updateItem(obj, empty);
@@ -254,25 +245,21 @@ public class ProcedimentoListController implements Initializable, DataChangeList
                 }
                 // coloca o botão na tabela
                 setGraphic(button);
-
                 // seta a action do button
                 button.setOnAction(
                         event -> createDialogForm(
                                 obj, "/org/openjfx/gui/ProcedimentoForm.fxml", Utils.currentStage(event)));
             }
         });
-
     }
 
     private void initRemoveButtons() {
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumnREMOVE.setCellFactory(param -> new TableCell<Procedimento, Procedimento>() {
             private JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
-
             @Override
             protected void updateItem(Procedimento obj, boolean empty) {
                 super.updateItem(obj, empty);
-
                 if (obj == null) {
                     setGraphic(null);
                     return;
@@ -287,7 +274,6 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     }
 
     private void removeEntity(Procedimento procedimento) {
-
         Optional<ButtonType> result = Alerts.
                 showConfirmation("Confirmation", "Tem certeza que deseja excluir o Paciente?");
         if (result.get() == ButtonType.OK) {
@@ -301,14 +287,11 @@ public class ProcedimentoListController implements Initializable, DataChangeList
                 e.printStackTrace();
                 Alerts.showAlert("Erro removing object", null, e.getMessage(), Alert.AlertType.INFORMATION);
             }
-
         }
     }
-
     public Colaborador getFuncionarioLogado() {
         return colaboradorLogado;
     }
-
     public void setFuncionarioLogado(Colaborador colaboradorLogado) {
         this.colaboradorLogado = colaboradorLogado;
     }
