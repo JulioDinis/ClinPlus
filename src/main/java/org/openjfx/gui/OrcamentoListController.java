@@ -7,7 +7,6 @@ package org.openjfx.gui;
 
 
 import com.jfoenix.controls.JFXButton;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,13 +20,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.javafx.FontIcon;
-import org.openjfx.application.MainApp;
-import org.openjfx.db.DbIntegrityException;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.model.dto.ItensTratamentoDto;
 import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.entities.ItensTratamento;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.entities.Tratamento;
 import org.openjfx.model.service.ProcedimentoService;
@@ -46,7 +43,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     private ProcedimentoService service;
     private Colaborador colaboradorLogado;
     private ObservableList<Procedimento> obsList;
-    private ObservableList<ItensTratamento> observableListItensTratamento;
+    private ObservableList<ItensTratamentoDto> observableListItensTratamentoDto;
     Map<Procedimento, Integer> procedimentosSelecionados = new HashMap<>();
 
     private ObservableList<Tratamento> obsSelecionados;
@@ -57,7 +54,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     @FXML
     private TableView<Procedimento> tableViewProcedimento;
     @FXML
-    private TableView<ItensTratamento> tableViewItensTratamento;
+    private TableView<ItensTratamentoDto> tableViewItensTratamento;
     @FXML
     private TableColumn<Procedimento, Integer> tableColumnEspecialista;
     @FXML
@@ -70,10 +67,12 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     private TableColumn<Procedimento, Double> tableColumValor;
     @FXML
     JFXButton jFxBtNew;
+    @FXML
+    JFXButton jFxBtAdd;
 
     @FXML
     private FontIcon jFXImVieBtnAlternar;
-    private List<ItensTratamento> itensTratamentoList = new ArrayList<>();
+    private List<ItensTratamentoDto> itensTratamentoDtoList = new ArrayList<>();
     ;
 
 
@@ -86,6 +85,13 @@ public class OrcamentoListController implements Initializable, DataChangeListene
         createDialogForm(procedimento, "/org/openjfx/gui/ProcedimentoForm.fxml", parentStage);
 
     }
+
+    @FXML
+    public void onBtAddAction(ActionEvent event) {
+        System.out.println(this.itensTratamentoDtoList);
+
+    }
+
 
     @FXML
     public void onTxtBuscaChange() {
@@ -106,39 +112,33 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     // Click do mouse, para click duplo event.getClickCount() ==2
     @FXML
     private void handleRowSelect() {
-        tableViewProcedimento.setOnMouseClicked(event ->
-                this.inserirLista(
-                        tableViewProcedimento
-                                .getSelectionModel()
-                                .getSelectedItem(),
-                        1)
+        tableViewProcedimento.setOnMouseClicked(event -> {
+                    if (event.getClickCount() == 2)
+                        this.inserirLista(tableViewProcedimento.getSelectionModel().getSelectedItem(), 1);
+                }
         );
 
     }
 
-    private void  inserirLista(Procedimento procedimento, Integer quantidade) {
-        if (this.itensTratamentoList.size() > 0) {
-            for (ItensTratamento it : this.itensTratamentoList) {
-                if (it.getProcedimento().equals(procedimento)) {
-                    Integer qtd = it.getQuantidade();
-                    quantidade = quantidade + qtd;
-                    this.itensTratamentoList.remove(it);
-                }
+    private synchronized void inserirLista(Procedimento procedimento, Integer quantidade) {
+        ItensTratamentoDto itensTratamentoDto = new ItensTratamentoDto(procedimento, quantidade);
+        if (this.itensTratamentoDtoList.size() > 0) {
+            if (this.itensTratamentoDtoList.contains(itensTratamentoDto)) {
+                System.out.println("Já tem");
+                this.itensTratamentoDtoList.remove(itensTratamentoDto);
+            } else {
+                this.itensTratamentoDtoList.add(new ItensTratamentoDto(procedimento, quantidade));
             }
-        }
-        this.itensTratamentoList.add(new ItensTratamento(procedimento, quantidade));
+        } else
+            this.itensTratamentoDtoList.add(new ItensTratamentoDto(procedimento, quantidade));
 
-
-        this.atualizaTableItens();
-
+        this.atualizaTableItens(this.itensTratamentoDtoList);
 
     }
 
-    private void atualizaTableItens() {
-
-
-        observableListItensTratamento = FXCollections.observableArrayList(itensTratamentoList);
-        this.tableViewItensTratamento.setItems(observableListItensTratamento);
+    private synchronized void atualizaTableItens(List<ItensTratamentoDto> list) {
+        this.observableListItensTratamentoDto = FXCollections.observableArrayList(this.itensTratamentoDtoList);
+        this.tableViewItensTratamento.setItems(this.observableListItensTratamentoDto);
 
     }
 
