@@ -119,7 +119,7 @@ public class PacienteListController implements Initializable, DataChangeListener
     }
     @FXML
     public void onJfxButtonPacientesInativosClick(ActionEvent event){
-        Utils.abrirJrxm("/org/openjfx/relatorios/jrxml/Colaboradores2.jrxml");
+        Utils.abrirJrxm("/org/openjfx/relatorios/jrxml/PacientesInativos.jrxml");
     }
 
     @FXML

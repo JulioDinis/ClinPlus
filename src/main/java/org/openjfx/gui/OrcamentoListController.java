@@ -77,10 +77,10 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     @FXML
     JFXButton jFxBtNew;
     @FXML
-    JFXButton jFxBtAdd;
+    JFXButton jFxBtImprirOrcamento;
 
     @FXML
-    private FontIcon jFXImVieBtnAlternar;
+
     private List<ItensTratamentoDto> itensTratamentoDtoList = new ArrayList<>();
     private ItensTratamentoService serviceItensTratamento;
     private TratamentoService tratamentoService;
@@ -120,6 +120,10 @@ public class OrcamentoListController implements Initializable, DataChangeListene
             tableViewProcedimento.setItems(obsList);
         }
     }
+    @FXML
+    public void onInprimirOrcamentoClick(ActionEvent event){
+        Utils.abrirJrxm("/org/openjfx/relatorios/jrxml/Colaboradores2.jrxml");
+    }
 
     // Click do mouse, para click duplo event.getClickCount() ==2
     @FXML
@@ -132,11 +136,9 @@ public class OrcamentoListController implements Initializable, DataChangeListene
         gc.add((GregorianCalendar.DAY_OF_MONTH), 10);
 
         tableViewProcedimento.setOnMouseClicked(event -> {
-
                     Procedimento p = new Procedimento();
                     if (event.getClickCount() == 2) {
                         p = tableViewProcedimento.getSelectionModel().getSelectedItem();
-
                         if (this.tratamento == null) {
                             this.tratamento = new TratamentoDTO();
                             System.out.println("Criou Tratamento");
@@ -150,39 +152,45 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                             itensTratamentoDto.setProcedimento(this.tratamento.getProcedimento());
                             itensTratamentoDto.setQuantidade(1);
                             itensTratamentoService.saveOrUpdate(itensTratamentoDto);
-
-                            atualizaTableItens();
+//                            atualizaTableItens();
                         } else {
-                            System.out.println("Atualiza Tratamento");
+                            if (this.tratamento.getIdTratamento() == null && p.getIdProcedimento() == null) {
+                                System.out.println("Nulos");
+                            } else {
+                                if (itensTratamentoService.findByTratamentoIdAndProcedimentoId(this.tratamento.getIdTratamento(), p.getIdProcedimento()) == null) {
+                                    System.out.println("Adicionar a lista");
+                                    ItensTratamentoDto itensTratamentoDto = new ItensTratamentoDto();
+                                    itensTratamentoDto.setTratamento(tratamentoMapper.toEntity(this.tratamento));
+                                    itensTratamentoDto.setProcedimento(p);
+                                    itensTratamentoDto.setQuantidade(1);
+                                    itensTratamentoService.saveOrUpdate(itensTratamentoDto);
 
+                                } else {
+
+                                    ItensTratamentoDto itensTratamentoDto;
+                                    itensTratamentoDto = itensTratamentoService.findByTratamentoIdAndProcedimentoId(this.tratamento.getIdTratamento(), p.getIdProcedimento());
+                                    System.out.println("Atualizar a lista");
+                                    itensTratamentoDto.setQuantidade(itensTratamentoDto.getQuantidade() + 1);
+                                    itensTratamentoService.saveOrUpdate(itensTratamentoDto);
+                                }
+                            }
+                            //                            System.out.println("Atualiza Tratamento");
                         }
-
                         System.out.println("NOVO ID-> " + this.tratamento.getIdTratamento());
+                        atualizaTableItens();
                     }
                 }
         );
     }
-
-    private synchronized void inserirLista() {
-
-    }
-
     private synchronized void atualizaTableItens() {
-
         if (this.tratamento == null) {
             System.out.println("Nenhum valor");
-        }else {
-
+        } else {
             List<ItensTratamentoDto> list = itensTratamentoService.findByTratamentoId(this.tratamento.getIdTratamento());
-
             this.observableListItensTratamentoDto = FXCollections.observableArrayList(list);
             this.tableViewItensTratamento.setItems(this.observableListItensTratamentoDto);
         }
-
-
-
     }
-
     /**
      * Initializes the controller class.
      */
@@ -261,11 +269,9 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     @Override
     public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
     }
-
     public Colaborador getFuncionarioLogado() {
         return colaboradorLogado;
     }
-
     public void setFuncionarioLogado(Colaborador colaboradorLogado) {
         this.colaboradorLogado = colaboradorLogado;
     }

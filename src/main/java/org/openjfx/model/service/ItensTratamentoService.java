@@ -28,13 +28,13 @@ public class ItensTratamentoService {
 
         ItensTratamento it = mapper.toEntity(itensTratamentoDto);
 
-        dao.insert(it);
+//        dao.insert(it);
 
-//        if (itensTratamentoDto.getTratamento() == null) {
-//            dao.insert(mapper.toEntity(itensTratamentoDto));
-//        } else {
-//            dao.update(mapper.toEntity(itensTratamentoDto));
-//        }
+        if (itensTratamentoDto.getQuantidade() == 1) {
+            dao.insert(mapper.toEntity(itensTratamentoDto));
+        } else {
+            dao.update(mapper.toEntity(itensTratamentoDto));
+        }
 
     }
 
@@ -49,5 +49,9 @@ public class ItensTratamentoService {
 
     public List<ItensTratamentoDto> findByTratamentoId(Integer idTratamento) {
         return dao.findByTratamentoId(idTratamento);
+    }
+
+    public ItensTratamentoDto findByTratamentoIdAndProcedimentoId(Integer idTratamento, Integer idProcedimento) {
+        return  mapper.toDto(dao.findByTratamentoIdAndProcedimentoId(idTratamento, idProcedimento));
     }
 }

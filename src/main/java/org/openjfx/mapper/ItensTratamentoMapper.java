@@ -20,15 +20,20 @@ public class ItensTratamentoMapper {
     }
 
     public ItensTratamentoDto toDto(ItensTratamento entity) {
-        ItensTratamentoDto dto = new ItensTratamentoDto();
-        dto.setProcedimento(entity.getProcedimento());
-        dto.setTratamento(entity.getTratamento());
-        dto.setNrItem(entity.getNrItem());
-        dto.setQuantidade(entity.getQuantidade());
-        dto.setValor(entity.getValor());
-        dto.setDataExecucao(entity.getDataExecucao());
-        dto.setDescricao(entity.getProcedimento().getDescricao());
-        return dto;
+       try{
+           ItensTratamentoDto dto = new ItensTratamentoDto();
+           dto.setProcedimento(entity.getProcedimento());
+           dto.setTratamento(entity.getTratamento());
+           dto.setNrItem(entity.getNrItem());
+           dto.setQuantidade(entity.getQuantidade());
+           dto.setValor(entity.getValor());
+           dto.setDataExecucao(entity.getDataExecucao());
+           dto.setDescricao(entity.getProcedimento().getDescricao());
+           return dto;
+       }catch (NullPointerException ex){
+           return null;
+       }
+
     }
 
     public List<ItensTratamentoDto> toDto(List<ItensTratamento> itensTratamentoList) {

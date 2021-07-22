@@ -49,4 +49,8 @@ public class ProcedimentoService {
     public List<Procedimento> findByDescricaoAndId(String descricao, Integer id) {
         return dao.findByDescricaoAndId(descricao, id);
     }
+
+    public Procedimento findById(int id_procedimento) {
+        return dao.findById(id_procedimento);
+    }
 }

@@ -110,8 +110,8 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
             statement.setInt(1, idProcedimento);
             rs = statement.executeQuery();
             if (rs.next()) {
-                Procedimento Procedimento = instantiateProcedimento(rs);
-                return Procedimento;
+                Procedimento procedimento = instantiateProcedimento(rs);
+                return procedimento;
             }
             return null;
         } catch (SQLException e) {

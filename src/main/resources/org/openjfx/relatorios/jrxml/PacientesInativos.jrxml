@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Pacientes Inativos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1eb9e6f0-f141-4c33-8d9f-080613876f26">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgreSQL Adapter"/>
+	<style name="estilo_cores_alternada" mode="Opaque" forecolor="#080808" backcolor="#B0E7EB">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2==0]]></conditionExpression>
+			<style mode="Opaque" forecolor="#141414" backcolor="#6671F2"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[Select id_paciente, nome, email, whats_app
+from paciente
+where ativo = false]]>
+	</queryString>
+	<field name="id_paciente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_paciente"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_paciente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="email"/>
+		<property name="com.jaspersoft.studio.field.label" value="email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<field name="whats_app" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="whats_app"/>
+		<property name="com.jaspersoft.studio.field.label" value="whats_app"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="paciente"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="50" uuid="084784e5-fb0e-4fa3-a973-1dfe51f86b68"/>
+				<imageExpression><![CDATA["img/Clin+.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="50" y="15" width="505" height="30" uuid="1afa5bb6-8321-4ec5-98cd-63940c1d0e4c"/>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Pacientes Inativos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="60" height="30" forecolor="#FFFFFF" backcolor="#6666E3" uuid="8e96b767-89df-4d0c-849a-27dcd84aff33">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d5807203-1bad-459b-8541-1d947b343688"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="60" y="0" width="170" height="30" forecolor="#FFFFFF" backcolor="#6666E3" uuid="617c33f8-c23c-420a-ba8a-2beea8a04a56">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc189bd4-bd57-4b4a-b94f-e9008ea4d1d6"/>
+				</reportElement>
+				<box padding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="230" y="0" width="200" height="30" forecolor="#FFFFFF" backcolor="#6666E3" uuid="2ee7e566-a185-44c6-aab7-b8e57d2fbef9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e540d178-0045-4c22-8e9f-175172312529"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[E-mail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="430" y="0" width="115" height="30" forecolor="#FFFFFF" backcolor="#6666E3" uuid="e094dd26-e976-4d1f-9897-a64dd9b12153">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2aeb7dcb-e51c-4929-85ce-874b550d566f"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[WhatsApp]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement style="estilo_cores_alternada" x="60" y="0" width="170" height="30" uuid="d64640c2-0d72-4679-a95a-28183c29326d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc189bd4-bd57-4b4a-b94f-e9008ea4d1d6"/>
+				</reportElement>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#D6D6D6"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#D6D6D6"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#D6D6D6"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="estilo_cores_alternada" x="230" y="0" width="200" height="30" uuid="f014c672-a55d-42bd-b11a-71fb166ee3d0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e540d178-0045-4c22-8e9f-175172312529"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="5">
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#D6D6D6"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#D6D6D6"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#D6D6D6"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="estilo_cores_alternada" x="430" y="0" width="115" height="30" uuid="24ad2f71-791f-4982-80d1-d1137d78d4fc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2aeb7dcb-e51c-4929-85ce-874b550d566f"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{whats_app}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="estilo_cores_alternada" x="0" y="0" width="60" height="30" uuid="6d70670d-4abc-42b6-a455-dbe4767bb7c3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4e193aae-e80d-4144-9623-9c6a3e1b19b3"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id_paciente}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

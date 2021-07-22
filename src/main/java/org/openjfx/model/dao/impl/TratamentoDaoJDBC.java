@@ -66,7 +66,44 @@ public class TratamentoDaoJDBC implements TratamentoDao {
 
     @Override
     public Tratamento findById(Integer idTratamento) {
-        return null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * "
+                            + "FROM orcamento "
+                            + "WHERE id_orcamento = ?");
+
+            statement.setInt(1, idTratamento);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                Tratamento tratamento = instantiateTratamento(rs);
+                return tratamento;
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    private Tratamento instantiateTratamento(ResultSet rs) {
+        Tratamento tratamento = new Tratamento();
+
+        try {
+            tratamento.setIdTratamento(rs.getInt("id_orcamento"));
+            tratamento.setTotal(rs.getDouble("total"));
+            tratamento.setDesconto(rs.getDouble("desconto"));
+            tratamento.setDataOrcamento(rs.getDate("data_orcamento"));
+            tratamento.setValidadeOrcamento(rs.getDate("validade_orcamento"));
+//            tratamento.setAtendimento(rs.getDate("data_orcamento"));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return tratamento;
     }
 
     @Override
