@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 
 @NoArgsConstructor
@@ -19,10 +20,10 @@ public class Tratamento implements Serializable {
     private Integer idTratamento;
     private Double total;
     private Double desconto;
-    private LocalDate dataOrcamento;
-    private LocalDate validadeOrcamento;
+    private Date dataOrcamento;
+    private Date validadeOrcamento;
     private Boolean status;
     private Integer quantidadeParcelas;
-    private LocalDate dataAprovacao;
+    private Date dataAprovacao;
     private Paciente paciente;
 }

@@ -234,11 +234,11 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
         }
     }
 
-    private synchronized PreparedStatement createQuery(Procedimento Procedimento, PreparedStatement statement) {
+    private synchronized PreparedStatement createQuery(Procedimento procedimento, PreparedStatement statement) {
         try {
-            statement.setString(1, Procedimento.getDescricao());
-            statement.setDouble(2, Procedimento.getValor());
-            statement.setInt(3, Procedimento.getIdEspecialista());
+            statement.setString(1, procedimento.getDescricao());
+            statement.setDouble(2, procedimento.getValor());
+            statement.setInt(3, procedimento.getIdEspecialista());
             return statement;
         } catch (SQLException e) {
             e.printStackTrace();

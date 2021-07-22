@@ -1,17 +1,19 @@
 package org.openjfx.model.dao;
 
+import org.openjfx.model.entities.Tratamento;
+
 import java.util.List;
 
 public interface TratamentoDao {
-    void insert(TratamentoDao agendaDao);
+    int insert(Tratamento tratamento);
 
-    void update(TratamentoDao agendaDao);
+    int update(Tratamento tratamento);
 
     void deleteById(Integer idTratamento);
 
-    TratamentoDao findById(Integer idTratamento);
+    Tratamento findById(Integer idTratamento);
 
-    List<TratamentoDao> findAll();
+    List<Tratamento> findAll();
 
 
 }

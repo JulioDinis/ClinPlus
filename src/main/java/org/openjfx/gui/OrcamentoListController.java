@@ -23,13 +23,19 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.mapper.ItensTratamentoMapper;
+import org.openjfx.mapper.TratamentoMapper;
 import org.openjfx.model.dto.ItensTratamentoDto;
+import org.openjfx.model.dto.TratamentoDTO;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.entities.Tratamento;
+import org.openjfx.model.service.ItensTratamentoService;
 import org.openjfx.model.service.ProcedimentoService;
+import org.openjfx.model.service.TratamentoService;
 
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -40,8 +46,11 @@ import java.util.function.Consumer;
  */
 public class OrcamentoListController implements Initializable, DataChangeListener {
 
-    private ProcedimentoService service;
+    private ProcedimentoService procedimentoService;
     private Colaborador colaboradorLogado;
+    private TratamentoMapper tratamentoMapper = new TratamentoMapper();
+    private ItensTratamentoService itensTratamentoService = new ItensTratamentoService();
+
     private ObservableList<Procedimento> obsList;
     private ObservableList<ItensTratamentoDto> observableListItensTratamentoDto;
     Map<Procedimento, Integer> procedimentosSelecionados = new HashMap<>();
@@ -73,6 +82,9 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     @FXML
     private FontIcon jFXImVieBtnAlternar;
     private List<ItensTratamentoDto> itensTratamentoDtoList = new ArrayList<>();
+    private ItensTratamentoService serviceItensTratamento;
+    private TratamentoService tratamentoService;
+    private TratamentoDTO tratamento;
     ;
 
 
@@ -95,14 +107,14 @@ public class OrcamentoListController implements Initializable, DataChangeListene
 
     @FXML
     public void onTxtBuscaChange() {
-        if (service == null) {
+        if (procedimentoService == null) {
             throw new IllegalStateException("Service was Null");
         } else {
             List<Procedimento> list;
             if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
-                list = service.findByDescricaoAndId(txtBusca.getText(), this.getFuncionarioLogado().getIdFuncionario());
+                list = procedimentoService.findByDescricaoAndId(txtBusca.getText(), this.getFuncionarioLogado().getIdFuncionario());
             } else {
-                list = service.findByDescricao(txtBusca.getText());
+                list = procedimentoService.findByDescricao(txtBusca.getText());
             }
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
@@ -112,40 +124,64 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     // Click do mouse, para click duplo event.getClickCount() ==2
     @FXML
     private void handleRowSelect() {
+        // Cria um formatador para a data usando DateFormat:
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        Calendar gc = Calendar.getInstance();
+        System.out.println(df.format(gc.getTime())); // 14/03/2016
+        // Adiciona 10 dias:
+        gc.add((GregorianCalendar.DAY_OF_MONTH), 10);
+
         tableViewProcedimento.setOnMouseClicked(event -> {
-                    if (event.getClickCount() == 2)
-                        this.inserirLista(tableViewProcedimento.getSelectionModel().getSelectedItem(), 1);
+
+                    Procedimento p = new Procedimento();
+                    if (event.getClickCount() == 2) {
+                        p = tableViewProcedimento.getSelectionModel().getSelectedItem();
+
+                        if (this.tratamento == null) {
+                            this.tratamento = new TratamentoDTO();
+                            System.out.println("Criou Tratamento");
+                            this.tratamento.setValidadeOrcamento(gc.getTime());
+                            this.tratamento.setDesconto(0.0);
+                            this.tratamento.setTotal(0.0);
+                            this.tratamento.setProcedimento(p);
+                            this.tratamento.setIdTratamento(tratamentoService.saveOrUpdate(this.tratamento));
+                            ItensTratamentoDto itensTratamentoDto = new ItensTratamentoDto();
+                            itensTratamentoDto.setTratamento(tratamentoMapper.toEntity(this.tratamento));
+                            itensTratamentoDto.setProcedimento(this.tratamento.getProcedimento());
+                            itensTratamentoDto.setQuantidade(1);
+                            itensTratamentoService.saveOrUpdate(itensTratamentoDto);
+
+                            atualizaTableItens();
+                        } else {
+                            System.out.println("Atualiza Tratamento");
+
+                        }
+
+                        System.out.println("NOVO ID-> " + this.tratamento.getIdTratamento());
+                    }
                 }
         );
+    }
+
+    private synchronized void inserirLista() {
 
     }
 
-    private synchronized void inserirLista(Procedimento procedimento, Integer quantidade) {
-        ItensTratamentoDto itensTratamentoDto = new ItensTratamentoDto(procedimento, quantidade);
-        if (this.itensTratamentoDtoList.size() > 0) {
-            if (this.itensTratamentoDtoList.contains(itensTratamentoDto)) {
-                System.out.println("Já tem");
-                this.itensTratamentoDtoList.remove(itensTratamentoDto);
-            } else {
-                this.itensTratamentoDtoList.add(new ItensTratamentoDto(procedimento, quantidade));
-            }
-        } else
-            this.itensTratamentoDtoList.add(new ItensTratamentoDto(procedimento, quantidade));
+    private synchronized void atualizaTableItens() {
 
-        this.atualizaTableItens(this.itensTratamentoDtoList);
+        if (this.tratamento == null) {
+            System.out.println("Nenhum valor");
+        }else {
 
-    }
+            List<ItensTratamentoDto> list = itensTratamentoService.findByTratamentoId(this.tratamento.getIdTratamento());
 
-    private synchronized void atualizaTableItens(List<ItensTratamentoDto> list) {
-        this.observableListItensTratamentoDto = FXCollections.observableArrayList(this.itensTratamentoDtoList);
-        this.tableViewItensTratamento.setItems(this.observableListItensTratamentoDto);
+            this.observableListItensTratamentoDto = FXCollections.observableArrayList(list);
+            this.tableViewItensTratamento.setItems(this.observableListItensTratamentoDto);
+        }
+
+
 
     }
-
-    public void setProcedimentoService(ProcedimentoService service) {
-        this.service = service;
-    }
-
 
     /**
      * Initializes the controller class.
@@ -168,16 +204,16 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     }
 
     public void updateTableView() {
-        if (service == null) {
+        if (procedimentoService == null) {
             throw new IllegalStateException("Service was Null");
         }
         if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
-            List<Procedimento> list = service.findByEspecialista(this.getFuncionarioLogado().getIdFuncionario());
+            List<Procedimento> list = procedimentoService.findByEspecialista(this.getFuncionarioLogado().getIdFuncionario());
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             this.tableColumnEspecialista.setVisible(false);
         } else {
-            List<Procedimento> list = service.findAll();
+            List<Procedimento> list = procedimentoService.findAll();
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
         }
@@ -232,5 +268,11 @@ public class OrcamentoListController implements Initializable, DataChangeListene
 
     public void setFuncionarioLogado(Colaborador colaboradorLogado) {
         this.colaboradorLogado = colaboradorLogado;
+    }
+
+    public void setServices(ItensTratamentoService itensTratamentoService, ProcedimentoService procedimentoService, TratamentoService tratamentoService) {
+        this.serviceItensTratamento = itensTratamentoService;
+        this.procedimentoService = procedimentoService;
+        this.tratamentoService = tratamentoService;
     }
 }

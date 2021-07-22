@@ -1,11 +1,21 @@
 package org.openjfx.gui;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import lombok.Data;
 import org.openjfx.gui.listener.DataChangeListener;
+import org.openjfx.gui.util.Alerts;
+import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.service.*;
 
 import java.net.URL;
@@ -58,10 +68,10 @@ public class TelaEspecialistaController implements Initializable {
     }
 
     @FXML
-    public void onJfxButtonHistoricoClick() {
-        notifyDataChangeListeners("/org/openjfx/gui/FuncionarioList.fxml",
-                (ColaboradorListController controller) -> {
-                    controller.setFuncionarioService(new ColaboradorService());
+    public void onJfxButtonAtendimentoClick() {
+        notifyDataChangeListeners("/org/openjfx/gui/TelaAtendimento.fxml",
+                (TelaAtendimentoController controller) -> {
+                    controller.setServices(new ColaboradorService(), new PacienteService(), new ItensTratamentoService());
                     controller.updateTableView();
                 });
     }
@@ -76,12 +86,8 @@ public class TelaEspecialistaController implements Initializable {
     }
 
     @FXML
-    public void onJfxButtonOrcamentoClick() {
-        notifyDataChangeListeners("/org/openjfx/gui/TelaFinanceiro.fxml",
-                (TelaFinanceiroController controller) -> {
-                    controller.setFinanceiroService(new FinanceiroService());
-                    controller.updateTableView();
-                });
+    public void onJfxButtonOrcamentoClick(ActionEvent event) {
+        createDialogForm("/org/openjfx/gui/OrcamentoList.fxml", Utils.currentStage(event));
     }
 
     @FXML
@@ -90,9 +96,33 @@ public class TelaEspecialistaController implements Initializable {
         notifyLogOut();
     }
 
+    private void createDialogForm(String absolutName, Stage parentStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
+            Pane pane = loader.load();
+            // Controller
+            OrcamentoListController controller = loader.getController();
+            controller.setServices(new ItensTratamentoService(), new ProcedimentoService(), new TratamentoService());
+            controller.setFuncionarioLogado(this.getEspecialistaLogado());
+            controller.updateTableView();
+            // Stage
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Orçamento");
+            dialogStage.setScene(new Scene(pane));
+            dialogStage.setResizable(false);
+            dialogStage.initOwner(parentStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.showAndWait();
+
+        } catch (Exception e) {
+            System.out.println("ERRO AQUI");
+            e.printStackTrace();
+            Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
 
 
-    public void subscribeDataChangeListener(DataChangeListener ...listener) {
+    public void subscribeDataChangeListener(DataChangeListener... listener) {
         System.out.println("ADD --> " + listener);
         Arrays.stream(listener).forEach(listen -> dataChangeListener.add(listen));
     }
@@ -103,7 +133,8 @@ public class TelaEspecialistaController implements Initializable {
             listener.onClickTela(resource, initialingAction);
         }
     }
-    private void notifyLogOut(){
+
+    private void notifyLogOut() {
         for (DataChangeListener listener : dataChangeListener) {
             listener.onLogout();
         }

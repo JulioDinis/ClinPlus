@@ -9,28 +9,15 @@ import java.util.stream.Collectors;
 public class ItensTratamentoMapper {
 
     public static ItensTratamento toEntity(ItensTratamentoDto dto){
-
         ItensTratamento entity = new ItensTratamento();
-
         entity.setTratamento(dto.getTratamento());
         entity.setProcedimento(dto.getProcedimento());
         entity.setNrItem(dto.getNrItem());
         entity.setDataExecucao(dto.getDataExecucao());
         entity.setQuantidade(dto.getQuantidade());
         entity.setValor(dto.getValor());
-        return  null;
+        return  entity;
     }
-
-//    public Stock toEntity(StockDTO dto) {
-//        // transforma o dto em entity forma manual (existem formas automatizadas)
-//        Stock stock = new Stock();
-//        stock.setId(dto.getId());
-//        stock.setName(dto.getName());
-//        stock.setPrice(dto.getPrice());
-//        stock.setVariation(dto.getVariation());
-//        stock.setDate(dto.getDate());
-//        return stock;
-//    }
 
     public ItensTratamentoDto toDto(ItensTratamento entity) {
         ItensTratamentoDto dto = new ItensTratamentoDto();

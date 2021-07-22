@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Data
 public class ItensTratamentoDto {
     private static final long serialVersionUID = 1L;
-    private  String descricao;
+    private String descricao;
     private Tratamento tratamento;
     private Integer nrItem;
     private Procedimento procedimento;
@@ -21,9 +21,10 @@ public class ItensTratamentoDto {
     private LocalDate dataExecucao;
     private Double valor;
 
-    public ItensTratamentoDto(Procedimento procedimento, Integer quantidade) {
+    public ItensTratamentoDto(Procedimento procedimento, Tratamento tratamento, Integer quantidade) {
         this.procedimento = procedimento;
         this.quantidade = quantidade;
+        this.tratamento = tratamento;
         this.valor = procedimento.getValor();
         this.descricao = procedimento.getDescricao();
     }

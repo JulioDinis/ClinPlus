@@ -5,6 +5,7 @@ import org.openjfx.model.dao.DaoFactory;
 import org.openjfx.model.dao.ItensTratamentoDao;
 import org.openjfx.model.dao.PacienteDao;
 import org.openjfx.model.dto.ItensTratamentoDto;
+import org.openjfx.model.entities.ItensTratamento;
 import org.openjfx.model.entities.Paciente;
 
 import java.util.List;
@@ -25,11 +26,15 @@ public class ItensTratamentoService {
 
     public void saveOrUpdate(ItensTratamentoDto itensTratamentoDto) {
 
-        if (itensTratamentoDto.getNrItem() == null) {
-            dao.insert(mapper.toEntity(itensTratamentoDto));
-        } else {
-            dao.update(mapper.toEntity(itensTratamentoDto));
-        }
+        ItensTratamento it = mapper.toEntity(itensTratamentoDto);
+
+        dao.insert(it);
+
+//        if (itensTratamentoDto.getTratamento() == null) {
+//            dao.insert(mapper.toEntity(itensTratamentoDto));
+//        } else {
+//            dao.update(mapper.toEntity(itensTratamentoDto));
+//        }
 
     }
 
@@ -42,4 +47,7 @@ public class ItensTratamentoService {
     }
 
 
+    public List<ItensTratamentoDto> findByTratamentoId(Integer idTratamento) {
+        return dao.findByTratamentoId(idTratamento);
+    }
 }

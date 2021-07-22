@@ -1,1 +1,72 @@
-<svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 128 128" width="64px" height="64px"><path d="M56.3 28.6c-3.7-3.7-8.6-5.7-13.8-5.7s-10.1 2-13.8 5.7c-7.6 7.6-7.6 20.1 0 27.7l43 43c3.7 3.7 8.6 5.7 13.8 5.7s10.1-2 13.8-5.7c7.6-7.6 7.6-20.1 0-27.7L56.3 28.6zM32.9 52.1c-2.6-2.6-4-6-4-9.6s1.4-7 4-9.6c2.6-2.6 6-4 9.6-4s7 1.4 9.6 4l5.5 5.5L38.4 57.6 32.9 52.1zM42.7 61.9l19.2-19.2 23.5 23.5L66.1 85.3 42.7 61.9zM95.1 95.1c-2.6 2.6-6 4-9.6 4s-7-1.4-9.6-4l-5.5-5.5 19.2-19.2 5.5 5.5c2.6 2.6 4 6 4 9.6S97.7 92.5 95.1 95.1zM71.7 28.6c-1.2 1.2-1.2 3.1 0 4.2 1.2 1.2 3.1 1.2 4.2 0 5.3-5.3 13.9-5.3 19.2 0 2.6 2.6 4 6 4 9.6s-1.4 7-4 9.6c-1.2 1.2-1.2 3.1 0 4.2.6.6 1.4.9 2.1.9s1.5-.3 2.1-.9c7.6-7.6 7.6-20.1 0-27.7C91.7 21 79.3 21 71.7 28.6zM32.9 71.7c-1.2-1.2-3.1-1.2-4.2 0-7.6 7.6-7.6 20.1 0 27.7 3.8 3.8 8.8 5.7 13.8 5.7s10-1.9 13.8-5.7c1.2-1.2 1.2-3.1 0-4.2-1.2-1.2-3.1-1.2-4.2 0-5.3 5.3-13.9 5.3-19.2 0-2.6-2.6-4-6-4-9.6s1.4-7 4-9.6C34.1 74.7 34.1 72.8 32.9 71.7z"/><path d="M40.4 37.4A3.1 3 0 1 0 40.4 43.4A3.1 3 0 1 0 40.4 37.4Z" transform="rotate(-134.999 40.43 40.43)"/><path d="M88.3 85.3A3.1 3 0 1 0 88.3 91.3A3.1 3 0 1 0 88.3 85.3Z" transform="rotate(-134.999 88.278 88.278)"/><path d="M63.8 71.5A3.1 3 0 1 0 63.8 77.5A3.1 3 0 1 0 63.8 71.5Z" transform="rotate(-134.999 63.825 74.485)"/><path d="M53.5 61.2A3.1 3 0 1 0 53.5 67.2A3.1 3 0 1 0 53.5 61.2Z" transform="rotate(-134.999 53.516 64.176)"/><path d="M74.5 60.699999999999996A3 3.1 0 1 0 74.5 66.89999999999999A3 3.1 0 1 0 74.5 60.699999999999996Z" transform="rotate(-45.001 74.481 63.825)"/><path d="M64.2 50.5A3.1 3 0 1 0 64.2 56.5A3.1 3 0 1 0 64.2 50.5Z" transform="rotate(-134.999 64.176 53.516)"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   fill="#000000"
+   viewBox="0 0 128 128"
+   width="64px"
+   height="64px"
+   version="1.1"
+   id="svg16"
+   sodipodi:docname="icons8-bandage.svg"
+   inkscape:export-filename="/home/julio/IdeaProjects/ClinPlusGradle/src/main/resources/org/openjfx/img/Icones/icons8-bandage-64x64.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   inkscape:version="1.1 (c4e8f9ed74, 2021-05-24)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs20" />
+  <sodipodi:namedview
+     id="namedview18"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="8.328125"
+     inkscape:cx="1.9812383"
+     inkscape:cy="32.060038"
+     inkscape:window-width="1366"
+     inkscape:window-height="713"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg16" />
+  <path
+     d="M56.3 28.6c-3.7-3.7-8.6-5.7-13.8-5.7s-10.1 2-13.8 5.7c-7.6 7.6-7.6 20.1 0 27.7l43 43c3.7 3.7 8.6 5.7 13.8 5.7s10.1-2 13.8-5.7c7.6-7.6 7.6-20.1 0-27.7L56.3 28.6zM32.9 52.1c-2.6-2.6-4-6-4-9.6s1.4-7 4-9.6c2.6-2.6 6-4 9.6-4s7 1.4 9.6 4l5.5 5.5L38.4 57.6 32.9 52.1zM42.7 61.9l19.2-19.2 23.5 23.5L66.1 85.3 42.7 61.9zM95.1 95.1c-2.6 2.6-6 4-9.6 4s-7-1.4-9.6-4l-5.5-5.5 19.2-19.2 5.5 5.5c2.6 2.6 4 6 4 9.6S97.7 92.5 95.1 95.1zM71.7 28.6c-1.2 1.2-1.2 3.1 0 4.2 1.2 1.2 3.1 1.2 4.2 0 5.3-5.3 13.9-5.3 19.2 0 2.6 2.6 4 6 4 9.6s-1.4 7-4 9.6c-1.2 1.2-1.2 3.1 0 4.2.6.6 1.4.9 2.1.9s1.5-.3 2.1-.9c7.6-7.6 7.6-20.1 0-27.7C91.7 21 79.3 21 71.7 28.6zM32.9 71.7c-1.2-1.2-3.1-1.2-4.2 0-7.6 7.6-7.6 20.1 0 27.7 3.8 3.8 8.8 5.7 13.8 5.7s10-1.9 13.8-5.7c1.2-1.2 1.2-3.1 0-4.2-1.2-1.2-3.1-1.2-4.2 0-5.3 5.3-13.9 5.3-19.2 0-2.6-2.6-4-6-4-9.6s1.4-7 4-9.6C34.1 74.7 34.1 72.8 32.9 71.7z"
+     id="path2"
+     style="fill:#000080" />
+  <path
+     d="M40.4 37.4A3.1 3 0 1 0 40.4 43.4A3.1 3 0 1 0 40.4 37.4Z"
+     transform="rotate(-134.999 40.43 40.43)"
+     id="path4"
+     style="fill:#000080" />
+  <path
+     d="M88.3 85.3A3.1 3 0 1 0 88.3 91.3A3.1 3 0 1 0 88.3 85.3Z"
+     transform="rotate(-134.999 88.278 88.278)"
+     id="path6"
+     style="fill:#000080" />
+  <path
+     d="M63.8 71.5A3.1 3 0 1 0 63.8 77.5A3.1 3 0 1 0 63.8 71.5Z"
+     transform="rotate(-134.999 63.825 74.485)"
+     id="path8"
+     style="fill:#000080" />
+  <path
+     d="M53.5 61.2A3.1 3 0 1 0 53.5 67.2A3.1 3 0 1 0 53.5 61.2Z"
+     transform="rotate(-134.999 53.516 64.176)"
+     id="path10"
+     style="fill:#000080" />
+  <path
+     d="M74.5 60.699999999999996A3 3.1 0 1 0 74.5 66.89999999999999A3 3.1 0 1 0 74.5 60.699999999999996Z"
+     transform="rotate(-45.001 74.481 63.825)"
+     id="path12"
+     style="fill:#000080" />
+  <path
+     d="M64.2 50.5A3.1 3 0 1 0 64.2 56.5A3.1 3 0 1 0 64.2 50.5Z"
+     transform="rotate(-134.999 64.176 53.516)"
+     id="path14"
+     style="fill:#000080" />
+</svg>

@@ -31,6 +31,7 @@ import org.openjfx.model.entities.Tratamento;
 import org.openjfx.model.service.ColaboradorService;
 import org.openjfx.model.service.PacienteService;
 import org.openjfx.model.service.ProcedimentoService;
+import org.openjfx.model.service.TratamentoService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -90,13 +91,13 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     }
 
     @FXML
-    public void onMenuItemOrcamentoAction( ActionEvent event) {
+    public void onMenuItemOrcamentoAction(ActionEvent event) {
 
         buttonAction("/org/openjfx/gui/OrcamentoList.fxml", (OrcamentoListController controller) -> {
-            controller.setProcedimentoService(new ProcedimentoService());
-            controller.setFuncionarioLogado(this.colaboradorLogado);
+//            controller.setProcedimentoService(new ProcedimentoService());
+//            controller.setFuncionarioLogado(this.colaboradorLogado);
 //            controller.updateList();
-            controller.updateTableView();
+//            controller.updateTableView();
 
         });
     }
@@ -271,12 +272,13 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
         System.out.println("*********************** TELA ALTERADA ******************************");
         buttonAction(resource, initialingAction);
     }
-    private void createDialogForm( String absolutName, Stage parentStage) {
+
+    private void createDialogForm(String absolutName, Stage parentStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
             OrcamentoListController controller = loader.getController();
-            controller.setProcedimentoService(new ProcedimentoService());
+            controller.setServices(null, new ProcedimentoService(), new TratamentoService());
             controller.setFuncionarioLogado(this.colaboradorLogado);
 //          controller.updateList();
             controller.updateTableView();
