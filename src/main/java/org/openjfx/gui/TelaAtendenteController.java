@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import org.openjfx.gui.listener.DataChangeListener;
+import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.AgendaService;
 import org.openjfx.model.service.ColaboradorService;
@@ -41,6 +42,7 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
     private JFXButton jfxButtonFinanceiro;
     @FXML
     private JFXButton jfxButtonLogout;
+    private Atendente atendenteLogado;
 
 
     @FXML
@@ -95,7 +97,7 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
     }
 
     @Override
-    public void onLogin(Colaborador p) {
+    public void onLogin(Object obj) {
 
     }
 
@@ -125,5 +127,9 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
         for (DataChangeListener listener : dataChangeListener) {
             listener.onLogout();
         }
+    }
+
+    public void setAtendenteLogado(Atendente atendenteLogado) {
+        this.atendenteLogado = atendenteLogado;
     }
 }

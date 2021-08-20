@@ -26,8 +26,9 @@ import org.openjfx.db.DbIntegrityException;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.mapper.ProcedimentoMapper;
+import org.openjfx.model.dto.ProcedimentoDTO;
 import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.service.ProcedimentoService;
 
@@ -46,27 +47,27 @@ public class ProcedimentoListController implements Initializable, DataChangeList
 
     private ProcedimentoService service;
     private Colaborador colaboradorLogado;
-    private ObservableList<Procedimento> obsList;
+    private ObservableList<ProcedimentoDTO> obsList;
 
     @FXML
     private TextField txtBusca;
 
     @FXML
-    private TableView<Procedimento> tableViewProcedimento;
+    private TableView<ProcedimentoDTO> tableViewProcedimento;
     @FXML
-    private TableColumn<Procedimento, Integer> tableColumnId;
+    private TableColumn<ProcedimentoDTO, Integer> tableColumnId;
     @FXML
-    private TableColumn<Procedimento, Integer> tableColumnEspecialista;
+    private TableColumn<ProcedimentoDTO, Integer> tableColumnEspecialista;
     @FXML
-    private TableColumn<Procedimento, String> tableCollumDescricao;
+    private TableColumn<ProcedimentoDTO, String> tableCollumDescricao;
     @FXML
-    private TableColumn<Procedimento, Double> tableColumValor;
+    private TableColumn<ProcedimentoDTO, Double> tableColumValor;
 
     @FXML
-    private TableColumn<Procedimento, Procedimento> tableColumnEDIT;
+    private TableColumn<ProcedimentoDTO, ProcedimentoDTO> tableColumnEDIT;
 
     @FXML
-    private TableColumn<Procedimento, Procedimento> tableColumnREMOVE;
+    private TableColumn<ProcedimentoDTO, ProcedimentoDTO> tableColumnREMOVE;
 
 
     @FXML
@@ -84,7 +85,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     public void onBtNewAction(ActionEvent event) {
         System.out.println(event);
         Procedimento procedimento = new Procedimento();
-        procedimento.setIdEspecialista(colaboradorLogado.getIdFuncionario());
+        procedimento.setColaborador(colaboradorLogado);
         Stage parentStage = Utils.currentStage(event);
         createDialogForm(procedimento, "/org/openjfx/gui/ProcedimentoForm.fxml", parentStage);
 
@@ -95,9 +96,9 @@ public class ProcedimentoListController implements Initializable, DataChangeList
         if (service == null) {
             throw new IllegalStateException("Service was Null");
         } else {
-            List<Procedimento> list;
+            List<ProcedimentoDTO> list;
             if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
-                list = service.findByDescricaoAndId(txtBusca.getText(), this.getFuncionarioLogado().getIdFuncionario());
+                list = service.findByDescricaoAndId(txtBusca.getText(), this.getFuncionarioLogado().getIdEspecialista());
             } else {
                 list = service.findByDescricao(txtBusca.getText());
             }
@@ -117,7 +118,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
                 throw new IllegalStateException("Service was Null");
             }
 
-            List<Procedimento> list = service.findAll();
+            List<ProcedimentoDTO> list = service.findAll();
             System.out.println(list);
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
@@ -130,7 +131,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
                 throw new IllegalStateException("Service was Null");
             }
 
-            List<Procedimento> list = service.findAllAtivos();
+            List<ProcedimentoDTO> list = service.findAllAtivos();
             System.out.println(list);
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
@@ -157,7 +158,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idProcedimento"));
         tableCollumDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         tableColumValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
-        tableColumnEspecialista.setCellValueFactory(new PropertyValueFactory<>("idEspecialista"));
+        tableColumnEspecialista.setCellValueFactory(new PropertyValueFactory<>("nomeEspecialista"));
         Stage stage = (Stage) MainApp.getMainScene().getWindow();
 
         tableViewProcedimento.prefHeightProperty().bind(stage.heightProperty());
@@ -168,15 +169,23 @@ public class ProcedimentoListController implements Initializable, DataChangeList
         if (service == null) {
             throw new IllegalStateException("Service was Null");
         }
-        if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
-            List<Procedimento> list = service.findByEspecialista(this.getFuncionarioLogado().getIdFuncionario());
+
+//        List<Procedimento> list = service.findByEspecialista(this.getFuncionarioLogado().getIdFuncionario());
+//        obsList = FXCollections.observableArrayList(list);
+//        tableViewProcedimento.setItems(obsList);
+//        initEditButtons();
+//        initRemoveButtons();
+//        this.tableColumnEspecialista.setVisible(false);
+
+        if (this.getFuncionarioLogado() != null) {
+            List<ProcedimentoDTO> list = service.findByEspecialista(this.getFuncionarioLogado().getIdEspecialista());
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             initEditButtons();
             initRemoveButtons();
             this.tableColumnEspecialista.setVisible(false);
         } else {
-            List<Procedimento> list = service.findAll();
+            List<ProcedimentoDTO> list = service.findAll();
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             this.btNew.setDisable(true);
@@ -216,7 +225,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     }
 
     @Override
-    public void onLogin(Colaborador colaborador) {
+    public void onLogin(Object obj) {
         throw new IllegalStateException("Service was Null");
     }
 
@@ -232,12 +241,15 @@ public class ProcedimentoListController implements Initializable, DataChangeList
      * Método para colocar um button dentro da tabela
      */
     private void initEditButtons() {
+
+
         tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnEDIT.setCellFactory(param -> new TableCell<Procedimento, Procedimento>() {
+        tableColumnEDIT.setCellFactory(param -> new TableCell<ProcedimentoDTO, ProcedimentoDTO>() {
             private final FontIcon editarIcone = new FontIcon("fa-edit");
             private final JFXButton button = new JFXButton("Editar", editarIcone);
+
             @Override
-            protected void updateItem(Procedimento obj, boolean empty) {
+            protected void updateItem(ProcedimentoDTO obj, boolean empty) {
                 super.updateItem(obj, empty);
                 if (obj == null) {
                     setGraphic(null);
@@ -246,31 +258,34 @@ public class ProcedimentoListController implements Initializable, DataChangeList
                 // coloca o botão na tabela
                 setGraphic(button);
                 // seta a action do button
+                ProcedimentoMapper mapper = new ProcedimentoMapper();
                 button.setOnAction(
                         event -> createDialogForm(
-                                obj, "/org/openjfx/gui/ProcedimentoForm.fxml", Utils.currentStage(event)));
+                                mapper.toEntity(obj), "/org/openjfx/gui/ProcedimentoForm.fxml", Utils.currentStage(event)));
             }
         });
     }
 
     private void initRemoveButtons() {
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-        tableColumnREMOVE.setCellFactory(param -> new TableCell<Procedimento, Procedimento>() {
+        tableColumnREMOVE.setCellFactory(param -> new TableCell<ProcedimentoDTO, ProcedimentoDTO>() {
             private JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
+
             @Override
-            protected void updateItem(Procedimento obj, boolean empty) {
+            protected void updateItem(ProcedimentoDTO obj, boolean empty) {
                 super.updateItem(obj, empty);
                 if (obj == null) {
                     setGraphic(null);
                     return;
                 }
                 setGraphic(button);
-                button.setOnAction(event -> removeEntity(obj));
+                ProcedimentoMapper mapper = new ProcedimentoMapper();
+                button.setOnAction(event -> removeEntity(mapper.toEntity(obj)));
             }
         });
-        if (!this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
-            this.tableColumnEDIT.setVisible(false);
-        }
+//        if (!this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
+//            this.tableColumnEDIT.setVisible(false);
+//        }
     }
 
     private void removeEntity(Procedimento procedimento) {
@@ -289,9 +304,11 @@ public class ProcedimentoListController implements Initializable, DataChangeList
             }
         }
     }
+
     public Colaborador getFuncionarioLogado() {
         return colaboradorLogado;
     }
+
     public void setFuncionarioLogado(Colaborador colaboradorLogado) {
         this.colaboradorLogado = colaboradorLogado;
     }

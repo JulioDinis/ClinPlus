@@ -19,15 +19,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 import org.openjfx.application.MainApp;
 import org.openjfx.application.ToolbarActionCallBack;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
-import org.openjfx.gui.util.CreateDialog;
-import org.openjfx.gui.util.Utils;
+import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.entities.Procedimento;
-import org.openjfx.model.entities.Tratamento;
+import org.openjfx.model.entities.Pessoa;
 import org.openjfx.model.service.ColaboradorService;
 import org.openjfx.model.service.PacienteService;
 import org.openjfx.model.service.ProcedimentoService;
@@ -38,7 +38,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
+@Getter
+@Setter
 public class MainAppViewController implements Initializable, ToolbarActionCallBack, DataChangeListener {
+    private Object logado;
     private Colaborador colaboradorLogado;
     private DataChangeListener parent;
     @FXML
@@ -84,7 +87,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     public void onMenuItemProcedimentoAction() {
         buttonAction("/org/openjfx/gui/ProcedimentoList.fxml", (ProcedimentoListController controller) -> {
             controller.setProcedimentoService(new ProcedimentoService());
-            controller.setFuncionarioLogado(this.colaboradorLogado);
+            controller.setFuncionarioLogado(getColaboradorLogado());
             controller.updateTableView();
 
         });
@@ -148,11 +151,13 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
         });
     }
 
-    public void setFuncionarioLogado(Colaborador colaboradorLogado) {
+    public void setLogado(Object colaboradorLogado) {
         System.out.println("Chamou" + colaboradorLogado);
-        this.colaboradorLogado = colaboradorLogado;
-        if (this.colaboradorLogado != null) {
-            textNomeDoUsuarioLogado.setText(this.colaboradorLogado.getNome());
+
+        this.logado = colaboradorLogado;
+        if (this.logado != null) {
+            Pessoa p = (Pessoa) this.logado;
+            textNomeDoUsuarioLogado.setText(p.getNome());
         }
     }
 
@@ -162,26 +167,36 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
 
     @FXML
     public void logout() {
-        this.colaboradorLogado = null;
+        this.logado = null;
     }
 
     @FXML
     public void onLogoClick() {
-        System.out.println("Carregando..." + this.colaboradorLogado.getFuncao());
-        if (this.colaboradorLogado.getFuncao().equals("Atendente")) {
+
+        System.out.println("LOGO -> "+logado.getClass());
+
+        if (logado.getClass().isInstance(Atendente.class)) {
+            Atendente atendenteLogado = (Atendente) this.getLogado();
             buttonAction("/org/openjfx/gui/TelaAtendente.fxml",
                     (TelaAtendenteController controller) -> {
+                        controller.setAtendenteLogado(atendenteLogado);
                         controller.subscribeDataChangeListener(this);
                         controller.subscribeDataChangeListener(this.parent);
                     });
         } else {
+            Colaborador colaborador = (Colaborador) this.getLogado();
+            this.setColaboradorLogado(colaborador);
             buttonAction("/org/openjfx/gui/TelaEspecialista.fxml",
                     (TelaEspecialistaController controller) -> {
-                        controller.setEspecialistaLogado(this.colaboradorLogado);
+                        controller.setEspecialistaLogado(getColaboradorLogado());
                         controller.subscribeDataChangeListener(this);
                         controller.subscribeDataChangeListener(this.parent);
                     });
         }
+    }
+
+    private Object getLogado() {
+        return this.logado;
     }
     // Carrega a view - o synchronized garante que o carregamento não será interrompido no meio
 
@@ -257,7 +272,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     }
 
     @Override
-    public void onLogin(Colaborador p) {
+    public void onLogin(Object obj) {
 
     }
 
@@ -279,7 +294,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             Pane pane = loader.load();
             OrcamentoListController controller = loader.getController();
             controller.setServices(null, new ProcedimentoService(), new TratamentoService());
-            controller.setFuncionarioLogado(this.colaboradorLogado);
+            controller.setFuncionarioLogado(getColaboradorLogado());
 //          controller.updateList();
             controller.updateTableView();
             Stage dialogStage = new Stage();

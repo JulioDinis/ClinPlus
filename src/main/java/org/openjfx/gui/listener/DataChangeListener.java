@@ -16,7 +16,7 @@ public interface DataChangeListener {
 
     void onDataChange();
 
-    void onLogin(Colaborador p);
+    void onLogin(Object logado);
 
     void onLogout();
 

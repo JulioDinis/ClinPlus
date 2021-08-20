@@ -3,10 +3,8 @@ package org.openjfx.model.service;
 import org.openjfx.mapper.ItensTratamentoMapper;
 import org.openjfx.model.dao.DaoFactory;
 import org.openjfx.model.dao.ItensTratamentoDao;
-import org.openjfx.model.dao.PacienteDao;
-import org.openjfx.model.dto.ItensTratamentoDto;
+import org.openjfx.model.dto.ItensTratamentoDTO;
 import org.openjfx.model.entities.ItensTratamento;
-import org.openjfx.model.entities.Paciente;
 
 import java.util.List;
 
@@ -17,14 +15,14 @@ public class ItensTratamentoService {
     private ItensTratamentoMapper mapper = new ItensTratamentoMapper();
 
 
-    public List<ItensTratamentoDto> findAll() {
+    public List<ItensTratamentoDTO> findAll() {
 
         return mapper.toDto(dao.findAll());
     }
 
 
 
-    public void saveOrUpdate(ItensTratamentoDto itensTratamentoDto) {
+    public void saveOrUpdate(ItensTratamentoDTO itensTratamentoDto) {
 
         ItensTratamento it = mapper.toEntity(itensTratamentoDto);
 
@@ -38,20 +36,20 @@ public class ItensTratamentoService {
 
     }
 
-    public void remove(ItensTratamentoDto obj) {
+    public void remove(ItensTratamentoDTO obj) {
         dao.deleteById(obj.getNrItem());
     }
 
-    public List<ItensTratamentoDto> findByDescricao(String name) {
+    public List<ItensTratamentoDTO> findByDescricao(String name) {
         return dao.findByDescricao(name);
     }
 
 
-    public List<ItensTratamentoDto> findByTratamentoId(Integer idTratamento) {
+    public List<ItensTratamentoDTO> findByTratamentoId(Integer idTratamento) {
         return dao.findByTratamentoId(idTratamento);
     }
 
-    public ItensTratamentoDto findByTratamentoIdAndProcedimentoId(Integer idTratamento, Integer idProcedimento) {
+    public ItensTratamentoDTO findByTratamentoIdAndProcedimentoId(Integer idTratamento, Integer idProcedimento) {
         return  mapper.toDto(dao.findByTratamentoIdAndProcedimentoId(idTratamento, idProcedimento));
     }
 }

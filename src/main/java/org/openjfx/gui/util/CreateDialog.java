@@ -42,7 +42,7 @@ public class CreateDialog implements DataChangeListener {
     }
 
     @Override
-    public void onLogin(Colaborador p) {
+    public void onLogin(Object obj) {
 
     }
 

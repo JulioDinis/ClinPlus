@@ -2,10 +2,10 @@ package org.openjfx.model.dao.impl;
 
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
+import org.openjfx.mapper.ProcedimentoMapper;
 import org.openjfx.mapper.TratamentoMapper;
 import org.openjfx.model.dao.ItensTratamentoDao;
-import org.openjfx.model.dto.ItensTratamentoDto;
-import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.dto.ItensTratamentoDTO;
 import org.openjfx.model.entities.ItensTratamento;
 import org.openjfx.model.service.ProcedimentoService;
 import org.openjfx.model.service.TratamentoService;
@@ -24,21 +24,22 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
 
     @Override
     public void insert(ItensTratamento itensTratamento) {
-
         System.out.println("ITENS ->>>> " + itensTratamento);
         PreparedStatement statement = null;
         int key = 0;
         try {
             statement = connection.prepareStatement(
-                    "INSERT INTO itens_orcamento "
-                            + "(orcamento, procedimento, quantidade) "
-                            + "VALUES (?,?,?);",
+                    "INSERT INTO itens_tratamento "
+                            + "(tratamento, procedimento, quantidade, valor) "
+                            + "VALUES (?,?,?, ?);",
                     Statement.RETURN_GENERATED_KEYS
             );
             try {
                 statement.setInt(1, itensTratamento.getTratamento().getIdTratamento());
                 statement.setInt(2, itensTratamento.getProcedimento().getIdProcedimento());
                 statement.setInt(3, itensTratamento.getQuantidade());
+                statement.setDouble(4, itensTratamento.getProcedimento().getValor());
+
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new DbException(e.getMessage());
@@ -67,10 +68,10 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(
-                    "UPDATE itens_orcamento"
-                            + " SET quantidade = ?"
+                    "UPDATE itens_tratamento "
+                            + "SET quantidade = ?"
                             + "WHERE procedimento = ? "
-                            + "and orcamento = ?");
+                            + "and tratamento = ?");
             try {
                 statement.setInt(1, itensTratamentoDao.getQuantidade());
                 statement.setInt(2, itensTratamentoDao.getProcedimento().getIdProcedimento());
@@ -99,27 +100,27 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
     }
 
     @Override
-    public List<ItensTratamentoDto> findByDescricao(String descricao) {
+    public List<ItensTratamentoDTO> findByDescricao(String descricao) {
         return null;
     }
 
     @Override
-    public List<ItensTratamentoDto> findByTratamentoId(Integer idTratamento) {
+    public List<ItensTratamentoDTO> findByTratamentoId(Integer idTratamento) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         try {
             statement = connection.prepareStatement(
-                    "SELECT * FROM itens_orcamento " +
-                            "where orcamento = ? ");
+                    "SELECT * FROM itens_tratamento " +
+                            "where tratamento = ? ");
 
             statement.setInt(1, idTratamento);
             rs = statement.executeQuery();
 
-            List<ItensTratamentoDto> list = new ArrayList<>();
+            List<ItensTratamentoDTO> list = new ArrayList<>();
 
             while (rs.next()) {
 
-                ItensTratamentoDto itensTratamentoDto = instantiateItensTratamentoDto(rs);
+                ItensTratamentoDTO itensTratamentoDto = instantiateItensTratamentoDto(rs);
                 list.add(itensTratamentoDto);
             }
             return list;
@@ -137,15 +138,15 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
         ResultSet rs = null;
         try {
             statement = connection.prepareStatement(
-                    "SELECT * FROM itens_orcamento " +
-                            "where orcamento = ? " +
+                    "SELECT * FROM itens_tratamento " +
+                            "where tratamento = ? " +
                             "AND procedimento =?");
 
             statement.setInt(1, idTratamento);
             statement.setInt(2, idProcedimento);
             rs = statement.executeQuery();
 
-            List<ItensTratamentoDto> list = new ArrayList<>();
+            List<ItensTratamentoDTO> list = new ArrayList<>();
 
             if (rs.next()) {
                 ItensTratamento itensTratamento = instantiateItensTratamento(rs);
@@ -164,10 +165,11 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
         TratamentoService tratamentoService = new TratamentoService();
         ProcedimentoService procedimentoService = new ProcedimentoService();
         TratamentoMapper tratamentoMapper = new TratamentoMapper();
+        ProcedimentoMapper procedimentoMapper = new ProcedimentoMapper();
         ItensTratamento itensTratamento = new ItensTratamento();
         try {
-            itensTratamento.setTratamento(tratamentoMapper.toEntity(tratamentoService.findById(rs.getInt("orcamento"))));
-            itensTratamento.setProcedimento(procedimentoService.findById(rs.getInt("procedimento")));
+            itensTratamento.setTratamento(tratamentoMapper.toEntity(tratamentoService.findById(rs.getInt("tratamento"))));
+            itensTratamento.setProcedimento(procedimentoMapper.toEntity(procedimentoService.findById(rs.getInt("procedimento"))));
             itensTratamento.setQuantidade(rs.getInt("quantidade"));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -175,15 +177,16 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
         return itensTratamento;
     }
 
-    private ItensTratamentoDto instantiateItensTratamentoDto(ResultSet rs) {
-        ItensTratamentoDto itensTratamentoDto = new ItensTratamentoDto();
+    private ItensTratamentoDTO instantiateItensTratamentoDto(ResultSet rs) {
+        ItensTratamentoDTO itensTratamentoDto = new ItensTratamentoDTO();
         TratamentoService tratamentoService = new TratamentoService();
         ProcedimentoService procedimentoService = new ProcedimentoService();
         TratamentoMapper tratamentoMapper = new TratamentoMapper();
+        ProcedimentoMapper procedimentoMapper = new ProcedimentoMapper();
 
         try {
-            itensTratamentoDto.setTratamento(tratamentoMapper.toEntity(tratamentoService.findById(rs.getInt("orcamento"))));
-            itensTratamentoDto.setProcedimento(procedimentoService.findById(rs.getInt("procedimento")));
+            itensTratamentoDto.setTratamento(tratamentoMapper.toEntity(tratamentoService.findById(rs.getInt("tratamento"))));
+            itensTratamentoDto.setProcedimento(procedimentoMapper.toEntity(procedimentoService.findById(rs.getInt("procedimento"))));
             itensTratamentoDto.setQuantidade(rs.getInt("quantidade"));
             itensTratamentoDto.setDescricao(itensTratamentoDto.getProcedimento().getDescricao());
             itensTratamentoDto.setValor(itensTratamentoDto.getProcedimento().getValor());

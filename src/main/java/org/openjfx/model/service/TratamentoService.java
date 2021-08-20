@@ -3,9 +3,7 @@ package org.openjfx.model.service;
 import org.openjfx.mapper.TratamentoMapper;
 import org.openjfx.model.dao.DaoFactory;
 import org.openjfx.model.dao.TratamentoDao;
-import org.openjfx.model.dto.ItensTratamentoDto;
 import org.openjfx.model.dto.TratamentoDTO;
-import org.openjfx.model.entities.ItensTratamento;
 import org.openjfx.model.entities.Procedimento;
 
 import java.util.List;

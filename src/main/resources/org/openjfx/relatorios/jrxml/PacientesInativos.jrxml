@@ -41,7 +41,7 @@ where ativo = false]]>
 		<band height="50" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="50" uuid="084784e5-fb0e-4fa3-a973-1dfe51f86b68"/>
-				<imageExpression><![CDATA["img/Clin+.png"]]></imageExpression>
+				<imageExpression><![CDATA["org/openjfx/img/Clin+.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="50" y="15" width="505" height="30" uuid="1afa5bb6-8321-4ec5-98cd-63940c1d0e4c"/>

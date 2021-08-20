@@ -23,24 +23,25 @@ public class ColaboradorService {
     }
 
     public void saveOrUpdate(Colaborador colaborador) {
-        System.out.println("Chegou aqui");
-        if (colaborador.getIdFuncionario() == null) {
-            System.out.println("Chegou no insert");
+        if (colaborador.getIdEspecialista() == null) {
             dao.insert(colaborador);
         } else {
             dao.update(colaborador);
         }
-
     }
 
     public void remove(Colaborador obj) {
-        dao.deleteById(obj.getIdFuncionario());
+        dao.deleteById(obj.getIdEspecialista());
     }
     public Colaborador logar(Colaborador colaborador){
-        return dao.logar(colaborador.getIdFuncionario(), colaborador.getSenha());
+        return dao.logar(colaborador.getIdEspecialista(), colaborador.getSenha());
     }
 
     public List<Colaborador> findByName(String name) {
         return dao.findByName(name);
+    }
+
+    public Colaborador findById(int id_colaborador) {
+        return dao.findById(id_colaborador);
     }
 }

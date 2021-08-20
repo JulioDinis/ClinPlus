@@ -42,4 +42,9 @@ public class DaoFactory {
         return new TratamentoDaoJDBC(DB.getConnection("Dao Factory - Create Tratamento DAO  | Pedido By: " + creator)) {
         };
     }
+
+    public static AtendenteDao createAtendenteDao(String creator) {
+        return new AtendenteDaoJDBC(DB.getConnection("Dao Factory - Create Tratamento DAO  | Pedido By: " + creator)) {
+        };
+    }
 }

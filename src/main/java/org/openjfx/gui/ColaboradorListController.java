@@ -181,7 +181,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
     }
 
     @Override
-    public void onLogin(Colaborador colaborador) {
+    public void onLogin(Object obj) {
 
     }
 

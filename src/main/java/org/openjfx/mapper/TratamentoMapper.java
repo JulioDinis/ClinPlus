@@ -1,8 +1,6 @@
 package org.openjfx.mapper;
 
-import org.openjfx.model.dto.ItensTratamentoDto;
 import org.openjfx.model.dto.TratamentoDTO;
-import org.openjfx.model.entities.ItensTratamento;
 import org.openjfx.model.entities.Tratamento;
 
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class TratamentoMapper {
 
-    public static Tratamento toEntity(TratamentoDTO dto) {
+    public Tratamento toEntity(TratamentoDTO dto) {
         Tratamento entity = new Tratamento();
         entity.setIdTratamento(dto.getIdTratamento());
         entity.setDataAprovacao(dto.getDataAprovacao());
@@ -38,8 +36,8 @@ public class TratamentoMapper {
         return dto;
     }
 
-    public List<TratamentoDTO> toDto(List<Tratamento> TratamentoList) {
-        return TratamentoList.stream().map(this::toDto).collect(Collectors.toList());
+    public List<TratamentoDTO> toDto(List<Tratamento> tratamentoList) {
+        return tratamentoList.stream().map(this::toDto).collect(Collectors.toList());
     }
 
 }

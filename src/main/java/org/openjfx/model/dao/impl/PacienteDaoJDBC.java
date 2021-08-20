@@ -30,7 +30,7 @@ public class PacienteDaoJDBC implements PacienteDao {
 
             createQuery(paciente, statement);
 
-            Integer linhasAfetadas = statement.executeUpdate();
+            int linhasAfetadas = statement.executeUpdate();
 
             if (linhasAfetadas > 0) {
                 ResultSet rs = statement.getGeneratedKeys();

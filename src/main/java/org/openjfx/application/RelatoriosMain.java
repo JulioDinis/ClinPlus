@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class RelatoriosMain {
 
     public static void main(String[] args) throws SQLException, FileNotFoundException {
-        Utils.abrirJrxm("/k");
+        Utils.abrirJrxm("/k", null);
     }
 
 

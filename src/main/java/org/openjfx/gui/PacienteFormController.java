@@ -22,6 +22,7 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Constraints;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.gui.util.ValidaCPF;
 import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.exeption.ValidationException;
 import org.openjfx.model.service.PacienteService;
@@ -74,7 +75,6 @@ public class PacienteFormController implements Initializable {
     private JFXTextField txtWhatsApp;
     @FXML
     private Label labelCodigo;
-
 
 
     @FXML
@@ -144,7 +144,7 @@ public class PacienteFormController implements Initializable {
         if (entity == null) {
             throw new IllegalStateException("Entity was null");
         }
-        labelCodigo.setText(String.valueOf((entity.getIdPaciente()==null)?"Novo":entity.getIdPaciente()));
+        labelCodigo.setText(String.valueOf((entity.getIdPaciente() == null) ? "Novo" : entity.getIdPaciente()));
         txtNome.setText(entity.getNome());
         txtCpf.setText(entity.getCpf());
         txtRg.setText(entity.getRg());
@@ -177,73 +177,75 @@ public class PacienteFormController implements Initializable {
     }
 
     private synchronized Paciente getFormData() {
-        Paciente obj = new Paciente();
+        Paciente paciente = new Paciente();
 
         ValidationException exception = new ValidationException("Validation error");
 
-        obj.setIdPaciente(Utils.tryParseToInt(labelCodigo.getText()));
+        paciente.setIdPaciente(Utils.tryParseToInt(labelCodigo.getText()));
 
         if (isValido(txtNome, "nome", exception)) {
-            obj.setNome(txtNome.getText());
+            paciente.setNome(txtNome.getText());
         }
 
-
-        if (isValido(txtCpf, "cpf", exception)) {
-            obj.setCpf(txtCpf.getText());
+        if (ValidaCPF.isCPF((txtCpf.getText().replace(".", "")).replace("-", ""))) {
+            if (isValido(txtCpf, "cpf", exception)) {
+                paciente.setCpf(ValidaCPF.imprimeCPF(txtCpf.getText()));
+            }
+        } else {
+            exception.addError("cpf", "O campo não pode ficar vazio");
         }
-
         if (isValido(txtRg, "rg", exception))
-            obj.setRg(txtRg.getText());
+            paciente.setRg(txtRg.getText());
 
         if (dpDataNascimento.getValue() == null) {
             exception.addError("dataNascimento", "Seleciona a data de nascimento");
         } else {
             // data Piker Pegando Valor
             Instant instant = Instant.from(dpDataNascimento.getValue().atStartOfDay(ZoneId.systemDefault()));
-            obj.setDataNascimento(Date.from(instant));
+            paciente.setDataNascimento(Date.from(instant));
         }
         //sexo
         if (comboBoxSexo.getSelectionModel().isEmpty()) {
             exception.addError("sexo", "Selecione uma das opções");
         } else {
-            obj.setSexo(comboBoxSexo.getSelectionModel().getSelectedItem());
+            paciente.setSexo(comboBoxSexo.getSelectionModel().getSelectedItem());
         }
         if (isValido(txtEmail, "email", exception)) {
-            obj.setEmail(txtEmail.getText());
+            paciente.setEmail(txtEmail.getText());
         }
         if (isValido(txtLogradouro, "logradouro", exception)) {
-            obj.setLogradouro(txtLogradouro.getText());
+            paciente.setLogradouro(txtLogradouro.getText());
         }
 
         if (isValido(txtCidade, "cidade", exception)) {
-            obj.setCidade(txtCidade.getText());
+            paciente.setCidade(txtCidade.getText());
         }
 
         if (isValido(txtBairro, "bairro", exception))
-            obj.setBairro(txtBairro.getText());
+            paciente.setBairro(txtBairro.getText());
 
         if (isValido(txtCep, "cep", exception))
-            obj.setCep(txtCep.getText());
+            paciente.setCep(txtCep.getText());
 
         if (comboBoxUf.getSelectionModel().isEmpty()) {
             exception.addError("uf", "Selecione uma das opções");
         } else {
             String uf = comboBoxUf.getSelectionModel().getSelectedItem();
-            obj.setUf(uf);
+            paciente.setUf(uf);
         }
         if (isValido(txtTelefone, "telefone", exception))
-            obj.setTelefone(txtTelefone.getText());
+            paciente.setTelefone(txtTelefone.getText());
 
         if (isValido(txtWhatsApp, "whatsApp", exception))
-            obj.setWhatsApp(txtWhatsApp.getText());
+            paciente.setWhatsApp(txtWhatsApp.getText());
 
 
         if (exception.getErrors().size() > 0) {
             throw exception;
         }
 
-        System.out.println(obj);
-        return obj;
+        System.out.println(paciente);
+        return paciente;
 
     }
 

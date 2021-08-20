@@ -101,7 +101,7 @@ public class ProcedimentoFormController {
         } else {
             txtValor.setText(entity.getValor().toString());
         }
-        if (entity.getIdEspecialista() == null) {
+        if (entity.getColaborador().getIdEspecialista() == null) {
             labelEspecialista.setText("null");
         } else
             labelEspecialista.setText(this.colaborador.getNome() + " | " + this.colaborador.getEspecialidade());
@@ -109,14 +109,21 @@ public class ProcedimentoFormController {
     }
 
     private synchronized Procedimento getFormData() {
-        Procedimento obj = new Procedimento();
+        Procedimento procedimento = new Procedimento();
 
-        obj.setIdProcedimento(Integer.parseInt(labelCodigo.getText()));
-        obj.setDescricao(txtDescricao.getText());
-        obj.setIdEspecialista(entity.getIdEspecialista());
-        obj.setValor(Double.parseDouble(txtValor.getText()));
-        System.out.println(obj);
-        return obj;
+        Integer id = null;
+        try{
+            id = Integer.parseInt(labelCodigo.getText());
+        }catch (RuntimeException ex){
+            System.out.println("\n+adicionando\n");
+        }
+
+        procedimento.setIdProcedimento(id);
+        procedimento.setDescricao(txtDescricao.getText());
+        procedimento.setColaborador(entity.getColaborador());
+        procedimento.setValor(Double.parseDouble(txtValor.getText()));
+        System.out.println(procedimento);
+        return procedimento;
     }
 
     private void notifyDataChangeListeners() {

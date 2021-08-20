@@ -22,9 +22,9 @@ public class TratamentoDaoJDBC implements TratamentoDao {
         int key = 0;
         try {
             statement = connection.prepareStatement(
-                    "INSERT INTO orcamento "
-                            + "(total, desconto, validade_orcamento) "
-                            + "VALUES (?,?,?);",
+                    "INSERT INTO tratamento "
+                            + "(total, desconto, validade_orcamento, status) "
+                            + "VALUES (?,?,?,'t');",
                     Statement.RETURN_GENERATED_KEYS
             );
             try {
@@ -56,7 +56,41 @@ public class TratamentoDaoJDBC implements TratamentoDao {
 
     @Override
     public int update(Tratamento tratamento) {
-        return 1;
+        PreparedStatement statement = null;
+        int key = 0;
+        try {
+            statement = connection.prepareStatement(
+                    "UPDATE tratamento "
+                            + " SET total = ?,"
+                            + " desconto = ? "
+                            + " WHERE tratamento.id_tratamento = ?",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            try {
+                statement.setDouble(1, tratamento.getTotal());
+                statement.setDouble(2, tratamento.getDesconto());
+                statement.setInt(3, tratamento.getIdTratamento());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new DbException(e.getMessage());
+            }
+            Integer linhasAfetadas = statement.executeUpdate();
+            if (linhasAfetadas > 0) {
+                ResultSet rs = statement.getGeneratedKeys();
+                if (rs.next()) {
+                    // Retrieve the auto generated key(s).
+                    key = rs.getInt(1);
+                }
+                DB.closeResultSet(rs);
+            } else {
+                throw new DbException("Erro inesperado! Nenhum registo afetado");
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+        }
+        return key;
     }
 
     @Override
@@ -71,8 +105,8 @@ public class TratamentoDaoJDBC implements TratamentoDao {
         try {
             statement = connection.prepareStatement(
                     "SELECT * "
-                            + "FROM orcamento "
-                            + "WHERE id_orcamento = ?");
+                            + "FROM tratamento "
+                            + "WHERE id_tratamento = ?");
 
             statement.setInt(1, idTratamento);
             rs = statement.executeQuery();
@@ -93,7 +127,7 @@ public class TratamentoDaoJDBC implements TratamentoDao {
         Tratamento tratamento = new Tratamento();
 
         try {
-            tratamento.setIdTratamento(rs.getInt("id_orcamento"));
+            tratamento.setIdTratamento(rs.getInt("id_tratamento"));
             tratamento.setTotal(rs.getDouble("total"));
             tratamento.setDesconto(rs.getDouble("desconto"));
             tratamento.setDataOrcamento(rs.getDate("data_orcamento"));

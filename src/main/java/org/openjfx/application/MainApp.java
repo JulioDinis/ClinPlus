@@ -13,7 +13,9 @@ import javafx.stage.Stage;
 import org.openjfx.gui.*;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
+import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.service.AtendenteService;
 import org.openjfx.model.service.ColaboradorService;
 
 import java.util.function.Consumer;
@@ -23,14 +25,14 @@ public class MainApp extends Application implements DataChangeListener {
 
     private static Scene mainScene;
     private static Stage stage;
-    private Colaborador colaboradorLogado;
+    private Object logado;
 
-    public Colaborador getFuncionarioLogado() {
-        return colaboradorLogado;
+    public Object getLogado() {
+        return this.logado;
     }
 
-    public void setFuncionarioLogado(Colaborador colaboradorLogado) {
-        this.colaboradorLogado = colaboradorLogado;
+    public void setFuncionarioLogado(Object logado) {
+        this.logado = logado;
     }
 
 
@@ -45,13 +47,23 @@ public class MainApp extends Application implements DataChangeListener {
             Colaborador colaborador = new Colaborador();
             String caminhoDoFXML = "";
             createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
-            if (this.getFuncionarioLogado() == null) {
+            if (this.getLogado() == null) {
                 createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
 
             } else {
 
-                Colaborador colaboradorLogado = this.getFuncionarioLogado();
-                String funcao = colaboradorLogado.getFuncao();
+                //    Colaborador colaboradorLogado = (Colaborador) this.getLogado();
+
+                String funcao = "";
+                if (this.getLogado() instanceof Colaborador) {
+                    funcao = "Especialista";
+                    System.out.println("ESPECIALISTA=> ");
+                } else if (this.getLogado() instanceof Atendente) {
+                    funcao = "Atendente";
+                    System.out.println("ATENDENTE" + this.getLogado());
+                } else {
+                    System.out.println("ISSO --->>> " + this.getLogado().getClass());
+                }
 
                 caminhoDoFXML = "/org/openjfx/gui/MainAppView.fxml";
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
@@ -65,7 +77,7 @@ public class MainApp extends Application implements DataChangeListener {
                 primaryStage.setTitle("ClinPlus - Painel Administrativo");
                 MainAppViewController controller = loader.getController();
 
-                controller.setFuncionarioLogado(this.getFuncionarioLogado());
+                controller.setLogado(this.getLogado());
                 controller.setParent(this);
 
 
@@ -83,15 +95,17 @@ public class MainApp extends Application implements DataChangeListener {
                             });
 
                 } else if (funcao.equals("Especialista")) {
+                    Colaborador especialista = (Colaborador) this.getLogado();
                     System.out.println("###>>> Login Especialista <<<###");
                     controller.buttonAction("/org/openjfx/gui/TelaEspecialista.fxml",
                             (TelaEspecialistaController telaEspecialistaController) -> {
-                                telaEspecialistaController.setEspecialistaLogado(this.getFuncionarioLogado());
+                                telaEspecialistaController.setEspecialistaLogado(especialista);
                                 telaEspecialistaController.subscribeDataChangeListener(controller);
                                 telaEspecialistaController.subscribeDataChangeListener(this);
                             });
 
                 } else {
+                    System.out.println("INDEFINIDO");
                 }
                 mainScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                     public void handle(KeyEvent ke) {
@@ -119,7 +133,7 @@ public class MainApp extends Application implements DataChangeListener {
             Pane pane = loader.load();
             LoginFormController controller = loader.getController();
             controller.setFuncionario(colaborador);
-            controller.setServices(new ColaboradorService());
+            controller.setServices(new ColaboradorService(), new AtendenteService());
             controller.subscribeDataChangeListener(this);
             Stage dialogStage = new Stage();
             dialogStage.setScene(new Scene(pane));
@@ -140,16 +154,18 @@ public class MainApp extends Application implements DataChangeListener {
     }
 
     @Override
-    public void onLogin(Colaborador colaborador) {
+    public void onLogin(Object logado) {
         System.out.println("###################### NOTIFICAÇÃO DE LOGIN #############");
-        this.setFuncionarioLogado(colaborador);
+        this.setFuncionarioLogado(logado);
+
+
     }
 
     @Override
     public void onLogout() {
         System.out.println("Logout Solicitado");
         this.stage.close();
-        this.colaboradorLogado = null;
+        this.logado = null;
         login(this.stage);
     }
 

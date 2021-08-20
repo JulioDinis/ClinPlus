@@ -165,18 +165,15 @@
             return listSexo;
         }
 
-        public static void abrirJrxm(String url)  {
+        public static void abrirJrxm(String url, Integer codigo) {
             Connection connection = DB.getConnection("Report");
             JasperService service = new JasperService();
 //            service.abrirJasperView("/org/openjfx/relatorios/jrxml/Colaboradores2.jrxml", connection);
 
+            if (codigo != null)
+                service.addParams("ID_TRATAMENTO", codigo);
             service.abrirJasperView(url, connection);
 
-            try {
-                connection.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
         }
     }
 

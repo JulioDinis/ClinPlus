@@ -22,6 +22,7 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Constraints;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.gui.util.ValidaCPF;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.exeption.ValidationException;
 import org.openjfx.model.service.ColaboradorService;
@@ -170,7 +171,7 @@ public class ColaboradorFormController implements Initializable {
         if (entity == null) {
             throw new IllegalStateException("Entity was null");
         }
-        txtIdFuncionario.setText(String.valueOf(entity.getIdFuncionario()));
+        txtIdFuncionario.setText(String.valueOf(entity.getIdEspecialista()));
         txtNome.setText(entity.getNome());
         txtCpf.setText(entity.getCpf());
         txtRg.setText(entity.getRg());
@@ -208,66 +209,70 @@ public class ColaboradorFormController implements Initializable {
     }
 
     private synchronized Colaborador getFormData() {
-        Colaborador obj = new Colaborador();
+        Colaborador paciente = new Colaborador();
 
         ValidationException exception = new ValidationException("Validation error");
 
-        obj.setIdFuncionario(Utils.tryParseToInt(txtIdFuncionario.getText()));
+        paciente.setIdFuncionario(Utils.tryParseToInt(txtIdFuncionario.getText()));
 
         if (isValido(txtNome, "nome", exception)) {
-            obj.setNome(txtNome.getText());
+            paciente.setNome(txtNome.getText());
         }
-        if (isValido(txtCpf, "cpf", exception)) {
-            obj.setCpf(txtCpf.getText());
+        if (ValidaCPF.isCPF((txtCpf.getText().replace(".", "")).replace("-", ""))) {
+            if (isValido(txtCpf, "cpf", exception)) {
+                paciente.setCpf(ValidaCPF.imprimeCPF(txtCpf.getText()));
+            }
+        } else {
+            exception.addError("cpf", "O campo não pode ficar vazio");
         }
         if (isValido(txtRg, "rg", exception))
-            obj.setRg(txtRg.getText());
+            paciente.setRg(txtRg.getText());
         if (dpDataNascimento.getValue() == null) {
             exception.addError("dataNascimento", "Seleciona a data de nascimento");
         } else {
             // data Piker Pegando Valor
             Instant instant = Instant.from(dpDataNascimento.getValue().atStartOfDay(ZoneId.systemDefault()));
-            obj.setDataNascimento(Date.from(instant));
+            paciente.setDataNascimento(Date.from(instant));
         }
         //sexo
         if (comboBoxSexo.getSelectionModel().isEmpty()) {
             exception.addError("sexo", "Selecione uma das opções");
         } else {
-            obj.setSexo(comboBoxSexo.getSelectionModel().getSelectedItem());
+            paciente.setSexo(comboBoxSexo.getSelectionModel().getSelectedItem());
         }
         if (isValido(txtEmail, "email", exception)) {
-            obj.setEmail(txtEmail.getText());
+            paciente.setEmail(txtEmail.getText());
         }
         if (isValido(txtLogradouro, "logradouro", exception)) {
-            obj.setLogradouro(txtLogradouro.getText());
+            paciente.setLogradouro(txtLogradouro.getText());
         }
         if (isValido(txtCidade, "cidade", exception)) {
-            obj.setCidade(txtCidade.getText());
+            paciente.setCidade(txtCidade.getText());
         }
         if (isValido(txtBairro, "bairro", exception))
-            obj.setBairro(txtBairro.getText());
+            paciente.setBairro(txtBairro.getText());
         if (isValido(txtCep, "cep", exception))
-            obj.setCep(txtCep.getText());
+            paciente.setCep(txtCep.getText());
         if (comboBoxUf.getSelectionModel().isEmpty()) {
             exception.addError("uf", "Selecione uma das opções");
         } else {
             String uf = comboBoxUf.getSelectionModel().getSelectedItem();
-            obj.setUf(uf);
+            paciente.setUf(uf);
         }
         if (isValido(txtTelefone, "telefone", exception))
-            obj.setTelefone(txtTelefone.getText());
+            paciente.setTelefone(txtTelefone.getText());
         if (isValido(txtFuncao, "funcao", exception))
-            obj.setFuncao(txtFuncao.getText());
+            paciente.setCR(txtFuncao.getText());
         if (isValido(txtEspecialidade, "especialidade", exception)) {
-            obj.setEspecialidade(txtEspecialidade.getText());
+            paciente.setEspecialidade(txtEspecialidade.getText());
         }
         if (isValido(txtSalario, "salario", exception)) {
-            obj.setSalario(Double.parseDouble(txtSalario.getText()));
+            paciente.setSalario(Double.parseDouble(txtSalario.getText()));
         }
         if (txtSenha.getText() == null || txtSenha.getText().isEmpty()) {
             exception.addError("senha", "Digite a senha");
         } else {
-            obj.setSenha(Hashing.sha256()
+            paciente.setSenha(Hashing.sha256()
                     .hashString(txtSenha.getText(), StandardCharsets.UTF_8).toString());
         }
 
@@ -276,8 +281,8 @@ public class ColaboradorFormController implements Initializable {
             throw exception;
         }
 
-        System.out.println(obj);
-        return obj;
+        System.out.println(paciente);
+        return paciente;
 
     }
 

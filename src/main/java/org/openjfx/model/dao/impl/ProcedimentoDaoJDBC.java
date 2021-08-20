@@ -3,8 +3,8 @@ package org.openjfx.model.dao.impl;
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
 import org.openjfx.model.dao.ProcedimentoDao;
-import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.entities.Procedimento;
+import org.openjfx.model.service.ColaboradorService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
 
 
     @Override
-    public void update(Procedimento Procedimento) {
+    public void update(Procedimento procedimento) {
         System.out.println("Chegou aqui");
         PreparedStatement statement = null;
         try {
@@ -59,15 +59,15 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
                             + " SET descricao = ?,valor = ?"
                             + "WHERE id_Procedimento = ?");
 
-            createQuery(Procedimento, statement);
+            createQuery(procedimento, statement);
             System.out.println(statement);
             try {
-                statement.setInt(3, Procedimento.getIdProcedimento());
+                statement.setInt(3, procedimento.getIdProcedimento());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            System.out.println(Procedimento.getIdProcedimento());
+            System.out.println(procedimento.getIdProcedimento());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -238,7 +238,7 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
         try {
             statement.setString(1, procedimento.getDescricao());
             statement.setDouble(2, procedimento.getValor());
-            statement.setInt(3, procedimento.getIdEspecialista());
+            statement.setInt(3, procedimento.getColaborador().getIdEspecialista());
             return statement;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -248,11 +248,11 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
 
     private Procedimento instantiateProcedimento(ResultSet rs) throws SQLException {
         Procedimento Procedimento = new Procedimento();
-
+        ColaboradorService colaboradorService = new ColaboradorService();
         Procedimento.setDescricao(rs.getString("descricao"));
         Procedimento.setIdProcedimento(rs.getInt("id_Procedimento"));
         Procedimento.setValor(rs.getDouble("valor"));
-        Procedimento.setIdEspecialista(rs.getInt("id_especialista"));
+        Procedimento.setColaborador(colaboradorService.findById(rs.getInt("id_especialista")));
         return Procedimento;
     }
 

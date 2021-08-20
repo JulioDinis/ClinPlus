@@ -119,7 +119,7 @@ public class PacienteListController implements Initializable, DataChangeListener
     }
     @FXML
     public void onJfxButtonPacientesInativosClick(ActionEvent event){
-        Utils.abrirJrxm("/org/openjfx/relatorios/jrxml/PacientesInativos.jrxml");
+        Utils.abrirJrxm("/org/openjfx/relatorios/jrxml/PacientesInativos.jrxml", null);
     }
 
     @FXML
@@ -249,7 +249,7 @@ public class PacienteListController implements Initializable, DataChangeListener
     }
 
     @Override
-    public void onLogin(Colaborador colaborador) {
+    public void onLogin(Object obj) {
         throw new IllegalStateException("Service was Null");
     }
 
