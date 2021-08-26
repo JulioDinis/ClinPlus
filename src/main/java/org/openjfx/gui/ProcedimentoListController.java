@@ -97,7 +97,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
             throw new IllegalStateException("Service was Null");
         } else {
             List<ProcedimentoDTO> list;
-            if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
+            if (this.getFuncionarioLogado().getConselhoRegional().equals("Especialista")) {
                 list = service.findByDescricaoAndId(txtBusca.getText(), this.getFuncionarioLogado().getIdEspecialista());
             } else {
                 list = service.findByDescricao(txtBusca.getText());

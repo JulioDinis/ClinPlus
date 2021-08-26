@@ -201,7 +201,7 @@ public class ColaboradorFormController implements Initializable {
             comboBoxUf.setValue(entity.getUf());
         }
         txtTelefone.setText(entity.getTelefone());
-        txtFuncao.setText(entity.getFuncao());
+        txtConselho.setText(entity.getConselhoRegional());
         txtEspecialidade.setText(entity.getEspecialidade());
         Locale.setDefault(Locale.US);
 //        txtConselho.setText(String.format("%.2f", entity.g()));
@@ -209,62 +209,62 @@ public class ColaboradorFormController implements Initializable {
     }
 
     private synchronized Colaborador getFormData() {
-        Colaborador paciente = new Colaborador();
+        Colaborador colaborador = new Colaborador();
 
         ValidationException exception = new ValidationException("Validation error");
 
-        paciente.setIdFuncionario(Utils.tryParseToInt(txtIdFuncionario.getText()));
+        colaborador.setIdFuncionario(Utils.tryParseToInt(txtIdFuncionario.getText()));
 
         if (isValido(txtNome, "nome", exception)) {
-            paciente.setNome(txtNome.getText());
+            colaborador.setNome(txtNome.getText());
         }
         if (ValidaCPF.isCPF((txtCpf.getText().replace(".", "")).replace("-", ""))) {
             if (isValido(txtCpf, "cpf", exception)) {
-                paciente.setCpf(ValidaCPF.imprimeCPF(txtCpf.getText()));
+                colaborador.setCpf(ValidaCPF.imprimeCPF(txtCpf.getText()));
             }
         } else {
             exception.addError("cpf", "O campo não pode ficar vazio");
         }
         if (isValido(txtRg, "rg", exception))
-            paciente.setRg(txtRg.getText());
+            colaborador.setRg(txtRg.getText());
         if (dpDataNascimento.getValue() == null) {
             exception.addError("dataNascimento", "Seleciona a data de nascimento");
         } else {
             // data Piker Pegando Valor
             Instant instant = Instant.from(dpDataNascimento.getValue().atStartOfDay(ZoneId.systemDefault()));
-            paciente.setDataNascimento(Date.from(instant));
+            colaborador.setDataNascimento(Date.from(instant));
         }
         //sexo
         if (comboBoxSexo.getSelectionModel().isEmpty()) {
             exception.addError("sexo", "Selecione uma das opções");
         } else {
-            paciente.setSexo(comboBoxSexo.getSelectionModel().getSelectedItem());
+            colaborador.setSexo(comboBoxSexo.getSelectionModel().getSelectedItem());
         }
         if (isValido(txtEmail, "email", exception)) {
-            paciente.setEmail(txtEmail.getText());
+            colaborador.setEmail(txtEmail.getText());
         }
         if (isValido(txtLogradouro, "logradouro", exception)) {
-            paciente.setLogradouro(txtLogradouro.getText());
+            colaborador.setLogradouro(txtLogradouro.getText());
         }
         if (isValido(txtCidade, "cidade", exception)) {
-            paciente.setCidade(txtCidade.getText());
+            colaborador.setCidade(txtCidade.getText());
         }
         if (isValido(txtBairro, "bairro", exception))
-            paciente.setBairro(txtBairro.getText());
+            colaborador.setBairro(txtBairro.getText());
         if (isValido(txtCep, "cep", exception))
-            paciente.setCep(txtCep.getText());
+            colaborador.setCep(txtCep.getText());
         if (comboBoxUf.getSelectionModel().isEmpty()) {
             exception.addError("uf", "Selecione uma das opções");
         } else {
             String uf = comboBoxUf.getSelectionModel().getSelectedItem();
-            paciente.setUf(uf);
+            colaborador.setUf(uf);
         }
         if (isValido(txtTelefone, "telefone", exception))
-            paciente.setTelefone(txtTelefone.getText());
-        if (isValido(txtFuncao, "funcao", exception))
-            paciente.setCR(txtFuncao.getText());
+            colaborador.setTelefone(txtTelefone.getText());
+        if (isValido(txtConselho, "conselho", exception))
+            colaborador.setConselhoRegional(txtConselho.getText());
         if (isValido(txtEspecialidade, "especialidade", exception)) {
-            paciente.setEspecialidade(txtEspecialidade.getText());
+            colaborador.setEspecialidade(txtEspecialidade.getText());
         }
 //        if (isValido(txtSalario, "salario", exception)) {
 //            paciente.setSalario(Double.parseDouble(txtSalario.getText()));
@@ -272,17 +272,18 @@ public class ColaboradorFormController implements Initializable {
         if (txtSenha.getText() == null || txtSenha.getText().isEmpty()) {
             exception.addError("senha", "Digite a senha");
         } else {
-            paciente.setSenha(Hashing.sha256()
+            colaborador.setSenha(Hashing.sha256()
                     .hashString(txtSenha.getText(), StandardCharsets.UTF_8).toString());
         }
+
 
 
         if (exception.getErrors().size() > 0) {
             throw exception;
         }
 
-        System.out.println(paciente);
-        return paciente;
+        System.out.println(colaborador);
+        return colaborador;
 
     }
 
@@ -353,8 +354,8 @@ public class ColaboradorFormController implements Initializable {
         txtTelefone.setFocusColor(fields.contains("telefone") ? Color.valueOf("red") : Color.LIGHTGRAY);
         txtTelefone.setStyle(fields.contains("telefone") ? "-fx-border-color: red" : "-fx-border-color: light gray");
 
-        txtFuncao.setFocusColor(fields.contains("funcao") ? Color.valueOf("red") : Color.LIGHTGRAY);
-        txtFuncao.setStyle(fields.contains("funcao") ? "-fx-border-color: red" : "-fx-border-color: light gray");
+        txtConselho.setFocusColor(fields.contains("funcao") ? Color.valueOf("red") : Color.LIGHTGRAY);
+        txtConselho.setStyle(fields.contains("funcao") ? "-fx-border-color: red" : "-fx-border-color: light gray");
         txtEspecialidade.setFocusColor(fields.contains("especialidade") ? Color.valueOf("red") : Color.LIGHTGRAY);
         txtEspecialidade.setStyle(fields.contains("especialidade") ? "-fx-border-color: red" : "-fx-border-color: light gray");
         txtSenha.setFocusColor(fields.contains("senha") ? Color.valueOf("red") : Color.LIGHTGRAY);

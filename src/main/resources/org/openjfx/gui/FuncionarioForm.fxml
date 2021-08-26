@@ -110,17 +110,12 @@
                   <Insets bottom="5.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </JFXComboBox>
-                <JFXTextField fx:id="txtFuncao" labelFloat="true" promptText="Funcao" GridPane.rowIndex="8">
+                <JFXTextField fx:id="txtEspecialidade" labelFloat="true" promptText="Especialidade" GridPane.rowIndex="8">
                     <GridPane.margin>
                         <Insets bottom="5.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="txtEspecialidade" labelFloat="true" promptText="Especialidade" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                    <GridPane.margin>
-                        <Insets bottom="5.0" right="10.0" top="10.0" />
-                    </GridPane.margin>
-                </JFXTextField>
-                <JFXTextField labelFloat="true" promptText="Conselho Regional" GridPane.rowIndex="9">
+                <JFXTextField fx:id="txtConselho" labelFloat="true" promptText="Conselho Regional - nº" GridPane.columnIndex="1" GridPane.rowIndex="8">
                     <GridPane.margin>
                         <Insets bottom="5.0" right="10.0" top="10.0" />
                     </GridPane.margin>

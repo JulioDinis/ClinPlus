@@ -9,9 +9,8 @@ public class Colaborador extends Pessoa implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
     private Integer idFuncionario;
-    private String funcao;
+    private String conselhoRegional;
     private String especialidade;
     private String senha;
     private Double salario;
@@ -38,12 +37,12 @@ public class Colaborador extends Pessoa implements Serializable {
         this.idFuncionario = idFuncionario;
     }
 
-    public String getFuncao() {
-        return funcao;
+    public String getConselhoRegional() {
+        return conselhoRegional;
     }
 
-    public void setCR(String funcao) {
-        this.funcao = funcao;
+    public void setConselhoRegional(String conselho) {
+        this.conselhoRegional = conselho;
     }
 
     public String getEspecialidade() {
@@ -71,7 +70,10 @@ public class Colaborador extends Pessoa implements Serializable {
     }
 
     public Date getDataContrato() {
-        return dataContrato;
+        if (this.dataContrato == null)
+            return new Date();
+        else
+            return this.dataContrato;
     }
 
     public void setDataContrato(Date dataContrato) {
@@ -93,19 +95,19 @@ public class Colaborador extends Pessoa implements Serializable {
         if (!(o instanceof Colaborador)) return false;
         if (!super.equals(o)) return false;
         Colaborador that = (Colaborador) o;
-        return Objects.equals(getIdEspecialista(), that.getIdEspecialista()) && Objects.equals(getFuncao(), that.getFuncao()) && Objects.equals(getEspecialidade(), that.getEspecialidade()) && Objects.equals(getSenha(), that.getSenha()) && Objects.equals(getSalario(), that.getSalario()) && Objects.equals(getDataContrato(), that.getDataContrato()) && Objects.equals(getDataDesligamento(), that.getDataDesligamento());
+        return Objects.equals(getIdEspecialista(), that.getIdEspecialista()) && Objects.equals(getConselhoRegional(), that.getConselhoRegional()) && Objects.equals(getEspecialidade(), that.getEspecialidade()) && Objects.equals(getSenha(), that.getSenha()) && Objects.equals(getSalario(), that.getSalario()) && Objects.equals(getDataContrato(), that.getDataContrato()) && Objects.equals(getDataDesligamento(), that.getDataDesligamento());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getIdEspecialista(), getFuncao(), getEspecialidade(), getSenha(), getSalario(), getDataContrato(), getDataDesligamento());
+        return Objects.hash(super.hashCode(), getIdEspecialista(), getConselhoRegional(), getEspecialidade(), getSenha(), getSalario(), getDataContrato(), getDataDesligamento());
     }
 
     @Override
     public String toString() {
         return "Colaborador{" +
                 "idFuncionario=" + idFuncionario +
-                ", funcao='" + funcao + '\'' +
+                ", funcao='" + conselhoRegional + '\'' +
                 ", especialidade='" + especialidade + '\'' +
                 ", senha='" + senha + '\'' +
                 ", salario=" + salario +

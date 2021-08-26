@@ -25,8 +25,8 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
             statement = connection.prepareStatement(
                     "INSERT INTO especialista "
                             + "(nome,cpf,rg,data_nascimento,sexo,email,logradouro,"
-                            + "cidade,bairro,cep,uf,telefone,especialidade, senha) "
-                            + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+                            + "cidade,bairro,cep,uf,telefone,especialidade, senha, data_admissao, conselho_regional) "
+                            + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
                     Statement.RETURN_GENERATED_KEYS
             );
 
@@ -70,10 +70,11 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
             statement.setString(10, colaborador.getCep());
             statement.setString(11, colaborador.getUf());
             statement.setString(12, colaborador.getTelefone());
-            statement.setString(13, colaborador.getFuncao());
-            statement.setString(14, colaborador.getEspecialidade());
-            statement.setString(15, colaborador.getSenha());
-            statement.setDouble(16, colaborador.getSalario());
+            statement.setString(13, colaborador.getEspecialidade());
+            statement.setString(14, colaborador.getSenha());
+            statement.setDate(15, new Date(colaborador.getDataContrato().getTime()));
+            statement.setString(16, colaborador.getConselhoRegional());
+
             return statement;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,15 +89,16 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
         try {
             statement = connection.prepareStatement(
                     "UPDATE especialista"
-                            + " SET nome = ?,cpf = ?,rg = ?,data_nascimento = ?,"
-                            + "sexo = ?,email = ?,logradouro = ?,cidade = ?,bairro = ?,"
-                            + "cep = ?,uf = ?,telefone = ?, especialidade = ?, senha = ? "
+                            + " SET nome = ?,cpf = ?,rg = ?,data_nascimento = ?, "
+                            + "sexo = ?,email = ?,logradouro = ?,cidade = ?,bairro = ?, "
+                            + "cep = ?,uf = ?,telefone = ?, especialidade = ?, senha = ?, "
+                            + " data_admissao = ?, conselho_regional =? "
                             + "WHERE id_colaborador = ?");
 
             createQuery(colaborador, statement);
 
             try {
-                statement.setInt(15, colaborador.getIdEspecialista());
+                statement.setInt(17, colaborador.getIdEspecialista());
             } catch (SQLException e) {
                 System.out.println(statement);
                 e.printStackTrace();
@@ -173,7 +175,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
         colaborador.setRg(rs.getString("rg"));
         colaborador.setCpf(rs.getString("cpf"));
         colaborador.setTelefone(rs.getString("telefone"));
-        colaborador.setCR(rs.getString("conselho_regional"));
+        colaborador.setConselhoRegional(rs.getString("conselho_regional"));
         colaborador.setEmail(rs.getString("email"));
         colaborador.setEspecialidade(rs.getString("especialidade"));
         colaborador.setDataContrato(rs.getDate("data_admissao"));
@@ -285,7 +287,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
                             "WHERE nome like ? " +
                             "and ativo = true " +
                             "ORDER BY nome");
-            statement.setString(1, "%"+name+"%");
+            statement.setString(1, "%" + name + "%");
             rs = statement.executeQuery();
             List<Colaborador> list = new ArrayList<>();
             while (rs.next()) {
