@@ -28,10 +28,7 @@ import org.openjfx.gui.util.Alerts;
 import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Pessoa;
-import org.openjfx.model.service.ColaboradorService;
-import org.openjfx.model.service.PacienteService;
-import org.openjfx.model.service.ProcedimentoService;
-import org.openjfx.model.service.TratamentoService;
+import org.openjfx.model.service.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -85,8 +82,8 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     }
     @FXML
     public void onMenuItemAtendenteAction() {
-        buttonAction("/org/openjfx/gui/FuncionarioList.fxml", (ColaboradorListController controller) -> {
-            controller.setFuncionarioService(new ColaboradorService());
+        buttonAction("/org/openjfx/gui/ColaboradorListController2.fxml", (ColaboradorListController2 controller) -> {
+            controller.setFuncionarioService(new AtendenteService());
             controller.updateTableView();
         });
     }

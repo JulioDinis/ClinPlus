@@ -11,6 +11,20 @@ import java.util.Date;
 @NoArgsConstructor
 public class ColaboradorDTO {
     private static final long serialVersionUID = 1L;
+    private Integer idPessoa;
+    private String nome;
+    private String cpf;
+    private String rg;
+    private Date dataNascimento;
+    private String sexo;
+    private String email;
+    private String logradouro;
+    private String cidade;
+    private String bairro;
+    private String cep;
+    private String uf;
+    private String telefone;
+    private boolean ativo;
     private Integer idAtendente;
     private String especialidade;
     private String senha;

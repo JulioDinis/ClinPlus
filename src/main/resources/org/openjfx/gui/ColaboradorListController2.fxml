@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ColaboradorListController2">
+    <children>
+        <Label prefHeight="35.0" prefWidth="560.0" text="Colaboradores Cadastrados [teste]">
+            <font>
+                <Font name="System Bold" size="25.0" />
+            </font>
+            <padding>
+                <Insets top="5.0" />
+            </padding>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" />
+         </VBox.margin>
+        </Label>
+      <ToolBar maxWidth="1.7976931348623157E308" prefHeight="90.0" prefWidth="815.0" VBox.vgrow="ALWAYS">
+         <items>
+            <JFXTextField fx:id="txtBusca" onKeyTyped="#onTxtBuscaChange" prefHeight="40.0" prefWidth="623.0" promptText="Busque pelo nome" unFocusColor="#4e56eb">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </JFXTextField>
+            <JFXButton prefHeight="34.0" prefWidth="120.0" ripplerFill="#3020e4" style="-fx-background-color: #CCC; -fx-background-radius: 25; -fx-border-radius: 25; -fx-border-color: #AAA;" text="Buscar">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/Icones/usuario busca/action-24x24-87443.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </items>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="20.0" />
+         </padding>
+      </ToolBar>
+        <TableView fx:id="tableViewFuncionario" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="795.0" scaleShape="false" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="tableColumnId" prefWidth="37.0" text="ID" />
+                <TableColumn fx:id="tableColumnNome" prefWidth="150.0" text="Nome" />
+                <TableColumn fx:id="tableColumnSexo" prefWidth="100.0" text="Sexo" />
+                <TableColumn fx:id="tableColumnCpf" prefWidth="88.0" text="CPF" />
+                <TableColumn fx:id="tableColumnDataNascimento" prefWidth="110.0" text="Nascimento" />
+                <TableColumn fx:id="tableColumnCidade" prefWidth="106.0" text="Cidade" />
+                <TableColumn fx:id="tableColumnEmail" minWidth="98.0" prefWidth="122.0" text="E-mail" />
+                <TableColumn fx:id="tableColumnTelefone" prefWidth="73.0" text="Telefone" />
+                <TableColumn fx:id="tableColumnEDIT" prefWidth="100.0" />
+                <TableColumn fx:id="tableColumnREMOVE" minWidth="70.0" prefWidth="100.0" />
+            </columns>
+            <VBox.margin>
+                <Insets left="10.0" right="10.0" />
+            </VBox.margin>
+        </TableView>
+      <ToolBar prefHeight="58.0" prefWidth="796.0">
+         <VBox.margin>
+            <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+         </VBox.margin>
+         <items>
+            <JFXButton fx:id="jFxBtNew" onAction="#onBtNewEspecialistaAction" prefHeight="38.0" prefWidth="213.0" text="Especialista">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/Icones/usuario adicionar/action-48x48-87406.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="jFxBtNew1" onAction="#onBtNewAtendenteAction" prefHeight="38.0" prefWidth="213.0" text="Atendente">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/Icones/usuario adicionar/action-48x48-87406.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="17.0" />
+         </items>
+      </ToolBar>
+    </children>
+</VBox>
