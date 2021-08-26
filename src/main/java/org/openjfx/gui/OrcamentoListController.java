@@ -27,6 +27,7 @@ import org.openjfx.mapper.TratamentoMapper;
 import org.openjfx.model.dto.ItensTratamentoDTO;
 import org.openjfx.model.dto.ProcedimentoDTO;
 import org.openjfx.model.dto.TratamentoDTO;
+import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.entities.Tratamento;
@@ -47,7 +48,7 @@ import java.util.function.Consumer;
 public class OrcamentoListController implements Initializable, DataChangeListener {
 
     private ProcedimentoService procedimentoService;
-    private Colaborador colaboradorLogado;
+    private Object colaboradorLogado;
     private TratamentoMapper tratamentoMapper = new TratamentoMapper();
     private ItensTratamentoService itensTratamentoService = new ItensTratamentoService();
 
@@ -96,14 +97,14 @@ public class OrcamentoListController implements Initializable, DataChangeListene
 
 
     // eventos
-    @FXML
-    public void onBtNewAction(ActionEvent event) {
-        Procedimento procedimento = new Procedimento();
-        procedimento.setColaborador(colaboradorLogado);
-        Stage parentStage = Utils.currentStage(event);
-        createDialogForm(procedimento, "/org/openjfx/gui/ProcedimentoForm.fxml", parentStage);
-
-    }
+//    @FXML
+//    public void onBtNewAction(ActionEvent event) {
+//        Procedimento procedimento = new Procedimento();
+//        procedimento.setColaborador(colaboradorLogado);
+//        Stage parentStage = Utils.currentStage(event);
+//        createDialogForm(procedimento, "/org/openjfx/gui/ProcedimentoForm.fxml", parentStage);
+//
+//    }
 
     @FXML
     public void onBtAddAction(ActionEvent event) {
@@ -118,8 +119,8 @@ public class OrcamentoListController implements Initializable, DataChangeListene
             throw new IllegalStateException("Service was Null");
         } else {
             List<ProcedimentoDTO> list;
-            if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
-                list = procedimentoService.findByDescricaoAndId(txtBusca.getText(), this.getFuncionarioLogado().getIdEspecialista());
+            if ( this.getFuncionarioLogado() instanceof Colaborador) {
+                list = procedimentoService.findByDescricaoAndId(txtBusca.getText(),((Colaborador) this.getFuncionarioLogado()).getIdEspecialista());
             } else {
                 list = procedimentoService.findByDescricao(txtBusca.getText());
             }
@@ -144,13 +145,11 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                 valorComDesconto = total;
             } else {
                 valorComDesconto = total - Double.parseDouble(this.txtDesconto.getText());
-
             }
             this.total.setText(valorComDesconto.toString());
             this.tratamento.setDesconto(total - valorComDesconto);
             this.tratamento.setTotal(total);
             tratamentoService.saveOrUpdate(this.tratamento);
-
         }
     }
 
@@ -166,17 +165,11 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     @FXML
     public void onInprimirOrcamentoClick(ActionEvent event) {
         Integer codigo = null;
-
-
         if (this.tratamento != null) {
             this.tratamento.setTotal(Double.parseDouble(this.valorBruto.getText()));
             this.tratamento.setDesconto(Double.parseDouble(this.txtDesconto.getText()));
-
-
             tratamentoService.saveOrUpdate(this.tratamento);
-
             codigo = this.tratamento.getIdTratamento();
-
             Utils.abrirJrxm("/org/openjfx/relatorios/jrxml/orcamento.jrxml", codigo);
         }
     }
@@ -274,12 +267,14 @@ public class OrcamentoListController implements Initializable, DataChangeListene
         if (procedimentoService == null) {
             throw new IllegalStateException("Service was Null");
         }
-        if (this.getFuncionarioLogado().getFuncao().equals("Especialista")) {
-            List<ProcedimentoDTO> list = procedimentoService.findByEspecialista(this.getFuncionarioLogado().getIdEspecialista());
+        if (this.getFuncionarioLogado() instanceof Colaborador) {
+            List<ProcedimentoDTO> list = procedimentoService.findByEspecialista( ((Colaborador) this.getFuncionarioLogado()).getIdEspecialista());
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             this.tableColumnEspecialista.setVisible(false);
+            System.out.println("Colaborador");
         } else {
+            System.out.println("Outro -> " + this.getFuncionarioLogado().getClass());
             List<ProcedimentoDTO> list = procedimentoService.findAll();
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
@@ -293,7 +288,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
             Pane pane = loader.load();
             ProcedimentoFormController controller = loader.getController();
             controller.setEntity(procedimento);
-            controller.setColaborador(this.colaboradorLogado);
+            controller.setColaborador((Colaborador) this.colaboradorLogado);
             controller.setService(new ProcedimentoService(), new ProcedimentoService());
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
@@ -329,7 +324,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
     }
 
-    public Colaborador getFuncionarioLogado() {
+    public Object getFuncionarioLogado() {
         return colaboradorLogado;
     }
 

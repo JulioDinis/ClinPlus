@@ -10,17 +10,15 @@ public class Atendente extends Pessoa implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private Integer idFuncionario;
-    private String funcao;
-    private String especialidade;
+    private Integer idAtendente;
     private String senha;
     private Double salario;
     private Date dataContrato;
     private Date dataDesligamento;
 
-    public Atendente(Integer idPessoa, String nome, String cpf, String rg, Date dataNascimento, String sexo, String email, String logradouro, String cidade, String bairro, String cep, String uf, String telefone, boolean ativo, Integer idFuncionario) {
+    public Atendente(Integer idPessoa, String nome, String cpf, String rg, Date dataNascimento, String sexo, String email, String logradouro, String cidade, String bairro, String cep, String uf, String telefone, boolean ativo, Integer idAtendente) {
         super(idPessoa, nome, cpf, rg, dataNascimento, sexo, email, logradouro, cidade, bairro, cep, uf, telefone, ativo);
-        this.idFuncionario = idFuncionario;
+        this.idAtendente = idAtendente;
     }
 
     public Atendente() {
@@ -30,29 +28,14 @@ public class Atendente extends Pessoa implements Serializable {
         return serialVersionUID;
     }
 
-    public Integer getIdFuncionario() {
-        return idFuncionario;
+    public Integer getIdAtendente() {
+        return idAtendente;
     }
 
-    public void setIdFuncionario(Integer idFuncionario) {
-        this.idFuncionario = idFuncionario;
+    public void setIdAtendente(Integer idAtendente) {
+        this.idAtendente = idAtendente;
     }
 
-    public String getFuncao() {
-        return funcao;
-    }
-
-    public void setFuncao(String funcao) {
-        this.funcao = funcao;
-    }
-
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
 
     public String getSenha() {
         return senha;
@@ -93,20 +76,18 @@ public class Atendente extends Pessoa implements Serializable {
         if (!(o instanceof Atendente)) return false;
         if (!super.equals(o)) return false;
         Atendente that = (Atendente) o;
-        return Objects.equals(getIdFuncionario(), that.getIdFuncionario()) && Objects.equals(getFuncao(), that.getFuncao()) && Objects.equals(getEspecialidade(), that.getEspecialidade()) && Objects.equals(getSenha(), that.getSenha()) && Objects.equals(getSalario(), that.getSalario()) && Objects.equals(getDataContrato(), that.getDataContrato()) && Objects.equals(getDataDesligamento(), that.getDataDesligamento());
+        return Objects.equals(getIdAtendente(), that.getIdAtendente()) && Objects.equals(getSenha(), that.getSenha()) && Objects.equals(getSalario(), that.getSalario()) && Objects.equals(getDataContrato(), that.getDataContrato()) && Objects.equals(getDataDesligamento(), that.getDataDesligamento());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getIdFuncionario(), getFuncao(), getEspecialidade(), getSenha(), getSalario(), getDataContrato(), getDataDesligamento());
+        return Objects.hash(super.hashCode(), getIdAtendente(), getSenha(), getSalario(), getDataContrato(), getDataDesligamento());
     }
 
     @Override
     public String toString() {
         return "Colaborador{" +
-                "idFuncionario=" + idFuncionario +
-                ", funcao='" + funcao + '\'' +
-                ", especialidade='" + especialidade + '\'' +
+                "idFuncionario=" + idAtendente +
                 ", senha='" + senha + '\'' +
                 ", salario=" + salario +
                 ", dataContrato=" + dataContrato +

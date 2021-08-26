@@ -26,7 +26,9 @@ import org.openjfx.db.DbIntegrityException;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.service.AtendenteService;
 import org.openjfx.model.service.ColaboradorService;
 
 import java.net.URL;
@@ -92,17 +94,37 @@ public class ColaboradorListController implements Initializable, DataChangeListe
 
     // eventos
     @FXML
-    public void onBtNewAction(ActionEvent event) {
+    public void onBtNewEspecialistaAction(ActionEvent event) {
         Colaborador colaborador = new Colaborador();
         Stage parentStage = Utils.currentStage(event);
-        createDialogForm(colaborador, "/org/openjfx/gui/FuncionarioForm.fxml", parentStage);
+        createDialogForm(colaborador, "/org/openjfx/gui/FuncionarioForm.fxml", parentStage, (ColaboradorFormController controller) -> {
+            controller.setFuncionario(colaborador);
+            controller.setServices(new ColaboradorService(), new ColaboradorService());
+            controller.loadComboBox();
+            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
+        }, "Especialista");
     }
+
+    @FXML
+    public void onBtNewAtendenteAction(ActionEvent event) {
+        Colaborador colaborador = new Colaborador();
+        Stage parentStage = Utils.currentStage(event);
+        createDialogForm(colaborador, "/org/openjfx/gui/AtendenteForm.fxml", parentStage, (AtendenteFormController controller) -> {
+            controller.setFuncionario(new Atendente());
+            controller.setServices(new AtendenteService(), new AtendenteService());
+            controller.loadComboBox();
+            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
+        }, "Atendente");
+    }
+
     @FXML
     public void onTxtBuscaChange() {
         System.out.println("Valor Alterado");
         if (service == null) {
             throw new IllegalStateException("Service was Null");
-        }else{
+        } else {
             List<Colaborador> list = service.findByName(txtBusca.getText());
             System.out.println(list);
             obsList = FXCollections.observableArrayList(list);
@@ -151,18 +173,37 @@ public class ColaboradorListController implements Initializable, DataChangeListe
         initRemoveButtons();
     }
 
-    private void createDialogForm(Colaborador colaborador, String absolutName, Stage parentStage) {
+    //    private void createDialogForm(Colaborador colaborador, String absolutName, Stage parentStage) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
+//            Pane pane = loader.load();
+//            ColaboradorFormController controller = loader.getController();
+//            controller.setFuncionario(colaborador);
+//            controller.setServices(new ColaboradorService(), new ColaboradorService());
+//            controller.loadComboBox();
+//            controller.subscribeDataChangeListener(this);
+//            controller.updateFormData();
+//            Stage dialogStage = new Stage();
+//            dialogStage.setTitle("Insira os dados do Funcionário");
+//            dialogStage.setScene(new Scene(pane));
+//            dialogStage.setResizable(false);
+//            dialogStage.initOwner(parentStage);
+//            dialogStage.initModality(Modality.WINDOW_MODAL);
+//            dialogStage.showAndWait();
+//        } catch (Exception e) {
+//            System.out.println("ERRO AQUI");
+//            e.printStackTrace();
+//            Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
+//        }
+//    }
+    private synchronized <T> void createDialogForm(Colaborador colaborador, String absolutName, Stage parentStage, Consumer<T> initialingAction, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
-            ColaboradorFormController controller = loader.getController();
-            controller.setFuncionario(colaborador);
-            controller.setServices(new ColaboradorService(), new ColaboradorService());
-            controller.loadComboBox();
-            controller.subscribeDataChangeListener(this);
-            controller.updateFormData();
+            T controller = loader.getController();
+            initialingAction.accept(controller);
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Insira os dados do Funcionário");
+            dialogStage.setTitle(title);
             dialogStage.setScene(new Scene(pane));
             dialogStage.setResizable(false);
             dialogStage.initOwner(parentStage);
@@ -204,6 +245,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
         tableColumnEDIT.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
             private final FontIcon editarIcone = new FontIcon("fa-edit");
             private final JFXButton button = new JFXButton("Editar", editarIcone);
+
             @Override
             protected void updateItem(Colaborador obj, boolean empty) {
                 super.updateItem(obj, empty);
@@ -215,8 +257,14 @@ public class ColaboradorListController implements Initializable, DataChangeListe
                 setGraphic(button);
                 // seta a action do button
                 button.setOnAction(
-                        event -> createDialogForm(
-                                obj, "/org/openjfx/gui/FuncionarioForm.fxml", Utils.currentStage(event)));
+//                        event -> createDialogForm(
+//                                obj, "/org/openjfx/gui/FuncionarioForm.fxml", Utils.currentStage(event)));
+                        event -> createDialogForm(obj, "/org/openjfx/gui/FuncionarioForm.fxml", Utils.currentStage(event), (ColaboradorFormController controller) -> {
+                            controller.setFuncionario(obj);
+                            controller.setServices(new ColaboradorService(), new ColaboradorService());
+                            controller.loadComboBox();
+                            controller.updateFormData();
+                        }, "Editar"));
             }
         });
     }
@@ -225,6 +273,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumnREMOVE.setCellFactory(param -> new TableCell<Colaborador, Colaborador>() {
             private JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
+
             @Override
             protected void updateItem(Colaborador obj, boolean empty) {
                 super.updateItem(obj, empty);

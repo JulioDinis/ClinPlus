@@ -72,7 +72,16 @@
             <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
          </VBox.margin>
          <items>
-            <JFXButton fx:id="jFxBtNew" onAction="#onBtNewAction" prefHeight="38.0" prefWidth="213.0" text="Adicionar">
+            <JFXButton fx:id="jFxBtNew" onAction="#onBtNewEspecialistaAction" prefHeight="38.0" prefWidth="213.0" text="Especialista">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/Icones/usuario adicionar/action-48x48-87406.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="jFxBtNew1" onAction="#onBtNewAtendenteAction" prefHeight="38.0" prefWidth="213.0" text="Atendente">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>

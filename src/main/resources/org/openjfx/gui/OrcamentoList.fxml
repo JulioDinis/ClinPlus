@@ -7,6 +7,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -20,9 +22,9 @@
                <children>
                   <TableView fx:id="tableViewProcedimento" layoutX="15.0" layoutY="73.0" onMouseClicked="#handleRowSelect" prefHeight="317.0" prefWidth="398.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
                     <columns>
-                      <TableColumn fx:id="tableCollumDescricao" prefWidth="130.0" text="Descricao" />
-                      <TableColumn fx:id="tableColumValor" prefWidth="165.0" text="Valor" />
-                        <TableColumn fx:id="tableColumnEspecialista" prefWidth="102.0" text="Especialista" />
+                      <TableColumn fx:id="tableCollumDescricao" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" text="Descricao" />
+                      <TableColumn fx:id="tableColumValor" maxWidth="1.7976931348623157E308" minWidth="81.0" prefWidth="81.0" text="Valor" />
+                        <TableColumn fx:id="tableColumnEspecialista" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="123.0" text="Especialista" />
                     </columns>
                   </TableView>
                   <JFXTextField fx:id="txtBusca" labelFloat="true" layoutX="15.0" layoutY="14.0" onKeyTyped="#onTxtBuscaChange" prefHeight="26.0" prefWidth="354.0" promptText="Busca" />
@@ -36,6 +38,16 @@
                       <TableColumn fx:id="tableColumnQuantidade" prefWidth="133.0" text="Quantidade" />
                     </columns>
                   </TableView>
+                  <JFXTextField layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="199.0" promptText="Abrir orçamento" />
+                  <JFXButton layoutX="213.0" layoutY="14.0" text=" ">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/Icones/relatorio%20medico/analytics-64x64-189657.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                </children>
             </AnchorPane>
         </items>
@@ -48,7 +60,7 @@
                </font>
             </Text>
             <JFXTextField fx:id="txtDesconto" labelFloat="true" layoutX="14.0" layoutY="23.0" onKeyTyped="#onTxtDescontoChange" prefHeight="26.0" prefWidth="209.0" promptText="Desconto" />
-            <JFXTextField editable="false" layoutX="14.0" layoutY="76.0" prefHeight="26.0" prefWidth="209.0" promptText="Validade" />
+            <JFXTextField alignment="TOP_RIGHT" labelFloat="true" layoutX="14.0" layoutY="76.0" prefHeight="26.0" prefWidth="103.0" promptText="Validade" />
             <Label fx:id="total" layoutX="560.0" layoutY="73.0" prefHeight="35.0" prefWidth="166.0" text="0.00" textFill="#4d40dd">
                <font>
                   <Font size="29.0" />
@@ -64,6 +76,7 @@
                   <Font size="14.0" />
                </font>
             </Text>
+            <Text layoutX="135.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dias" wrappingWidth="53.361328125" />
          </children>
       </Pane>
       <ToolBar layoutX="17.0" layoutY="493.0" prefHeight="58.0" prefWidth="743.0">

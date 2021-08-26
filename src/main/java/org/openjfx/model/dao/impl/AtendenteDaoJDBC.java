@@ -3,9 +3,7 @@ package org.openjfx.model.dao.impl;
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
 import org.openjfx.model.dao.AtendenteDao;
-import org.openjfx.model.dao.ColaboradorDao;
 import org.openjfx.model.entities.Atendente;
-import org.openjfx.model.entities.Colaborador;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -27,8 +25,8 @@ public class AtendenteDaoJDBC implements AtendenteDao {
             statement = connection.prepareStatement(
                     "INSERT INTO atendente "
                             + "(nome,cpf,rg,data_nascimento,sexo,email,logradouro,"
-                            + "cidade,bairro,cep,uf,telefone,senha, salario) "
-                            + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+                            + "cidade,bairro,cep,uf,telefone,senha, salario, data_admissao) "
+                            + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
                     Statement.RETURN_GENERATED_KEYS
             );
 
@@ -41,7 +39,7 @@ public class AtendenteDaoJDBC implements AtendenteDao {
                 if (rs.next()) {
                     int idPessoa = rs.getInt(1);
                     atendente.setIdPessoa(idPessoa);
-                    atendente.setIdFuncionario(idPessoa);
+                    atendente.setIdAtendente(idPessoa);
                 }
                 DB.closeResultSet(rs);
             } else {
@@ -72,10 +70,9 @@ public class AtendenteDaoJDBC implements AtendenteDao {
             statement.setString(10, atendente.getCep());
             statement.setString(11, atendente.getUf());
             statement.setString(12, atendente.getTelefone());
-            statement.setString(13, atendente.getFuncao());
-            statement.setString(14, atendente.getEspecialidade());
-            statement.setString(15, atendente.getSenha());
-            statement.setDouble(16, atendente.getSalario());
+            statement.setString(13, atendente.getSenha());
+            statement.setDouble(14, atendente.getSalario());
+            statement.setDate(15, new Date(atendente.getDataContrato().getTime()));
             return statement;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,13 +95,13 @@ public class AtendenteDaoJDBC implements AtendenteDao {
             createQuery(atendente, statement);
 
             try {
-                statement.setInt(15, atendente.getIdFuncionario());
+                statement.setInt(15, atendente.getIdAtendente());
             } catch (SQLException e) {
                 System.out.println(statement);
                 e.printStackTrace();
             }
 
-            System.out.println(atendente.getIdFuncionario());
+            System.out.println(atendente.getIdAtendente());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -164,7 +161,7 @@ public class AtendenteDaoJDBC implements AtendenteDao {
     private Atendente instantiateAtendente(ResultSet rs) throws SQLException {
         Atendente atendente = new Atendente();
         atendente.setIdPessoa(rs.getInt("id_pessoa"));
-        atendente.setIdFuncionario(rs.getInt("id_colaborador"));
+        atendente.setIdAtendente(rs.getInt("id_colaborador"));
         atendente.setNome(rs.getString("nome"));
         atendente.setLogradouro(rs.getString("logradouro"));
         atendente.setBairro(rs.getString("bairro"));
@@ -286,7 +283,7 @@ public class AtendenteDaoJDBC implements AtendenteDao {
                             "WHERE nome like ? " +
                             "and ativo = true " +
                             "ORDER BY nome");
-            statement.setString(1, "%"+name+"%");
+            statement.setString(1, "%" + name + "%");
             rs = statement.executeQuery();
             List<Atendente> list = new ArrayList<>();
             while (rs.next()) {

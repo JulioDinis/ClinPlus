@@ -22,7 +22,6 @@ import java.util.function.Consumer;
 
 public class MainApp extends Application implements DataChangeListener {
 
-
     private static Scene mainScene;
     private static Stage stage;
     private Object logado;
@@ -34,7 +33,6 @@ public class MainApp extends Application implements DataChangeListener {
     public void setFuncionarioLogado(Object logado) {
         this.logado = logado;
     }
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -49,11 +47,8 @@ public class MainApp extends Application implements DataChangeListener {
             createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
             if (this.getLogado() == null) {
                 createDialogForm(colaborador, "/org/openjfx/gui/LoginForm.fxml", primaryStage);
-
             } else {
-
                 //    Colaborador colaboradorLogado = (Colaborador) this.getLogado();
-
                 String funcao = "";
                 if (this.getLogado() instanceof Colaborador) {
                     funcao = "Especialista";
@@ -64,36 +59,23 @@ public class MainApp extends Application implements DataChangeListener {
                 } else {
                     System.out.println("ISSO --->>> " + this.getLogado().getClass());
                 }
-
                 caminhoDoFXML = "/org/openjfx/gui/MainAppView.fxml";
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(caminhoDoFXML));
                 ScrollPane scrollPane = loader.load();
                 scrollPane.setFitToHeight(true);
                 scrollPane.setFitToWidth(true);
-
                 mainScene = new Scene(scrollPane);
                 primaryStage.setScene(mainScene);
-
                 primaryStage.setTitle("ClinPlus - Painel Administrativo");
                 MainAppViewController controller = loader.getController();
-
                 controller.setLogado(this.getLogado());
                 controller.setParent(this);
-
-
                 if (funcao.equals("Atendente")) {
-
                     System.out.println("###>>> Login Atendente <<<###");
-
                     controller.buttonAction("/org/openjfx/gui/TelaAtendente.fxml",
                             (TelaAtendenteController telaAtendenteController) -> {
-//                              controller.setFuncionarioService(new ColaboradorService());
-//                              controller.setFuncionarioLogado(this.colaboradorLogado);
-//                              controller.updateTableView();
                                 telaAtendenteController.subscribeDataChangeListener(controller, this);
-
                             });
-
                 } else if (funcao.equals("Especialista")) {
                     Colaborador especialista = (Colaborador) this.getLogado();
                     System.out.println("###>>> Login Especialista <<<###");
@@ -103,7 +85,6 @@ public class MainApp extends Application implements DataChangeListener {
                                 telaEspecialistaController.subscribeDataChangeListener(controller);
                                 telaEspecialistaController.subscribeDataChangeListener(this);
                             });
-
                 } else {
                     System.out.println("INDEFINIDO");
                 }
@@ -118,15 +99,12 @@ public class MainApp extends Application implements DataChangeListener {
             e.printStackTrace();
         }
     }
-
     public static Scene getMainScene() {
         return mainScene;
     }
-
     public static void main(String[] args) {
         launch(args);
     }
-
     private void createDialogForm(Colaborador colaborador, String absolutName, Stage parentStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
@@ -148,19 +126,14 @@ public class MainApp extends Application implements DataChangeListener {
             Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
     @Override
     public void onDataChange() {
     }
-
     @Override
     public void onLogin(Object logado) {
         System.out.println("###################### NOTIFICAÇÃO DE LOGIN #############");
         this.setFuncionarioLogado(logado);
-
-
     }
-
     @Override
     public void onLogout() {
         System.out.println("Logout Solicitado");
@@ -168,9 +141,7 @@ public class MainApp extends Application implements DataChangeListener {
         this.logado = null;
         login(this.stage);
     }
-
     @Override
     public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
-
     }
 }

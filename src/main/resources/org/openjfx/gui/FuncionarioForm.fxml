@@ -19,7 +19,7 @@
       <Insets bottom="1.0" left="11.0" right="1.0" top="1.0" />
    </padding>
    <top>
-        <GridPane prefHeight="339.0" prefWidth="568.0" vgap="15.0" BorderPane.alignment="CENTER">
+        <GridPane prefHeight="409.0" prefWidth="684.0" vgap="15.0" BorderPane.alignment="CENTER">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="380.0" minWidth="0.0" prefWidth="346.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="333.0" minWidth="10.0" prefWidth="333.0" />
@@ -60,7 +60,7 @@
                         <Insets bottom="5.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </JFXTextField>
-            <DatePicker fx:id="dpDataNascimento" promptText="Data de Nascimento" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <DatePicker fx:id="dpDataNascimento" prefHeight="26.0" prefWidth="222.0" promptText="Data de Nascimento" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="5.0" right="10.0" top="10.0" />
                </GridPane.margin>
@@ -120,7 +120,7 @@
                         <Insets bottom="5.0" right="10.0" top="10.0" />
                     </GridPane.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="txtSalario" labelFloat="true" promptText="Sálario" GridPane.rowIndex="9">
+                <JFXTextField labelFloat="true" promptText="Conselho Regional" GridPane.rowIndex="9">
                     <GridPane.margin>
                         <Insets bottom="5.0" right="10.0" top="10.0" />
                     </GridPane.margin>
@@ -132,11 +132,11 @@
         </GridPane>
    </top>
    <bottom>
-      <AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="97.0" prefWidth="684.0" BorderPane.alignment="CENTER">
+      <AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="55.0" prefWidth="684.0" BorderPane.alignment="CENTER">
       
                 <children>
-                  <Button fx:id="btCancel" alignment="CENTER" contentDisplay="TOP" layoutX="197.0" layoutY="43.0" mnemonicParsing="false" onAction="#onBtCancelAction" prefHeight="26.0" prefWidth="205.0" text="Cancel" />
-                  <Button fx:id="btSalve" alignment="CENTER" contentDisplay="TOP" layoutX="411.0" layoutY="43.0" mnemonicParsing="false" onAction="#onBtSaveAction" prefHeight="26.0" prefWidth="214.0" text="Save">
+                  <Button fx:id="btCancel" alignment="CENTER" contentDisplay="TOP" layoutX="193.0" layoutY="15.0" mnemonicParsing="false" onAction="#onBtCancelAction" prefHeight="26.0" prefWidth="205.0" text="Cancel" />
+                  <Button fx:id="btSalve" alignment="CENTER" contentDisplay="TOP" layoutX="407.0" layoutY="15.0" mnemonicParsing="false" onAction="#onBtSaveAction" prefHeight="26.0" prefWidth="214.0" text="Save">
                       <padding>
                           <Insets right="10.0" />
                       </padding>

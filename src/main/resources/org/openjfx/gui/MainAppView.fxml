@@ -21,10 +21,11 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Cadastros">
                             <items>
-                                <MenuItem fx:id="menuItemPaciente" mnemonicParsing="false" onAction="#onMenuItemPacienteAction" text="Paciente" />
-                                <MenuItem fx:id="menuItemFuncionario" mnemonicParsing="false" onAction="#onMenuItemFuncionarioAction" text="Funcionario" />
-                                <MenuItem fx:id="menuItemProcedimento" mnemonicParsing="false" onAction="#onMenuItemProcedimentoAction" text="Procedimento" />
+                        <MenuItem fx:id="menuItemAtendente" mnemonicParsing="false" onAction="#onMenuItemAtendenteAction" text="Atendente" />
+                                <MenuItem fx:id="menuItemEspecialista" mnemonicParsing="false" onAction="#onMenuItemEspecialistaAction" text="Especialista" />
                         <MenuItem mnemonicParsing="false" onAction="#onMenuItemOrcamentoAction" text="Orcamento" />
+                                <MenuItem fx:id="menuItemPaciente" mnemonicParsing="false" onAction="#onMenuItemPacienteAction" text="Paciente" />
+                                <MenuItem fx:id="menuItemProcedimento" mnemonicParsing="false" onAction="#onMenuItemProcedimentoAction" text="Procedimento" />
                             </items>
                         </Menu>
                   <Menu mnemonicParsing="false" text="Relatorios">

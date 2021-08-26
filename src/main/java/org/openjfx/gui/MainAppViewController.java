@@ -45,8 +45,9 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     private Colaborador colaboradorLogado;
     private DataChangeListener parent;
     @FXML
-    private MenuItem menuItemFuncionario;
-
+    private MenuItem menuItemEspecialista;
+    @FXML
+    private MenuItem menuItemAtendente;
     @FXML
     private MenuItem menuItemProcedimento;
 
@@ -76,13 +77,19 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     }
 
     @FXML
-    public void onMenuItemFuncionarioAction() {
+    public void onMenuItemEspecialistaAction() {
         buttonAction("/org/openjfx/gui/FuncionarioList.fxml", (ColaboradorListController controller) -> {
             controller.setFuncionarioService(new ColaboradorService());
             controller.updateTableView();
         });
     }
-
+    @FXML
+    public void onMenuItemAtendenteAction() {
+        buttonAction("/org/openjfx/gui/FuncionarioList.fxml", (ColaboradorListController controller) -> {
+            controller.setFuncionarioService(new ColaboradorService());
+            controller.updateTableView();
+        });
+    }
     @FXML
     public void onMenuItemProcedimentoAction() {
         buttonAction("/org/openjfx/gui/ProcedimentoList.fxml", (ProcedimentoListController controller) -> {
@@ -263,31 +270,22 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
-
     // Listeners
     @Override
     public void onDataChange() {
-
     }
-
     @Override
     public void onLogin(Object obj) {
-
     }
-
     @Override
     public void onLogout() {
-
     }
-
     @Override
     public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
         // Arrumar para funcionar com qualquer tela (USAR T)
         System.out.println("*********************** TELA ALTERADA ******************************");
         buttonAction(resource, initialingAction);
     }
-
     private void createDialogForm(String absolutName, Stage parentStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));

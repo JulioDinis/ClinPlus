@@ -81,7 +81,7 @@ public class ColaboradorFormController implements Initializable {
     @FXML
     private JFXPasswordField txtSenha;
     @FXML
-    private JFXTextField txtSalario;
+    private JFXTextField txtConselho;
 
 
 
@@ -164,7 +164,7 @@ public class ColaboradorFormController implements Initializable {
         Constraints.setTextFieldMaxLength(txtNome, 70);
         Constraints.setTextFieldMaxLength(txtEmail, 60);
         Utils.formatDatePicker(dpDataNascimento, "dd/MM/yyyy");
-        Constraints.setTextFieldDouble(txtSalario);
+//        Constraints.setTextFieldDouble(txtSalario);
     }
 
     public void updateFormData() {
@@ -204,7 +204,7 @@ public class ColaboradorFormController implements Initializable {
         txtFuncao.setText(entity.getFuncao());
         txtEspecialidade.setText(entity.getEspecialidade());
         Locale.setDefault(Locale.US);
-        txtSalario.setText(String.format("%.2f", entity.getSalario()));
+//        txtConselho.setText(String.format("%.2f", entity.g()));
 
     }
 
@@ -266,9 +266,9 @@ public class ColaboradorFormController implements Initializable {
         if (isValido(txtEspecialidade, "especialidade", exception)) {
             paciente.setEspecialidade(txtEspecialidade.getText());
         }
-        if (isValido(txtSalario, "salario", exception)) {
-            paciente.setSalario(Double.parseDouble(txtSalario.getText()));
-        }
+//        if (isValido(txtSalario, "salario", exception)) {
+//            paciente.setSalario(Double.parseDouble(txtSalario.getText()));
+//        }
         if (txtSenha.getText() == null || txtSenha.getText().isEmpty()) {
             exception.addError("senha", "Digite a senha");
         } else {
@@ -359,8 +359,8 @@ public class ColaboradorFormController implements Initializable {
         txtEspecialidade.setStyle(fields.contains("especialidade") ? "-fx-border-color: red" : "-fx-border-color: light gray");
         txtSenha.setFocusColor(fields.contains("senha") ? Color.valueOf("red") : Color.LIGHTGRAY);
         txtSenha.setStyle(fields.contains("senha") ? "-fx-border-color: red" : "-fx-border-color: light gray");
-        txtSalario.setFocusColor(fields.contains("salario") ? Color.valueOf("red") : Color.LIGHTGRAY);
-        txtSalario.setStyle(fields.contains("salario") ? "-fx-border-color: red" : "-fx-border-color: light gray");
+//        txtSalario.setFocusColor(fields.contains("salario") ? Color.valueOf("red") : Color.LIGHTGRAY);
+//        txtSalario.setStyle(fields.contains("salario") ? "-fx-border-color: red" : "-fx-border-color: light gray");
 
 
     }

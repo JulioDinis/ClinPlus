@@ -59,7 +59,6 @@ public class LoginFormController implements Initializable {
         try {
             Atendente atendenteLogado = atendenteService.logar(getFormDataAtendente());
             Colaborador colaboradorLogado = colaboradorService.logar(getFormDataColaborador());
-
             if ((atendenteLogado == null) && (colaboradorLogado == null)) {
                 ValidationException exception = new ValidationException("Validation error");
                 exception.addError("login", "Credenciais recusadas");
@@ -71,10 +70,7 @@ public class LoginFormController implements Initializable {
                 System.out.println("ATENDENTE LOGADO");
                 notifyDataChangeListeners(atendenteLogado);
             }
-
             Utils.currentStage(event).close();
-
-
         } catch (ValidationException e) {
             //           e.printStackTrace(); it is ok
             setErrosMensagens(e.getErrors());
@@ -82,7 +78,6 @@ public class LoginFormController implements Initializable {
             e.printStackTrace();
             Alerts.showAlert("Error Saving object", null, e.getMessage(), Alert.AlertType.ERROR);
         }
-
     }
 
 //    @FXML
@@ -181,9 +176,9 @@ public class LoginFormController implements Initializable {
     private synchronized Atendente getFormDataAtendente() {
         Atendente atendente = new Atendente();
         ValidationException exception = new ValidationException("Validation error");
-        atendente.setIdFuncionario(Utils.tryParseToInt(txtCodigo.getText()));
+        atendente.setIdAtendente(Utils.tryParseToInt(txtCodigo.getText()));
         if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty()) {
-            atendente.setIdFuncionario(Integer.parseInt(txtCodigo.getText()));
+            atendente.setIdAtendente(Integer.parseInt(txtCodigo.getText()));
         }
         if (txtSenha.getText() == null || txtSenha.getText().isEmpty()) {
             exception.addError("senha", "Digite a senha");
