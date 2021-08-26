@@ -194,6 +194,7 @@ public class AtendenteDaoJDBC implements AtendenteDao {
 
             List<Atendente> list = new ArrayList<>();
 
+            System.out.println(list);
             while (rs.next()) {
 
                 Atendente atendente = instantiateAtendente(rs);
@@ -222,7 +223,8 @@ public class AtendenteDaoJDBC implements AtendenteDao {
             rs = statement.executeQuery();
 
             List<Atendente> list = new ArrayList<>();
-
+            System.out.println("Buscou -> ");
+            System.out.println(list);
             while (rs.next()) {
 
                 Atendente atendente = instantiateAtendente(rs);

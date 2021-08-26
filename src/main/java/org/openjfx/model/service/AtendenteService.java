@@ -1,21 +1,25 @@
 package org.openjfx.model.service;
 
+import org.openjfx.mapper.ColaboradorMapper;
 import org.openjfx.model.dao.AtendenteDao;
 import org.openjfx.model.dao.DaoFactory;
+import org.openjfx.model.dto.ColaboradorDTO;
 import org.openjfx.model.entities.Atendente;
+import org.openjfx.model.entities.Colaborador;
 
 import java.util.List;
 
 public class AtendenteService {
     private AtendenteDao dao = DaoFactory.createAtendenteDao("Colaborador Service");
+    ColaboradorMapper mapper = new ColaboradorMapper();
 
-    public List<Atendente> findAll() {
+    public List<ColaboradorDTO> findAll() {
 
-        return dao.findAll();
+        return mapper.toDto(dao.findAll());
     }
 
-    public List<Atendente> findAllAtivos() {
-        return dao.findAllAtivos();
+    public List<ColaboradorDTO> findAllAtivos() {
+        return mapper.toDto(dao.findAllAtivos());
     }
 
     public void saveOrUpdate(Atendente atendente) {
@@ -34,7 +38,7 @@ public class AtendenteService {
         return dao.logar(atendente.getIdAtendente(), atendente.getSenha());
     }
 
-    public List<Atendente> findByName(String name) {
-        return dao.findByName(name);
+    public List<ColaboradorDTO> findByName(String name) {
+        return mapper.toDto(dao.findByName(name));
     }
 }
