@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -96,12 +95,6 @@
                </opaqueInsets>
             </HBox>
          </bottom>
-         <top>
-            <Label alignment="CENTER" contentDisplay="TOP" nodeOrientation="LEFT_TO_RIGHT" prefHeight="16.0" prefWidth="107.0" text="Fulano de Tal" textAlignment="CENTER" BorderPane.alignment="TOP_RIGHT">
-               <BorderPane.margin>
-                  <Insets right="10.0" top="20.0" />
-               </BorderPane.margin></Label>
-         </top>
          <center>
             <ImageView fitHeight="257.0" fitWidth="253.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>

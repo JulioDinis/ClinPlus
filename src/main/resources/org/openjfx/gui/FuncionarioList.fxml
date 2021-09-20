@@ -15,7 +15,7 @@
 
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ColaboradorListController">
     <children>
-        <Label prefHeight="45.0" prefWidth="407.0" text="Colaboradores Cadastrados">
+        <Label prefHeight="45.0" prefWidth="407.0" text="Especialistas Cadastrados">
             <font>
                 <Font name="System Bold" size="25.0" />
             </font>
@@ -81,7 +81,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="jFxBtNew1" onAction="#onBtNewAtendenteAction" prefHeight="38.0" prefWidth="213.0" text="Atendente">
+            <JFXButton fx:id="jFxBtNew1" onAction="#onBtNewAtendenteAction" prefHeight="38.0" prefWidth="213.0" text="Atendente" visible="false">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>

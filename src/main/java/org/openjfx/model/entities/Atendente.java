@@ -54,7 +54,7 @@ public class Atendente extends Pessoa implements Serializable {
     }
 
     public Date getDataContrato() {
-        return dataContrato;
+        return this.dataContrato;
     }
 
     public void setDataContrato(Date dataContrato) {

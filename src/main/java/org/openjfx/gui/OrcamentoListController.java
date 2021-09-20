@@ -119,8 +119,8 @@ public class OrcamentoListController implements Initializable, DataChangeListene
             throw new IllegalStateException("Service was Null");
         } else {
             List<ProcedimentoDTO> list;
-            if ( this.getFuncionarioLogado() instanceof Colaborador) {
-                list = procedimentoService.findByDescricaoAndId(txtBusca.getText(),((Colaborador) this.getFuncionarioLogado()).getIdEspecialista());
+            if (this.getFuncionarioLogado() instanceof Colaborador) {
+                list = procedimentoService.findByDescricaoAndId(txtBusca.getText(), ((Colaborador) this.getFuncionarioLogado()).getIdEspecialista());
             } else {
                 list = procedimentoService.findByDescricao(txtBusca.getText());
             }
@@ -213,9 +213,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                                     itensTratamentoDto.setProcedimento(p);
                                     itensTratamentoDto.setQuantidade(1);
                                     itensTratamentoService.saveOrUpdate(itensTratamentoDto);
-
                                 } else {
-
                                     ItensTratamentoDTO itensTratamentoDto;
                                     itensTratamentoDto = itensTratamentoService.findByTratamentoIdAndProcedimentoId(this.tratamento.getIdTratamento(), p.getIdProcedimento());
                                     System.out.println("Atualizar a lista");
@@ -268,7 +266,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
             throw new IllegalStateException("Service was Null");
         }
         if (this.getFuncionarioLogado() instanceof Colaborador) {
-            List<ProcedimentoDTO> list = procedimentoService.findByEspecialista( ((Colaborador) this.getFuncionarioLogado()).getIdEspecialista());
+            List<ProcedimentoDTO> list = procedimentoService.findByEspecialista(((Colaborador) this.getFuncionarioLogado()).getIdEspecialista());
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             this.tableColumnEspecialista.setVisible(false);

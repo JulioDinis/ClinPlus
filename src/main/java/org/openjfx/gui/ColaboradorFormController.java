@@ -171,7 +171,13 @@ public class ColaboradorFormController implements Initializable {
         if (entity == null) {
             throw new IllegalStateException("Entity was null");
         }
-        txtIdFuncionario.setText(String.valueOf(entity.getIdEspecialista()));
+
+        if(entity.getIdEspecialista() != null){
+            txtIdFuncionario.setText(String.valueOf(entity.getIdEspecialista()));
+        }else {
+            txtIdFuncionario.setText("+");
+
+        }
         txtNome.setText(entity.getNome());
         txtCpf.setText(entity.getCpf());
         txtRg.setText(entity.getRg());

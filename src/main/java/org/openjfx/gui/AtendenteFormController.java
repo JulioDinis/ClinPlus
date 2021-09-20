@@ -85,7 +85,6 @@ public class AtendenteFormController implements Initializable {
     private JFXPasswordField txtSenha;
 
 
-
     @FXML
     private Label labelErrorNome,
             labelErrorCpf,
@@ -172,7 +171,12 @@ public class AtendenteFormController implements Initializable {
         if (entity == null) {
             throw new IllegalStateException("Entity was null");
         }
-        txtIdFuncionario.setText(String.valueOf(entity.getIdAtendente()));
+
+        if (entity.getIdAtendente() != null) {
+            txtIdFuncionario.setText(String.valueOf(entity.getIdAtendente()));
+        } else {
+            txtIdFuncionario.setText("");
+        }
         txtNome.setText(entity.getNome());
         txtCpf.setText(entity.getCpf());
         txtRg.setText(entity.getRg());
@@ -201,10 +205,14 @@ public class AtendenteFormController implements Initializable {
             comboBoxUf.setValue(entity.getUf());
         }
         txtTelefone.setText(entity.getTelefone());
-//        txtEspecialidade.setText(entity.getEspecialidade());
-        Locale.setDefault(Locale.US);
-//        txtConselho.setText(String.format("%.2f", entity.g()));
 
+//        txtEspecialidade.setText(entity.getEspecialidade());
+
+        txtSalario.setText(String.format("%.2f", entity.getSalario()));
+        Locale.setDefault(Locale.US);
+        if (entity.getDataContrato() != null) {
+            dpDataAdmissao.setVisible(false);
+        }
     }
 
     private synchronized Atendente getFormData() {

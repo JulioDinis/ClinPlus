@@ -82,7 +82,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     }
     @FXML
     public void onMenuItemAtendenteAction() {
-        buttonAction("/org/openjfx/gui/ColaboradorListController2.fxml", (ColaboradorListController2 controller) -> {
+        buttonAction("/org/openjfx/gui/AtendenteList.fxml", (AtendenteListController controller) -> {
             controller.setFuncionarioService(new AtendenteService());
             controller.updateTableView();
         });
@@ -179,7 +179,8 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
 
         System.out.println("LOGO -> "+logado.getClass());
 
-        if (logado.getClass().isInstance(Atendente.class)) {
+        if (this.logado instanceof Atendente) {
+            System.out.println("ATENDENTE LOGADO!");
             Atendente atendenteLogado = (Atendente) this.getLogado();
             buttonAction("/org/openjfx/gui/TelaAtendente.fxml",
                     (TelaAtendenteController controller) -> {
@@ -187,7 +188,8 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
                         controller.subscribeDataChangeListener(this);
                         controller.subscribeDataChangeListener(this.parent);
                     });
-        } else {
+        } else if(this.logado instanceof Colaborador) {
+            System.out.println("COLABORADOR LOGADO!!");
             Colaborador colaborador = (Colaborador) this.getLogado();
             this.setColaboradorLogado(colaborador);
             buttonAction("/org/openjfx/gui/TelaEspecialista.fxml",
