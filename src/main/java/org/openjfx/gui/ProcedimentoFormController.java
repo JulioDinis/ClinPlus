@@ -101,7 +101,7 @@ public class ProcedimentoFormController {
         } else {
             txtValor.setText(entity.getValor().toString());
         }
-        if (entity.getColaborador().getIdEspecialista() == null) {
+        if (entity.getColaborador().getIdColaborador() == null) {
             labelEspecialista.setText("null");
         } else
             labelEspecialista.setText(this.colaborador.getNome() + " | " + this.colaborador.getEspecialidade());

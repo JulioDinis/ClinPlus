@@ -11,15 +11,11 @@ import java.util.List;
 public class ItensTratamentoService {
 
     private ItensTratamentoDao dao = DaoFactory.createItensTratamentoDao("ItensTratamento Service");
-
     private ItensTratamentoMapper mapper = new ItensTratamentoMapper();
 
-
     public List<ItensTratamentoDTO> findAll() {
-
         return mapper.toDto(dao.findAll());
     }
-
 
 
     public void saveOrUpdate(ItensTratamentoDTO itensTratamentoDto) {
@@ -41,15 +37,19 @@ public class ItensTratamentoService {
     }
 
     public List<ItensTratamentoDTO> findByDescricao(String name) {
-        return dao.findByDescricao(name);
+        return mapper.toDto(dao.findByDescricao(name));
     }
 
 
     public List<ItensTratamentoDTO> findByTratamentoId(Integer idTratamento) {
-        return dao.findByTratamentoId(idTratamento);
+        List<ItensTratamentoDTO> dtos = mapper.toDto(dao.findByTratamentoId(idTratamento));
+        for (ItensTratamentoDTO dto : dtos) {
+            dto.setDescricao(dto.getProcedimento().getDescricao());
+        }
+        return dtos;
     }
 
     public ItensTratamentoDTO findByTratamentoIdAndProcedimentoId(Integer idTratamento, Integer idProcedimento) {
-        return  mapper.toDto(dao.findByTratamentoIdAndProcedimentoId(idTratamento, idProcedimento));
+        return mapper.toDto(dao.findByTratamentoIdAndProcedimentoId(idTratamento, idProcedimento));
     }
 }

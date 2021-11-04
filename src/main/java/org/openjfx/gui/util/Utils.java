@@ -6,10 +6,12 @@
     package org.openjfx.gui.util;
 
     import javafx.event.ActionEvent;
+    import javafx.event.Event;
     import javafx.scene.Node;
     import javafx.scene.control.DatePicker;
     import javafx.scene.control.TableCell;
     import javafx.scene.control.TableColumn;
+    import javafx.scene.input.MouseEvent;
     import javafx.stage.Stage;
     import javafx.util.StringConverter;
     import org.openjfx.db.DB;
@@ -20,6 +22,8 @@
     import java.sql.SQLException;
     import java.text.SimpleDateFormat;
     import java.time.LocalDate;
+    import java.time.LocalDateTime;
+    import java.time.ZoneId;
     import java.time.format.DateTimeFormatter;
     import java.util.*;
 
@@ -30,6 +34,9 @@
 
         public static Stage currentStage(ActionEvent event) {
             return (Stage) ((Node) event.getSource()).getScene().getWindow();
+        }
+        public static Stage currentStage(MouseEvent event){
+            return  (Stage) ((Node) event.getSource()).getScene().getWindow();
         }
 
         public static Integer tryParseToInt(String str) {
@@ -174,6 +181,19 @@
                 service.addParams("ID_TRATAMENTO", codigo);
             service.abrirJasperView(url, connection);
 
+        }
+        public static LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
+            return dateToConvert.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+        }
+        public static java.sql.Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+            return java.sql.Date.valueOf(dateToConvert);
+        }
+        public static Date convertToDateViaInstant(LocalDate dateToConvert) {
+            return java.util.Date.from(dateToConvert.atStartOfDay()
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant());
         }
     }
 

@@ -19,7 +19,7 @@ public class AtendenteDaoJDBC implements AtendenteDao {
 
     @Override
     public synchronized void insert(Atendente atendente) {
-        System.out.println("Yeeppp");
+//        System.out.println("Yeeppp");
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(

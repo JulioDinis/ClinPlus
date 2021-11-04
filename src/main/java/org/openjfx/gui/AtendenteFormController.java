@@ -24,10 +24,8 @@ import org.openjfx.gui.util.Constraints;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.gui.util.ValidaCPF;
 import org.openjfx.model.entities.Atendente;
-import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.exeption.ValidationException;
 import org.openjfx.model.service.AtendenteService;
-import org.openjfx.model.service.ColaboradorService;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -83,23 +81,6 @@ public class AtendenteFormController implements Initializable {
 
     @FXML
     private JFXPasswordField txtSenha;
-
-
-    @FXML
-    private Label labelErrorNome,
-            labelErrorCpf,
-            labelErrorRg,
-            labelErrorDataNascimento,
-            labelErrorSexo,
-            labelErrorEmail,
-            labelErrorLogradouro,
-            labelErrorCidade,
-            labelErrorBairro,
-            labelErrorCep,
-            labelErrorUf,
-            labelErrorTelefone,
-            labelErrorWhatsApp;
-
     @FXML
     private Button btSalve;
     @FXML
@@ -160,11 +141,9 @@ public class AtendenteFormController implements Initializable {
     }
 
     private void initializeNodes() {
-//        Constraints.setTextFieldInteger(txtIdFuncionario);
         Constraints.setTextFieldMaxLength(txtNome, 70);
         Constraints.setTextFieldMaxLength(txtEmail, 60);
         Utils.formatDatePicker(dpDataNascimento, "dd/MM/yyyy");
-//        Constraints.setTextFieldDouble(txtSalario);
     }
 
     public void updateFormData() {
@@ -205,9 +184,6 @@ public class AtendenteFormController implements Initializable {
             comboBoxUf.setValue(entity.getUf());
         }
         txtTelefone.setText(entity.getTelefone());
-
-//        txtEspecialidade.setText(entity.getEspecialidade());
-
         txtSalario.setText(String.format("%.2f", entity.getSalario()));
         Locale.setDefault(Locale.US);
         if (entity.getDataContrato() != null) {
@@ -365,22 +341,5 @@ public class AtendenteFormController implements Initializable {
         txtSenha.setStyle(fields.contains("senha") ? "-fx-border-color: red" : "-fx-border-color: light gray");
         txtSalario.setFocusColor(fields.contains("salario") ? Color.valueOf("red") : Color.LIGHTGRAY);
         txtSalario.setStyle(fields.contains("salario") ? "-fx-border-color: red" : "-fx-border-color: light gray");
-
-
     }
-
-
-//    private void initializeComboBoxSexo() {
-//        Callback<ListView<String>, ListCell<String>> factory = lv -> new ListCell<String>() {
-//            @Override
-//            protected void updateItem(String item, Boolean empty) {
-//                super.updateItem(item, empty);
-//                setText(empty ? "" : item.getNome());
-//            }
-//        };
-//        comboBoxSexo.setCellFactory(factory);
-//        comboBoxSexo.setButtonCell(factory.call(null));
-//    }
-
-
 }

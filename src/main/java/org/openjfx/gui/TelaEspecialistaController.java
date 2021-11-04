@@ -78,10 +78,12 @@ public class TelaEspecialistaController implements Initializable {
 
     @FXML
     public void onJfxButtonAgendaClick() {
-        notifyDataChangeListeners("/org/openjfx/gui/TelaAgenda.fxml",
-                (TelaAgendaController controller) -> {
-                    controller.setAgendaService(new AgendaService());
+        notifyDataChangeListeners("/org/openjfx/gui/Agenda.fxml",
+                (AgendaController controller) -> {
+                    controller.setServices(new AgendaService(), new ColaboradorService());
+                    controller.loadComboBox();
                     controller.updateAgenda();
+                    controller.setEspecialista(this.especialistaLogado);
                 });
     }
 

@@ -7,8 +7,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -38,16 +36,7 @@
                       <TableColumn fx:id="tableColumnQuantidade" prefWidth="133.0" text="Quantidade" />
                     </columns>
                   </TableView>
-                  <JFXTextField layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="199.0" promptText="Abrir orçamento" />
-                  <JFXButton layoutX="213.0" layoutY="14.0" text=" ">
-                     <graphic>
-                        <ImageView fitHeight="28.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Icones/relatorio%20medico/analytics-64x64-189657.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
+                  <JFXButton layoutX="213.0" layoutY="14.0" text=" " />
                </children>
             </AnchorPane>
         </items>

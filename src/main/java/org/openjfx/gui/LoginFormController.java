@@ -156,9 +156,9 @@ public class LoginFormController implements Initializable {
     private synchronized Colaborador getFormDataColaborador() {
         Colaborador colaborador = new Colaborador();
         ValidationException exception = new ValidationException("Validation error");
-        colaborador.setIdFuncionario(Utils.tryParseToInt(txtCodigo.getText()));
+        colaborador.setIdColaborador(Utils.tryParseToInt(txtCodigo.getText()));
         if (txtCodigo.getText() == null || txtCodigo.getText().isEmpty()) {
-            colaborador.setIdFuncionario(Integer.parseInt(txtCodigo.getText()));
+            colaborador.setIdColaborador(Integer.parseInt(txtCodigo.getText()));
         }
         if (txtSenha.getText() == null || txtSenha.getText().isEmpty()) {
             exception.addError("senha", "Digite a senha");

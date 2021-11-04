@@ -147,7 +147,7 @@ public class ColaboradorListController implements Initializable, DataChangeListe
     }
 
     private synchronized void initializeNodes() {
-        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idFuncionario"));
+        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idColaborador"));
         tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tableColumnDataNascimento.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
         tableColumnCidade.setCellValueFactory(new PropertyValueFactory<>("cidade"));

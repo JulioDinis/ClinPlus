@@ -10,9 +10,9 @@ public interface ItensTratamentoDao {
     void update(ItensTratamento itensTratamento);
     List<ItensTratamento> findAll();
     void deleteById(Integer nrItem);
-    List<ItensTratamentoDTO> findByDescricao(String descricao);
+    List<ItensTratamento> findByDescricao(String descricao);
 
-    List<ItensTratamentoDTO> findByTratamentoId(Integer idTratamento);
+    List<ItensTratamento> findByTratamentoId(Integer idTratamento);
 
     ItensTratamento findByTratamentoIdAndProcedimentoId(Integer idTratamento, Integer idProcedimento);
 }

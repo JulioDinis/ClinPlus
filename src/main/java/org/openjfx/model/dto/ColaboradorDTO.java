@@ -25,13 +25,14 @@ public class ColaboradorDTO {
     private String uf;
     private String telefone;
     private boolean ativo;
-    private Integer idAtendente;
     private String especialidade;
     private String senha;
-    private Double salario;
     private Date dataContrato;
     private Date dataDesligamento;
     private Integer idFuncionario;
-    private String funcao;
+    private String especialidadeEspecialista;
 
+    public void setEspecialidadeEspecialista(String epecialidade, String especialista){
+        this.especialidadeEspecialista = especialidade + " - " + especialista;
+    }
 }

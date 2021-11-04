@@ -39,7 +39,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
                 if (rs.next()) {
                     int idPessoa = rs.getInt(1);
                     colaborador.setIdPessoa(idPessoa);
-                    colaborador.setIdFuncionario(idPessoa);
+                    colaborador.setIdColaborador(idPessoa);
                 }
                 DB.closeResultSet(rs);
             } else {
@@ -98,13 +98,13 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
             createQuery(colaborador, statement);
 
             try {
-                statement.setInt(17, colaborador.getIdEspecialista());
+                statement.setInt(17, colaborador.getIdColaborador());
             } catch (SQLException e) {
                 System.out.println(statement);
                 e.printStackTrace();
             }
 
-            System.out.println(colaborador.getIdEspecialista());
+            System.out.println(colaborador.getIdColaborador());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -164,7 +164,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
     private Colaborador instantiateFuncionario(ResultSet rs) throws SQLException {
         Colaborador colaborador = new Colaborador();
         colaborador.setIdPessoa(rs.getInt("id_pessoa"));
-        colaborador.setIdFuncionario(rs.getInt("id_colaborador"));
+        colaborador.setIdColaborador(rs.getInt("id_colaborador"));
         colaborador.setNome(rs.getString("nome"));
         colaborador.setLogradouro(rs.getString("logradouro"));
         colaborador.setBairro(rs.getString("bairro"));

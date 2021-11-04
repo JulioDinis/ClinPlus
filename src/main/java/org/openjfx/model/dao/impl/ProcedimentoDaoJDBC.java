@@ -238,7 +238,7 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
         try {
             statement.setString(1, procedimento.getDescricao());
             statement.setDouble(2, procedimento.getValor());
-            statement.setInt(3, procedimento.getColaborador().getIdEspecialista());
+            statement.setInt(3, procedimento.getColaborador().getIdColaborador());
             return statement;
         } catch (SQLException e) {
             e.printStackTrace();

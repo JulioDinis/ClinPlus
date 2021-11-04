@@ -172,30 +172,6 @@ public class AtendenteListController implements Initializable, DataChangeListene
         initEditButtons();
         initRemoveButtons();
     }
-
-    //    private void createDialogForm(Atendente atendente, String absolutName, Stage parentStage) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
-//            Pane pane = loader.load();
-//            AtendenteFormController controller = loader.getController();
-//            controller.setFuncionario(atendente);
-//            controller.setServices(new AtendenteService(), new AtendenteService());
-//            controller.loadComboBox();
-//            controller.subscribeDataChangeListener(this);
-//            controller.updateFormData();
-//            Stage dialogStage = new Stage();
-//            dialogStage.setTitle("Insira os dados do Funcionário");
-//            dialogStage.setScene(new Scene(pane));
-//            dialogStage.setResizable(false);
-//            dialogStage.initOwner(parentStage);
-//            dialogStage.initModality(Modality.WINDOW_MODAL);
-//            dialogStage.showAndWait();
-//        } catch (Exception e) {
-//            System.out.println("ERRO AQUI");
-//            e.printStackTrace();
-//            Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
-//        }
-//    }
     private synchronized <T> void createDialogForm(Atendente atendente, String absolutName, Stage parentStage, Consumer<T> initialingAction, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));

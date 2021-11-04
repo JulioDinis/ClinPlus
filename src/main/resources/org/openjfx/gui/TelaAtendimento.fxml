@@ -24,7 +24,7 @@
             <JFXButton layoutX="15.0" layoutY="362.0" prefHeight="36.0" prefWidth="133.0" style="-fx-background-color: #64A; -fx-text-fill: #FFF;" text="+ Procedimento" />
             <TextArea layoutX="362.0" layoutY="119.0" prefHeight="232.0" prefWidth="311.0" promptText="Anotações" wrapText="true" />
             <JFXButton layoutX="540.0" layoutY="362.0" prefHeight="36.0" prefWidth="133.0" style="-fx-background-color: #AAA;" text="Finalizar" />
-            <Label layoutX="362.0" layoutY="82.0" prefHeight="24.0" prefWidth="97.0" text="Carol">
+            <Label layoutX="362.0" layoutY="82.0" prefHeight="24.0" prefWidth="197.0" text="Nome do Paciente">
                <font>
                   <Font size="19.0" />
                </font>

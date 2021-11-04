@@ -292,7 +292,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             OrcamentoListController controller = loader.getController();
             controller.setServices(null, new ProcedimentoService(), new TratamentoService());
             controller.setFuncionarioLogado(getColaboradorLogado());
-//          controller.updateList();
+
             controller.updateTableView();
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Insira os dados do Procedimento");

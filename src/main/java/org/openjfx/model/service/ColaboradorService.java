@@ -1,7 +1,9 @@
 package org.openjfx.model.service;
 
+import org.openjfx.mapper.ColaboradorMapper;
 import org.openjfx.model.dao.DaoFactory;
 import org.openjfx.model.dao.ColaboradorDao;
+import org.openjfx.model.dto.ColaboradorDTO;
 import org.openjfx.model.entities.Colaborador;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
  * @author julio
  */
 public class ColaboradorService {
+    private ColaboradorMapper mapper = new ColaboradorMapper();
 
     private ColaboradorDao dao = DaoFactory.createFuncionarioDao("Colaborador Service");
 
@@ -22,8 +25,12 @@ public class ColaboradorService {
         return dao.findAllAtivos();
     }
 
+    public List<ColaboradorDTO> findAllAtivosDTO() {
+        return mapper.toDto(dao.findAllAtivos());
+    }
+
     public void saveOrUpdate(Colaborador colaborador) {
-        if (colaborador.getIdEspecialista() == null) {
+        if (colaborador.getIdColaborador() == null) {
             dao.insert(colaborador);
         } else {
             dao.update(colaborador);
@@ -31,10 +38,11 @@ public class ColaboradorService {
     }
 
     public void remove(Colaborador obj) {
-        dao.deleteById(obj.getIdEspecialista());
+        dao.deleteById(obj.getIdColaborador());
     }
-    public Colaborador logar(Colaborador colaborador){
-        return dao.logar(colaborador.getIdEspecialista(), colaborador.getSenha());
+
+    public Colaborador logar(Colaborador colaborador) {
+        return dao.logar(colaborador.getIdColaborador(), colaborador.getSenha());
     }
 
     public List<Colaborador> findByName(String name) {

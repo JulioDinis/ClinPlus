@@ -98,7 +98,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
         } else {
             List<ProcedimentoDTO> list;
             if (this.getFuncionarioLogado().getConselhoRegional().equals("Especialista")) {
-                list = service.findByDescricaoAndId(txtBusca.getText(), this.getFuncionarioLogado().getIdEspecialista());
+                list = service.findByDescricaoAndId(txtBusca.getText(), this.getFuncionarioLogado().getIdColaborador());
             } else {
                 list = service.findByDescricao(txtBusca.getText());
             }
@@ -178,7 +178,7 @@ public class ProcedimentoListController implements Initializable, DataChangeList
 //        this.tableColumnEspecialista.setVisible(false);
 
         if (this.getFuncionarioLogado() != null) {
-            List<ProcedimentoDTO> list = service.findByEspecialista(this.getFuncionarioLogado().getIdEspecialista());
+            List<ProcedimentoDTO> list = service.findByEspecialista(this.getFuncionarioLogado().getIdColaborador());
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             initEditButtons();

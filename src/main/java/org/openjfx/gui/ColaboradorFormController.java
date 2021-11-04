@@ -172,8 +172,8 @@ public class ColaboradorFormController implements Initializable {
             throw new IllegalStateException("Entity was null");
         }
 
-        if(entity.getIdEspecialista() != null){
-            txtIdFuncionario.setText(String.valueOf(entity.getIdEspecialista()));
+        if(entity.getIdColaborador() != null){
+            txtIdFuncionario.setText(String.valueOf(entity.getIdColaborador()));
         }else {
             txtIdFuncionario.setText("+");
 
@@ -219,7 +219,7 @@ public class ColaboradorFormController implements Initializable {
 
         ValidationException exception = new ValidationException("Validation error");
 
-        colaborador.setIdFuncionario(Utils.tryParseToInt(txtIdFuncionario.getText()));
+        colaborador.setIdColaborador(Utils.tryParseToInt(txtIdFuncionario.getText()));
 
         if (isValido(txtNome, "nome", exception)) {
             colaborador.setNome(txtNome.getText());

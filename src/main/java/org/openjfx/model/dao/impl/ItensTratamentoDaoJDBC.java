@@ -100,12 +100,12 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
     }
 
     @Override
-    public List<ItensTratamentoDTO> findByDescricao(String descricao) {
+    public List<ItensTratamento> findByDescricao(String descricao) {
         return null;
     }
 
     @Override
-    public List<ItensTratamentoDTO> findByTratamentoId(Integer idTratamento) {
+    public List<ItensTratamento> findByTratamentoId(Integer idTratamento) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         try {
@@ -116,12 +116,12 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
             statement.setInt(1, idTratamento);
             rs = statement.executeQuery();
 
-            List<ItensTratamentoDTO> list = new ArrayList<>();
+            List<ItensTratamento> list = new ArrayList<>();
 
             while (rs.next()) {
 
-                ItensTratamentoDTO itensTratamentoDto = instantiateItensTratamentoDto(rs);
-                list.add(itensTratamentoDto);
+                ItensTratamento itensTratamento = instantiateItensTratamento(rs);
+                list.add(itensTratamento);
             }
             return list;
         } catch (SQLException e) {
@@ -175,26 +175,5 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
             throwables.printStackTrace();
         }
         return itensTratamento;
-    }
-
-    private ItensTratamentoDTO instantiateItensTratamentoDto(ResultSet rs) {
-        ItensTratamentoDTO itensTratamentoDto = new ItensTratamentoDTO();
-        TratamentoService tratamentoService = new TratamentoService();
-        ProcedimentoService procedimentoService = new ProcedimentoService();
-        TratamentoMapper tratamentoMapper = new TratamentoMapper();
-        ProcedimentoMapper procedimentoMapper = new ProcedimentoMapper();
-
-        try {
-            itensTratamentoDto.setTratamento(tratamentoMapper.toEntity(tratamentoService.findById(rs.getInt("tratamento"))));
-            itensTratamentoDto.setProcedimento(procedimentoMapper.toEntity(procedimentoService.findById(rs.getInt("procedimento"))));
-            itensTratamentoDto.setQuantidade(rs.getInt("quantidade"));
-            itensTratamentoDto.setDescricao(itensTratamentoDto.getProcedimento().getDescricao());
-            itensTratamentoDto.setValor(itensTratamentoDto.getProcedimento().getValor());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
-        return itensTratamentoDto;
     }
 }

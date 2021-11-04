@@ -130,13 +130,6 @@ public class PacienteDaoJDBC implements PacienteDao {
         }
     }
 
-    //    private Department instantiateDepartment(ResultSet rs) throws SQLException {
-//        Department dep = new Department();
-//        dep.setId(rs.getInt("DepartmentId"));
-//        dep.setName(rs.getString("DepName"));
-//        return dep;
-//    }
-
     @Override
     public List<Paciente> findAll() {
         PreparedStatement statement = null;

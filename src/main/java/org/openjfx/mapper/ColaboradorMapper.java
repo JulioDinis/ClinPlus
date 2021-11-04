@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ColaboradorMapper {
 
-    public List<ColaboradorDTO> toDto(List<Atendente> procedimentoList) {
+    public List<ColaboradorDTO> toDto(List<Colaborador> procedimentoList) {
 
         return procedimentoList.stream().map(this::toDto).collect(Collectors.toList());
     }
@@ -33,18 +33,18 @@ public class ColaboradorMapper {
         entity.setTelefone(dto.getTelefone());
         entity.setAtivo(dto.isAtivo());
         //especifico
-        entity.setIdFuncionario(dto.getIdFuncionario());
+        entity.setIdColaborador(dto.getIdFuncionario());
         entity.setDataContrato(dto.getDataContrato());
         entity.setEspecialidade(dto.getEspecialidade());
         entity.setSenha(dto.getSenha());
         return entity;
     }
 
-    public ColaboradorDTO toDto(Atendente entity) {
+    public ColaboradorDTO toDto(Colaborador entity) {
         ColaboradorDTO dto = new ColaboradorDTO();
-        dto.setIdAtendente(entity.getIdAtendente());
+        dto.setIdFuncionario(entity.getIdColaborador());
         dto.setDataContrato(entity.getDataContrato());
-        dto.setSalario(entity.getSalario());
+        dto.setEspecialidadeEspecialista(entity.getEspecialidade(), entity.getNome());
         return dto;
     }
 
@@ -67,7 +67,6 @@ public class ColaboradorMapper {
         //especifico
         entity.setIdAtendente(dto.getIdFuncionario());
         entity.setDataContrato(dto.getDataContrato());
-        entity.setSalario(dto.getSalario());
         entity.setSenha(dto.getSenha());
         return entity;
     }

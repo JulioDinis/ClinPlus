@@ -120,7 +120,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
         } else {
             List<ProcedimentoDTO> list;
             if (this.getFuncionarioLogado() instanceof Colaborador) {
-                list = procedimentoService.findByDescricaoAndId(txtBusca.getText(), ((Colaborador) this.getFuncionarioLogado()).getIdEspecialista());
+                list = procedimentoService.findByDescricaoAndId(txtBusca.getText(), ((Colaborador) this.getFuncionarioLogado()).getIdColaborador());
             } else {
                 list = procedimentoService.findByDescricao(txtBusca.getText());
             }
@@ -266,7 +266,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
             throw new IllegalStateException("Service was Null");
         }
         if (this.getFuncionarioLogado() instanceof Colaborador) {
-            List<ProcedimentoDTO> list = procedimentoService.findByEspecialista(((Colaborador) this.getFuncionarioLogado()).getIdEspecialista());
+            List<ProcedimentoDTO> list = procedimentoService.findByEspecialista(((Colaborador) this.getFuncionarioLogado()).getIdColaborador());
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             this.tableColumnEspecialista.setVisible(false);
