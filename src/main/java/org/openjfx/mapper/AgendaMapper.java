@@ -24,6 +24,8 @@ public class AgendaMapper {
         entity.setPaciente(pacienteService.findById(dto.getIdPaciente()));
         entity.setEspecialista(especialistaService.findById(dto.getIdEspecialista()));
         entity.setHorario(dto.getHorario());
+        entity.setObservacao(dto.getObservacao());
+        entity.setStatus(dto.getStatus());
         return entity;
     }
 
@@ -35,12 +37,15 @@ public class AgendaMapper {
             dto.setId(entity.getId());
             dto.setEspecialista(entity.getEspecialista().getNome());
             dto.setIdEspecialista(entity.getEspecialista().getIdColaborador());
+            dto.setObservacao(entity.getObservacao());
+            dto.setStatus(entity.getStatus());
             if (entity.getPaciente() != null) {
                 dto.setIdPaciente(entity.getPaciente().getIdPaciente());
                 dto.setPaciente(entity.getPaciente().getNome());
             } else {
                 dto.setIdPaciente(0);
-                dto.setPaciente("LIVRE");
+                dto.setPaciente("");
+                dto.setStatus("LIVRE");
             }
             return dto;
         } catch (NullPointerException ex) {
@@ -57,7 +62,6 @@ public class AgendaMapper {
             times.add(t);
         }
         if (agendaList.isEmpty()) {
-            System.out.println("ENTROU");
             list = new ArrayList<>();
             for (Time horario : times) {
                 a = new Agenda();
@@ -68,7 +72,6 @@ public class AgendaMapper {
             }
             System.out.println("A lista" + list);
         } else {
-            System.out.println("ENTROU ONDE TAMBEM");
             list= new ArrayList<>();
             a = agendaList.get(0);
             if (times.size() > agendaList.size()) {

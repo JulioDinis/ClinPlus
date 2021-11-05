@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -38,6 +39,8 @@ public class MainApp extends Application implements DataChangeListener {
     public void start(Stage primaryStage) {
         this.stage = primaryStage;
         this.login(this.stage);
+        this.stage.getIcons().add(new Image("https://i.pinimg.com/474x/d0/b8/c9/d0b8c9efc8b5e3c582103a33c385dfb4.jpg"));
+
     }
 
     private void login(Stage primaryStage) {

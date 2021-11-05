@@ -32,8 +32,8 @@ public class AgendaDaoJDBC implements AgendaDao {
         try {
             statement = connection.prepareStatement(
                     "INSERT INTO agenda "
-                            + "(data,paciente,especialista,horario) "
-                            + "VALUES (?,?,?,?);",
+                            + "(data,paciente,especialista,horario,observacao) "
+                            + "VALUES (?,?,?,?,?);",
                     Statement.RETURN_GENERATED_KEYS
             );
             createQuery(agenda, statement);
@@ -64,6 +64,9 @@ public class AgendaDaoJDBC implements AgendaDao {
             statement.setInt(2, agenda.getPaciente().getIdPaciente());
             statement.setInt(3, agenda.getEspecialista().getIdColaborador());
             statement.setTime(4, agenda.getHorario());
+            statement.setString(5, agenda.getObservacao());
+            System.out.println("OBSERVACAOOO " + agenda.getObservacao());
+//            statement.setString(6, agenda.getStatus());
             return statement;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,18 +78,40 @@ public class AgendaDaoJDBC implements AgendaDao {
 
     @Override
     public void update(Agenda agenda) {
-//TODO implementar o reagendar (Agenda Antiga, Nova DATA_HORA)
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(
+                    "UPDATE agenda"
+                            + " SET data = ?,paciente = ?,especialista = ?,"
+                            + " horario = ?,observacao = ?,status = ?"
+                            + " WHERE id_agenda = ?");
+
+            createQuery(agenda, statement);
+            System.out.println(statement);
+            try {
+                statement.setString(6,agenda.getStatus());
+                statement.setInt(7, agenda.getId());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println(agenda.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+        }
 
     }
 
     @Override
     public void deleteById(Integer idAgenda) {
-//TODO implementar o delete by ID
     }
 
     @Override
     public Agenda findById(Integer idAgenda) {
-        //TODO implementar o findBYid
+
         return new Agenda();
     }
 
@@ -98,6 +123,8 @@ public class AgendaDaoJDBC implements AgendaDao {
             statement = connection.prepareStatement(
                     "SELECT * FROM agenda " +
                             "where data = ? " +
+                            "and status !='CANCELADO' " +
+                            "and status !='REAGENDADO' " +
                             "order by horario");
             statement.setDate(1, data);
             rs = statement.executeQuery();
@@ -124,6 +151,8 @@ public class AgendaDaoJDBC implements AgendaDao {
                     "SELECT * FROM agenda " +
                             "where data = ? " +
                             "and especialista = ? " +
+                            "and status !='CANCELADO' " +
+                            "and status !='REAGENDADO' " +
                             "order by horario");
             statement.setDate(1, data);
             statement.setInt(2, especialista.getIdColaborador());
@@ -153,6 +182,8 @@ public class AgendaDaoJDBC implements AgendaDao {
             agenda.setHorario(rs.getTime("horario"));
             agenda.setEspecialista(colaboradorService.findById(rs.getInt("especialista")));
             agenda.setPaciente(pacienteService.findById(rs.getInt("paciente")));
+            agenda.setObservacao(rs.getString("observacao"));
+            agenda.setStatus(rs.getString("status"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

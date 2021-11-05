@@ -70,7 +70,6 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
                     controller.setServices(new AgendaService(), new ColaboradorService());
                     controller.subscribeDataChangeListener(this);
                     controller.loadComboBox();
-                    controller.updateAgenda();
                 });
     }
 

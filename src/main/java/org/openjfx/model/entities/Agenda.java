@@ -25,7 +25,8 @@ public class Agenda implements Serializable, Comparable<Agenda> {
     private Time horario;
     private Paciente paciente;
     private Colaborador especialista;
-    //TODO adicionar status e motivo, observação(ex: dor nas costas)
+    private String observacao;
+    private String status;
 
     @Override
     public boolean equals(Object o) {

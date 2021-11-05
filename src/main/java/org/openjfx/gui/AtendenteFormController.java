@@ -137,7 +137,7 @@ public class AtendenteFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initializeNodes();
-        // TODO
+
     }
 
     private void initializeNodes() {

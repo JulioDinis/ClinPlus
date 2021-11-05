@@ -1,7 +1,6 @@
 package org.openjfx.model.dao;
 
 import org.openjfx.model.entities.Atendente;
-import org.openjfx.model.entities.Colaborador;
 
 import java.util.List;
 

@@ -82,7 +82,6 @@ public class TelaEspecialistaController implements Initializable {
                 (AgendaController controller) -> {
                     controller.setServices(new AgendaService(), new ColaboradorService());
                     controller.loadComboBox();
-                    controller.updateAgenda();
                     controller.setEspecialista(this.especialistaLogado);
                 });
     }

@@ -122,7 +122,6 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     public void initialize(URL url, ResourceBundle rb) {
         //this.carregarMenu(true);
 
-        // TODO
     }
 
     private void carregarMenu(boolean expandido) {

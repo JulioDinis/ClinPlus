@@ -1,33 +1,34 @@
 package org.openjfx.gui;
 
-import com.calendarfx.view.TimeField;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.openjfx.db.DbException;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
+import org.openjfx.gui.util.CreateDialog;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.mapper.AgendaMapper;
 import org.openjfx.model.dto.AgendaDTO;
 import org.openjfx.model.entities.Agenda;
-import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.exeption.ValidationException;
 import org.openjfx.model.service.AgendaService;
 import org.openjfx.model.service.PacienteService;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -39,15 +40,18 @@ public class DialogoAgendamentoController implements Initializable {
     @FXML
     private JFXTextField jfxTextFieldPaciente;
     @FXML
-    private JFXButton jfxButtonBuscarPaciente;
+    private TextArea textAreaObservacao;
+    @FXML
+    private JFXButton jfxButtonAdicionarPaciente;
     @FXML
     private JFXButton jfxButtonConfirmarAgendamento;
     @FXML
     private JFXButton jfxButtonCancelar;
+
     @FXML
-    private TimeField timeFieldHorario;
+    private Label labelData;
     @FXML
-    private DatePicker datePickerDataAgendada;
+    private Label labelHorario;
     @FXML
     private TableView<Paciente> tableViewPaciente;
     @FXML
@@ -63,6 +67,7 @@ public class DialogoAgendamentoController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        //Utils.formatDatePicker(dpDataNascimento, "dd/MM/yyyy");
     }
 
     public void setServices(AgendaService agendaService, PacienteService colaboradorService) {
@@ -79,9 +84,15 @@ public class DialogoAgendamentoController implements Initializable {
         if (pacienteService == null) {
             throw new IllegalStateException("Entity was null");
         }
+
         try {
             AgendaMapper mapper = new AgendaMapper();
-            this.agenda.setPaciente(tableViewPaciente.getSelectionModel().getSelectedItem());
+            if (this.agenda.getPaciente() != null) {
+
+            } else {
+                this.agenda.setPaciente(tableViewPaciente.getSelectionModel().getSelectedItem());
+            }
+            this.agenda.setObservacao(textAreaObservacao.getText());
             agendaService.saveOrUpdate(agenda);
             notifyDataChangeListeners();
             Utils.currentStage(event).close();
@@ -106,12 +117,19 @@ public class DialogoAgendamentoController implements Initializable {
     public void setAgenda(AgendaDTO evento) {
         AgendaMapper mapper = new AgendaMapper();
         this.agenda = mapper.toEntity(evento);
-        System.out.println("GGGGGGGGGGGGGGGGGGGGG" + evento);
     }
 
     public void updateFormData() {
-        datePickerDataAgendada.setValue(this.agenda.getData().toLocalDate());
-        timeFieldHorario.setValue(this.agenda.getHorario().toLocalTime());
+        LocalDate data = this.agenda.getData().toLocalDate();
+        String dataFormatada = "" + data.getDayOfMonth() + "/" + data.getMonthValue() + "/" + data.getYear();
+        labelData.setText(dataFormatada);
+        labelHorario.setText(this.agenda.getHorario().toString());
+        if (this.agenda.getPaciente() != null) {
+            textAreaObservacao.setText(this.agenda.getObservacao());
+            jfxTextFieldPaciente.setText(this.agenda.getPaciente().getNome());
+            this.tableViewPaciente.setDisable(true);
+        }
+
     }
 
     public void updateTablePaciente() {
@@ -125,6 +143,7 @@ public class DialogoAgendamentoController implements Initializable {
         }
         obsList = FXCollections.observableArrayList(list);
         tableViewPaciente.setItems(obsList);
+
     }
 
     @FXML
@@ -136,4 +155,47 @@ public class DialogoAgendamentoController implements Initializable {
     public void subscribeDataChangeListener(AgendaController listener) {
         dataChangeListener.add(listener);
     }
+
+    @FXML
+    public void onBtAdicionarAction(ActionEvent event) {
+        Paciente paciente = new Paciente();
+        Stage parentStage = Utils.currentStage(event);
+        CreateDialog createDialog = new CreateDialog();
+        createDialog.createDialogForm(paciente, "/org/openjfx/gui/PacienteForm.fxml", (PacienteFormController controller) -> {
+            controller.setPaciente(paciente);
+            controller.setServices(new PacienteService(), new PacienteService());
+            controller.loadComboBox();
+//            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
+        }, parentStage);
+
+    }
+
+    private void createDialogForm(Paciente paciente, String absolutName, Stage parentStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
+            Pane pane = loader.load();
+            // Controller
+            PacienteFormController controller = loader.getController();
+            controller.setPaciente(paciente);
+            controller.setServices(new PacienteService(), new PacienteService());
+            controller.loadComboBox();
+//            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
+            // Stage
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Insira os dados do Paciente");
+            dialogStage.setScene(new Scene(pane));
+            dialogStage.setResizable(false);
+            dialogStage.initOwner(parentStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.showAndWait();
+
+        } catch (Exception e) {
+            System.out.println("ERRO AQUI");
+            e.printStackTrace();
+            Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
 }

@@ -56,7 +56,6 @@ public class PacienteDaoJDBC implements PacienteDao {
 
     @Override
     public void update(Paciente paciente) {
-        System.out.println("Chegou aqui");
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(

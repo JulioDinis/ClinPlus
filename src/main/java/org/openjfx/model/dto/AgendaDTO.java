@@ -18,6 +18,8 @@ public class AgendaDTO {
     private Date data;
     private Time horario;
     private String paciente;
+    private String observacao;
+    private String status;
 
     private String especialista;
     private Integer idPaciente;
@@ -29,6 +31,7 @@ public class AgendaDTO {
                 "\n data=" + data +
                 "\n horario=" + horario +
                 "\n paciente='" + paciente + '\'' +
-                "\n especialista='" + especialista + '\'';
+                "\n especialista='" + especialista +
+                "\n STATUS=>> " + status;
     }
 }
