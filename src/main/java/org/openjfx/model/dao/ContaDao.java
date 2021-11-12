@@ -1,17 +1,19 @@
 package org.openjfx.model.dao;
 
+import org.openjfx.model.entities.Conta;
+
 import java.util.List;
 
 public interface ContaDao {
-    void insert(ContaDao agendaDao);
+    void insert(Conta conta);
 
-    void update(ContaDao agendaDao);
+    void update(Conta conta);
 
-    void deleteById(Integer idAgenda);
+    void deleteById(Integer idConta);
 
-    ContaDao findById(Integer idAgenda);
+    Conta findById(Integer idConta);
 
-    List<ContaDao> findAll();
+    List<Conta> findAll();
 
 
 }

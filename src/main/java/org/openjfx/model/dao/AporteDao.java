@@ -1,16 +1,18 @@
 package org.openjfx.model.dao;
 
+import org.openjfx.model.entities.Aporte;
+
 import java.util.List;
 
 public interface AporteDao {
-    void insert(AporteDao colaborador);
+    void insert(Aporte aporte);
 
-    void update(AporteDao colaborador);
+    void update(Aporte aporte);
 
     void deleteById(Integer idAporte);
 
-    AporteDao findById(Integer idAporte);
+    Aporte findById(Integer idAporte);
 
-    List<AporteDao> findAll();
+    List<Aporte> findAll();
 
 }

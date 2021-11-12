@@ -1,8 +1,6 @@
 package org.openjfx.model.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -15,5 +13,12 @@ public class CaixaMensal implements Serializable {
     private Integer ano;
     private Double saldoInicial;
     private Double saldoFinal;
-    private Boolean status;
+    private String status;
+
+    public CaixaMensal(Integer mes, Integer ano, Double saldoInicial) {
+        this.mes = mes;
+        this.ano = ano;
+        this.saldoInicial = saldoInicial;
+        this.status = "Aberto";
+    }
 }

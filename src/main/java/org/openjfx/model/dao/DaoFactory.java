@@ -14,22 +14,22 @@ public class DaoFactory {
     }
 
     public static AgendaDao createAgendaDao(String creator) {
-        return new AgendaDaoJDBC(DB.getConnection("Dao Factory - Create Procedimento DAO  | Pedido By: " + creator)) {
+        return new AgendaDaoJDBC(DB.getConnection("Dao Factory - Create Agenda DAO  | Pedido By: " + creator)) {
         };
     }
 
     public static AporteDao createAporteDao(String creator) {
-        return new AporteDaoJDBC(DB.getConnection("Dao Factory - Create Procedimento DAO  | Pedido By: " + creator)) {
+        return new AporteDaoJDBC(DB.getConnection("Dao Factory - Create Aporte DAO  | Pedido By: " + creator)) {
         };
     }
 
     public static CaixaMensalDao createCaixaMensalDao(String creator) {
-        return new CaixaMensalDaoJDBC(DB.getConnection("Dao Factory - Create Procedimento DAO  | Pedido By: " + creator)) {
+        return new CaixaMensalDaoJDBC(DB.getConnection("Dao Factory - Create Caixa Mensal DAO  | Pedido By: " + creator)) {
         };
     }
 
     public static ItensTratamentoDao createItensTratamentoDao(String creator) {
-        return new ItensTratamentoDaoJDBC(DB.getConnection("Dao Factory - Create Procedimento DAO  | Pedido By: " + creator)) {
+        return new ItensTratamentoDaoJDBC(DB.getConnection("Dao Factory - Create Itens Tratamento DAO  | Pedido By: " + creator)) {
         };
     }
 

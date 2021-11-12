@@ -15,6 +15,7 @@ import org.openjfx.gui.*;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.model.entities.Atendente;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.AtendenteService;
 import org.openjfx.model.service.ColaboradorService;
@@ -26,6 +27,7 @@ public class MainApp extends Application implements DataChangeListener {
     private static Scene mainScene;
     private static Stage stage;
     private Object logado;
+    private CaixaMensal caixaAberto;
 
     public Object getLogado() {
         return this.logado;

@@ -48,8 +48,6 @@ public class AgendaController implements Initializable, DataChangeListener {
     @FXML
     private YearMonthView miniCalendario;
     @FXML
-    private WeekDayHeaderView diaDaSemana;
-    @FXML
     private Label dataLabel;
     @FXML
     private TableView<AgendaDTO> tableEventosDoDia;
@@ -109,7 +107,7 @@ public class AgendaController implements Initializable, DataChangeListener {
     @FXML
     public void onClickMiniCalendario(Event event) {
         if (this.especialista != null) {
-            Date data = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+//            Date data = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
             Optional<LocalDate> data2 = miniCalendario.getSelectedDates().stream().findFirst();
             if (data2.isEmpty()) {
             }
@@ -123,8 +121,8 @@ public class AgendaController implements Initializable, DataChangeListener {
     @FXML
     private void handleRowSelect() {
         // Cria um formatador para a data usando DateFormat:
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-        Calendar gc = Calendar.getInstance();
+//        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+//        Calendar gc = Calendar.getInstance();
         tableEventosDoDia.setOnMouseClicked(event -> {
             AgendaDTO agenda = tableEventosDoDia.getSelectionModel().getSelectedItem();
             System.out.println(agenda);
@@ -137,7 +135,6 @@ public class AgendaController implements Initializable, DataChangeListener {
                         agenda.setIdPaciente(this.eventoReagendado.getIdPaciente());
                         preencherDados(agenda);
                     } else {
-                        AgendaDTO agendaDto = tableEventosDoDia.getSelectionModel().getSelectedItem();
                         Stage parentStage = Utils.currentStage(event);
                         createDialogForm(this.especialista, "/org/openjfx/gui/DialogoAgendamento.fxml", parentStage, (DialogoAgendamentoController controller) -> {
                             controller.setServices(new AgendaService(), new PacienteService());
@@ -282,21 +279,17 @@ public class AgendaController implements Initializable, DataChangeListener {
         Stage stage = (Stage) MainApp.getMainScene().getWindow();
         //Mudando as cores
         tableColumnStatus.setCellFactory(column -> {
-            return new TableCell<AgendaDTO, String>() {
+            return new TableCell<>() {
                 @Override
                 protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty); //This is mandatory
-
                     if (item == null || empty) { //If the cell is empty
                         setText(null);
                         setStyle("");
                     } else { //If the cell is not empty
-
                         setText(item); //Put the String data in the cell
-
                         //We get here all the info of the Person of this row
                         AgendaDTO auxAgenda = getTableView().getItems().get(getIndex());
-
                         if (auxAgenda.getStatus().equals("AUSENTE")) {
                             setTextFill(Color.WHITE); //The text in red
                             setStyle("-fx-background-color: GREY"); //The background of the cell in yellow

@@ -142,7 +142,6 @@ public class AtendenteDaoJDBC implements AtendenteDao {
                     "SELECT * "
                             + "FROM atendente "
                             + "WHERE id_colaborador = ?");
-
             statement.setInt(1, idFuncionario);
             rs = statement.executeQuery();
             if (rs.next()) {

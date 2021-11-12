@@ -27,7 +27,6 @@ public class AgendaDaoJDBC implements AgendaDao {
     }
     @Override
     public void insert(Agenda agenda) {
-        System.out.println("Salvou?" +agenda);
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(

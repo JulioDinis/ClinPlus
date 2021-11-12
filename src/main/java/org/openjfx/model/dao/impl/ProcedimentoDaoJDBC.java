@@ -27,23 +27,18 @@ public class ProcedimentoDaoJDBC implements ProcedimentoDao {
                             + "VALUES (?,?,?);",
                     Statement.RETURN_GENERATED_KEYS
             );
-
             createQuery(procedimento, statement);
-
             Integer linhasAfetadas = statement.executeUpdate();
-
             if (linhasAfetadas > 0) {
                 ResultSet rs = statement.getGeneratedKeys();
                 DB.closeResultSet(rs);
             } else {
                 throw new DbException("Erro inesperado! Nenhum registo afetado");
             }
-
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
             DB.closeStatement(statement);
-
         }
 
     }

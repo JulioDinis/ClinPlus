@@ -1,13 +1,18 @@
 package org.openjfx.model.dao;
 
+import org.openjfx.model.entities.CaixaMensal;
+
 import java.util.List;
 
 public interface CaixaMensalDao {
-    void insert(CaixaMensalDao caixaMensal);
+    void insert(CaixaMensal caixaMensal);
 
-    void update(CaixaMensalDao colaborador);
+    void update(CaixaMensal caixaMensal);
 
-    void deleteById(Integer idFuncionario);
-    List<CaixaMensalDao> findAll();
+    void deleteById(Integer mes, Integer ano);
+
+    CaixaMensal findById(Integer mes, Integer ano);
+
+    List<CaixaMensal> findAll();
 
 }
