@@ -17,6 +17,7 @@ import org.openjfx.gui.TelaEspecialistaController;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.model.entities.Atendente;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.AtendenteService;
 import org.openjfx.model.service.ColaboradorService;
@@ -78,6 +79,12 @@ public class MainCalendario extends Application implements DataChangeListener {
         System.out.println("###################### NOTIFICAÇÃO DE LOGIN #############");
         this.setFuncionarioLogado(logado);
     }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
+
+    }
+
     @Override
     public void onLogout() {
         System.out.println("Logout Solicitado");

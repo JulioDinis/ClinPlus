@@ -17,7 +17,7 @@ public class AgendaMapper {
     private static PacienteService pacienteService = new PacienteService();
     private static ColaboradorService especialistaService = new ColaboradorService();
 
-    public static Agenda toEntity(AgendaDTO dto) {
+    public Agenda toEntity(AgendaDTO dto) {
         Agenda entity = new Agenda();
         entity.setId(dto.getId());
         entity.setData(dto.getData());

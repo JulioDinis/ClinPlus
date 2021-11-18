@@ -28,6 +28,7 @@ import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.mapper.ProcedimentoMapper;
 import org.openjfx.model.dto.ProcedimentoDTO;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.service.ProcedimentoService;
@@ -227,6 +228,11 @@ public class ProcedimentoListController implements Initializable, DataChangeList
     @Override
     public void onLogin(Object obj) {
         throw new IllegalStateException("Service was Null");
+    }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
+
     }
 
     @Override

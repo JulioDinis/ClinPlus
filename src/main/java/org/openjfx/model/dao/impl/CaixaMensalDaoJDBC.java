@@ -147,9 +147,34 @@ public class CaixaMensalDaoJDBC implements CaixaMensalDao {
         }
     }
 
+    @Override
+    public List<CaixaMensal> findAllAberto() {
+        PreparedStatement statement = null;
+        List<CaixaMensal> list = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM caixa_mensal " +
+                            "where status = 'Aberto' " +
+                            "ORDER BY mes, ano");
+            rs = statement.executeQuery();
+            System.out.println(list);
+            while (rs.next()) {
+                CaixaMensal caixaMensal = instantiateCaixaMensal(rs);
+                list.add(caixaMensal);
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+            return list;
+        }
+    }
+
     private CaixaMensal instantiateCaixaMensal(ResultSet rs) {
         try {
-            CaixaMensal novaCaixaMensal = new CaixaMensal(rs.getInt('1'),
+            CaixaMensal novaCaixaMensal = new CaixaMensal(rs.getInt(1),
                     rs.getInt(2),
                     rs.getDouble(3),
                     rs.getDouble(4),

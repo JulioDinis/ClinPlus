@@ -75,11 +75,13 @@ public class MainApp extends Application implements DataChangeListener {
                 MainAppViewController controller = loader.getController();
                 controller.setLogado(this.getLogado());
                 controller.setParent(this);
+                controller.setCaixaAberto(this.caixaAberto);
                 if (funcao.equals("Atendente")) {
                     System.out.println("###>>> Login Atendente <<<###");
                     controller.buttonAction("/org/openjfx/gui/TelaAtendente.fxml",
                             (TelaAtendenteController telaAtendenteController) -> {
                                 telaAtendenteController.subscribeDataChangeListener(controller, this);
+                                telaAtendenteController.setCaixaAberto(this.caixaAberto);
                             });
                 } else if (funcao.equals("Especialista")) {
                     Colaborador especialista = (Colaborador) this.getLogado();
@@ -104,12 +106,15 @@ public class MainApp extends Application implements DataChangeListener {
             e.printStackTrace();
         }
     }
+
     public static Scene getMainScene() {
         return mainScene;
     }
+
     public static void main(String[] args) {
         launch(args);
     }
+
     private void createDialogForm(Colaborador colaborador, String absolutName, Stage parentStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
@@ -131,14 +136,22 @@ public class MainApp extends Application implements DataChangeListener {
             Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
+
     @Override
     public void onDataChange() {
     }
+
     @Override
     public void onLogin(Object logado) {
         System.out.println("###################### NOTIFICAÇÃO DE LOGIN #############");
         this.setFuncionarioLogado(logado);
     }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
+        this.caixaAberto = caixaAberto;
+    }
+
     @Override
     public void onLogout() {
         System.out.println("Logout Solicitado");
@@ -146,6 +159,7 @@ public class MainApp extends Application implements DataChangeListener {
         this.logado = null;
         login(this.stage);
     }
+
     @Override
     public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
     }

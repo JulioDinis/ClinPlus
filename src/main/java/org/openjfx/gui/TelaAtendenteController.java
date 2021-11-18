@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.model.entities.Atendente;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.AgendaService;
 import org.openjfx.model.service.ColaboradorService;
@@ -43,6 +44,7 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
     @FXML
     private JFXButton jfxButtonLogout;
     private Atendente atendenteLogado;
+    private CaixaMensal caixaAberto;
 
 
     @FXML
@@ -79,6 +81,7 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
                 (TelaFinanceiroController controller) -> {
                     controller.setFinanceiroService(new FinanceiroService());
                     controller.updateTableView();
+                    controller.setCaixaAberto(this.caixaAberto);
                 });
     }
 
@@ -99,6 +102,11 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
 
     @Override
     public void onLogin(Object obj) {
+
+    }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
 
     }
 
@@ -132,5 +140,9 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
 
     public void setAtendenteLogado(Atendente atendenteLogado) {
         this.atendenteLogado = atendenteLogado;
+    }
+
+    public void setCaixaAberto(CaixaMensal caixaAberto) {
+        this.caixaAberto=caixaAberto;
     }
 }

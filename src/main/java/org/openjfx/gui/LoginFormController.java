@@ -20,10 +20,12 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Atendente;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.exeption.ValidationException;
 import org.openjfx.model.service.AtendenteService;
 import org.openjfx.model.service.ColaboradorService;
+import org.openjfx.model.service.FinanceiroService;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -55,7 +57,6 @@ public class LoginFormController implements Initializable {
 
     @FXML
     public void onBtLoginAction(ActionEvent event) {
-
         try {
             Atendente atendenteLogado = atendenteService.logar(getFormDataAtendente());
             Colaborador colaboradorLogado = colaboradorService.logar(getFormDataColaborador());
@@ -65,10 +66,10 @@ public class LoginFormController implements Initializable {
                 setErrosMensagens(exception.getErrors());
             } else if (atendenteLogado == null) {
                 System.out.println("ESPECIALISTA LOGADO");
-                notifyDataChangeListeners(colaboradorLogado);
+                notifyDataChangeListeners(colaboradorLogado, buscarCaixaAberto());
             } else {
                 System.out.println("ATENDENTE LOGADO");
-                notifyDataChangeListeners(atendenteLogado);
+                notifyDataChangeListeners(atendenteLogado, buscarCaixaAberto());
             }
             Utils.currentStage(event).close();
         } catch (ValidationException e) {
@@ -79,37 +80,6 @@ public class LoginFormController implements Initializable {
             Alerts.showAlert("Error Saving object", null, e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
-//    @FXML
-//    public void onBtLoginAction(ActionEvent event) {
-//        Colaborador logado;
-//        Atendente atLogado;
-//        if (entity == null) {
-//            throw new IllegalStateException("Entity was null");
-//        }
-//        if (colaboradorService == null) {
-//            throw new IllegalStateException("Entity was null");
-//        }
-//        try {
-//            entity = getFormData();
-//            atLogado = atendenteService.logar(entity);
-//            if (atLogado == null) {
-//                ValidationException exception = new ValidationException("Validation error");
-//                exception.addError("login", "Credenciais recusadas");
-//                setErrosMensagens(exception.getErrors());
-//            } else {
-//                notifyDataChangeListeners(atLogado);
-//                Utils.currentStage(event).close();
-//            }
-//        } catch (ValidationException e) {
-//            //           e.printStackTrace(); it is ok
-//            setErrosMensagens(e.getErrors());
-//        } catch (DbException e) {
-//            e.printStackTrace();
-//            Alerts.showAlert("Error Saving object", null, e.getMessage(), Alert.AlertType.ERROR);
-//        }
-//
-//    }
 
     @FXML
     public void onBtCancelarAction(ActionEvent event) {
@@ -138,7 +108,6 @@ public class LoginFormController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
     }
-
 
     private void setErrosMensagens(Map<String, String> errors) {
         Set<String> fields = errors.keySet();
@@ -193,9 +162,27 @@ public class LoginFormController implements Initializable {
         return atendente;
     }
 
-    private void notifyDataChangeListeners(Object colaborador) {
+    private void notifyDataChangeListeners(Object colaborador, CaixaMensal caixaAberto) {
         for (DataChangeListener listener : dataChangeListener) {
             listener.onLogin(colaborador);
+            listener.onCaixaAbertoChange(caixaAberto);
         }
+    }
+
+    private CaixaMensal buscarCaixaAberto(){
+
+        FinanceiroService financeiroService = new FinanceiroService();
+        CaixaMensal caixaAberto = new CaixaMensal();
+        List<CaixaMensal> caixaMensalList = financeiroService.buscaCaixaAberto();
+        if(caixaMensalList.isEmpty()){
+            System.out.println("Nenhum Caixa aberto");
+        }else if(caixaMensalList.size() ==1){
+            System.out.println("**************CAIXA ABERTO***************");
+            caixaAberto = caixaMensalList.get(0);
+        }else{
+            System.out.println("Selecione o Caixa Mensal");
+        }
+        System.out.println(caixaAberto.toString());
+        return caixaAberto;
     }
 }

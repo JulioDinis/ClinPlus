@@ -25,6 +25,7 @@ import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.mapper.AgendaMapper;
 import org.openjfx.model.dto.AgendaDTO;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.AgendaService;
 import org.openjfx.model.service.ColaboradorService;
@@ -411,6 +412,11 @@ public class AgendaController implements Initializable, DataChangeListener {
 
     @Override
     public void onLogin(Object logado) {
+
+    }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
 
     }
 

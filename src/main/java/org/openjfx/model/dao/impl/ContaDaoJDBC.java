@@ -3,6 +3,7 @@ package org.openjfx.model.dao.impl;
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.mapper.CaixaMensalMapper;
 import org.openjfx.model.dao.ContaDao;
 import org.openjfx.model.entities.Conta;
 import org.openjfx.model.service.FinanceiroService;
@@ -115,7 +116,26 @@ public class ContaDaoJDBC implements ContaDao {
 
     @Override
     public Conta findById(Integer idConta) {
-        return null;
+        PreparedStatement statement = null;
+        Conta conta = new Conta();
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM conta " +
+                            "WHERE id_conta =? " +
+                            "ORDER BY data_cadastro");
+            statement.setInt(1, idConta);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                conta = instantiateConta(rs);
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+            return conta;
+        }
     }
 
     @Override
@@ -143,6 +163,7 @@ public class ContaDaoJDBC implements ContaDao {
 
     private Conta instantiateConta(ResultSet rs) {
         FinanceiroService financeiroService = new FinanceiroService();
+        CaixaMensalMapper mapper = new CaixaMensalMapper();
         Conta novaConta = new Conta();
         try {
             novaConta = new Conta(
@@ -154,7 +175,7 @@ public class ContaDaoJDBC implements ContaDao {
                     rs.getDate(6).toLocalDate(),
                     rs.getDouble(7),
                     rs.getString(8),
-                    financeiroService.buscarCaixaById(rs.getInt(9), rs.getInt(10))
+                    mapper.toEntity(financeiroService.buscarCaixaById(rs.getInt(9), rs.getInt(10)))
             );
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

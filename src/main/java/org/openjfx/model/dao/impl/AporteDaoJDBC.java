@@ -3,6 +3,7 @@ package org.openjfx.model.dao.impl;
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.mapper.CaixaMensalMapper;
 import org.openjfx.model.dao.AporteDao;
 import org.openjfx.model.entities.Aporte;
 import org.openjfx.model.entities.Conta;
@@ -114,7 +115,26 @@ public class AporteDaoJDBC implements AporteDao {
 
     @Override
     public Aporte findById(Integer idAporte) {
-        return null;
+        PreparedStatement statement = null;
+        Aporte aporte = new Aporte();
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM aporte " +
+                            "WHERE id_aporte =? " +
+                            "ORDER BY data");
+            statement.setInt(1, idAporte);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                aporte = instantiateAporte(rs);
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+            return aporte;
+        }
     }
 
     @Override
@@ -143,6 +163,7 @@ public class AporteDaoJDBC implements AporteDao {
     private Aporte instantiateAporte(ResultSet rs) {
         FinanceiroService financeiroService = new FinanceiroService();
         ColaboradorService colaboradorService = new ColaboradorService();
+        CaixaMensalMapper mapper = new CaixaMensalMapper();
         Aporte novoAporte = new Aporte();
         try {
             novoAporte = new Aporte(
@@ -151,7 +172,7 @@ public class AporteDaoJDBC implements AporteDao {
                     rs.getString("descricao"),
                     rs.getDate("data").toLocalDate(),
                     colaboradorService.findById(rs.getInt("id_colaborador")),
-                    financeiroService.buscarCaixaById(rs.getInt(9), rs.getInt(10))
+                    mapper.toEntity(financeiroService.buscarCaixaById(rs.getInt(9), rs.getInt(10)))
             );
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

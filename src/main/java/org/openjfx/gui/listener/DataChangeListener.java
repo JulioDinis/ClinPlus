@@ -5,6 +5,7 @@
  */
 package org.openjfx.gui.listener;
 
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 
 import java.util.function.Consumer;
@@ -17,6 +18,8 @@ public interface DataChangeListener {
     void onDataChange();
 
     void onLogin(Object logado);
+
+    void onCaixaAbertoChange(CaixaMensal caixaAberto);
 
     void onLogout();
 

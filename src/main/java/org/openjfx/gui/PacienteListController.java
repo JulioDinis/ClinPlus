@@ -27,6 +27,7 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.CreateDialog;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.service.PacienteService;
@@ -251,6 +252,11 @@ public class PacienteListController implements Initializable, DataChangeListener
     @Override
     public void onLogin(Object obj) {
         throw new IllegalStateException("Service was Null");
+    }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
+
     }
 
     @Override

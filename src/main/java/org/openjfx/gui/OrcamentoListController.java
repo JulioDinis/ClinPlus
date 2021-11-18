@@ -27,10 +27,7 @@ import org.openjfx.mapper.TratamentoMapper;
 import org.openjfx.model.dto.ItensTratamentoDTO;
 import org.openjfx.model.dto.ProcedimentoDTO;
 import org.openjfx.model.dto.TratamentoDTO;
-import org.openjfx.model.entities.Atendente;
-import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.entities.Procedimento;
-import org.openjfx.model.entities.Tratamento;
+import org.openjfx.model.entities.*;
 import org.openjfx.model.service.ItensTratamentoService;
 import org.openjfx.model.service.ProcedimentoService;
 import org.openjfx.model.service.TratamentoService;
@@ -312,6 +309,11 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     @Override
     public void onLogin(Object obj) {
         throw new IllegalStateException("Service was Null");
+    }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
+
     }
 
     @Override

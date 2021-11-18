@@ -28,6 +28,7 @@ import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.Atendente;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.service.AtendenteService;
 import org.openjfx.model.service.AtendenteService;
 
@@ -199,6 +200,11 @@ public class AtendenteListController implements Initializable, DataChangeListene
 
     @Override
     public void onLogin(Object obj) {
+
+    }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
 
     }
 

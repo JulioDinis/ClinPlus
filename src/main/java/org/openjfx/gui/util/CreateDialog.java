@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.openjfx.gui.listener.DataChangeListener;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Paciente;
 
@@ -43,6 +44,11 @@ public class CreateDialog implements DataChangeListener {
 
     @Override
     public void onLogin(Object obj) {
+
+    }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
 
     }
 

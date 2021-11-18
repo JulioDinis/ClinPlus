@@ -12,6 +12,7 @@ public interface CaixaMensalDao {
     void deleteById(Integer mes, Integer ano);
 
     CaixaMensal findById(Integer mes, Integer ano);
+    List<CaixaMensal> findAllAberto();
 
     List<CaixaMensal> findAll();
 

@@ -26,12 +26,14 @@ import org.openjfx.application.ToolbarActionCallBack;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.model.entities.Atendente;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Pessoa;
 import org.openjfx.model.service.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -39,6 +41,7 @@ import java.util.function.Consumer;
 @Setter
 public class MainAppViewController implements Initializable, ToolbarActionCallBack, DataChangeListener {
     private Object logado;
+
     private Colaborador colaboradorLogado;
     private DataChangeListener parent;
     @FXML
@@ -64,6 +67,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
 
     @FXML
     private JFXDrawer menuLateral;
+    private CaixaMensal caixaAberto;
 
     @FXML
     public void onMenuItemPacienteAction() {
@@ -155,12 +159,11 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     }
 
     public void setLogado(Object colaboradorLogado) {
-        System.out.println("Chamou" + colaboradorLogado);
-
         this.logado = colaboradorLogado;
         if (this.logado != null) {
             Pessoa p = (Pessoa) this.logado;
             textNomeDoUsuarioLogado.setText(p.getNome());
+
         }
     }
 
@@ -175,15 +178,14 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
 
     @FXML
     public void onLogoClick() {
-
         System.out.println("LOGO -> "+logado.getClass());
-
         if (this.logado instanceof Atendente) {
             System.out.println("ATENDENTE LOGADO!");
             Atendente atendenteLogado = (Atendente) this.getLogado();
             buttonAction("/org/openjfx/gui/TelaAtendente.fxml",
                     (TelaAtendenteController controller) -> {
                         controller.setAtendenteLogado(atendenteLogado);
+                        controller.setCaixaAberto(this.caixaAberto);
                         controller.subscribeDataChangeListener(this);
                         controller.subscribeDataChangeListener(this.parent);
                     });
@@ -204,6 +206,11 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
         return this.logado;
     }
     // Carrega a view - o synchronized garante que o carregamento não será interrompido no meio
+
+    private CaixaMensal getCaixaAberto(){
+        System.out.println("CAIXA ABERTO -->> " +this.caixaAberto);
+        return this.caixaAberto;
+    }
 
     /**
      * função parametrizada
@@ -275,6 +282,12 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     @Override
     public void onLogin(Object obj) {
     }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
+
+    }
+
     @Override
     public void onLogout() {
     }
@@ -305,5 +318,10 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             e.printStackTrace();
             Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+
+    public void setCaixaAberto(CaixaMensal caixaAberto) {
+        this.caixaAberto=caixaAberto;
     }
 }
