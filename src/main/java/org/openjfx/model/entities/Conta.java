@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,11 +16,11 @@ public class Conta implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Integer idConta;
-    private LocalDate dataCadastro;
+    private Date dataCadastro;
     private String descricao;
     private Double valor;
-    private LocalDate dataVencimento;
-    private LocalDate dataPagamento;
+    private Date dataVencimento;
+    private Date dataPagamento;
     private Double valorPagamento;
     private String observacao;
     private CaixaMensal caixaMensal;

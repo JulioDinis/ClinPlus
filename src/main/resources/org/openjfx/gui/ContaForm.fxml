@@ -4,13 +4,13 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane prefHeight="336.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ContaFormController">
    <children>
@@ -25,31 +25,36 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <DatePicker prefHeight="29.0" prefWidth="167.0" promptText="Data de Vencimento" GridPane.columnIndex="2">
+            <DatePicker fx:id="datePickerDataVenciemento" prefHeight="29.0" prefWidth="167.0" promptText="Data de Vencimento" GridPane.columnIndex="2">
                <GridPane.margin>
                   <Insets left="4.0" />
                </GridPane.margin>
             </DatePicker>
-            <JFXTextField promptText="Descrição" GridPane.columnSpan="2">
+            <JFXTextField fx:id="jfxTextFieldDescricao" labelFloat="true" promptText="Descrição" GridPane.columnSpan="2">
                <GridPane.margin>
                   <Insets right="3.0" />
                </GridPane.margin>
             </JFXTextField>
-            <JFXTextField promptText="Valor" GridPane.rowIndex="1" />
-            <JFXTextField promptText="Observação" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <JFXTextField fx:id="jfxTextFieldValor" labelFloat="true" promptText="Valor" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="jfxTextFieldObservacao" labelFloat="true" promptText="Observação" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="3.0" right="2.0" />
                </GridPane.margin>
             </JFXTextField>
          </children>
       </GridPane>
-      <JFXButton layoutX="404.0" layoutY="254.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="49.0" prefWidth="111.0" ripplerFill="#3315cd" style="-fx-background-color: #CCC;" text="Salvar" />
+      <JFXButton layoutX="404.0" layoutY="254.0" nodeOrientation="RIGHT_TO_LEFT" onAction="#onBtSaveAction" prefHeight="49.0" prefWidth="111.0" ripplerFill="#3315cd" style="-fx-background-color: #CCC;" text="Salvar" />
       <JFXButton layoutX="264.0" layoutY="254.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="49.0" prefWidth="111.0" ripplerFill="#eed308f7" style="-fx-background-color: #CCC;" text="Limpar" />
-      <JFXButton layoutX="131.0" layoutY="254.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="49.0" prefWidth="111.0" ripplerFill="#ff0400" style="-fx-background-color: #CCC;" text="Cancelar" />
-      <Text layoutX="222.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cadastro de Contas" wrappingWidth="195.05126953125">
+      <JFXButton layoutX="131.0" layoutY="254.0" nodeOrientation="RIGHT_TO_LEFT" onAction="#onBtCancelAction" prefHeight="49.0" prefWidth="111.0" ripplerFill="#ff0400" style="-fx-background-color: #CCC;" text="Cancelar" />
+      <Text layoutX="46.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cadastro de Contas" wrappingWidth="195.05126953125">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
+      <Label fx:id="labelCaixa" layoutX="402.0" layoutY="17.0" prefHeight="21.0" prefWidth="189.0" text="Caixa Aberto">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

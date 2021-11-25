@@ -48,7 +48,7 @@ public class ContaDaoJDBC implements ContaDao {
         try {
             statement.setString(1, conta.getDescricao());
             statement.setDouble(2, conta.getValor());
-            statement.setDate(3, Utils.convertToDateViaSqlDate(conta.getDataVencimento()));
+            statement.setDate(3,conta.getDataPagamento());
             statement.setString(4, conta.getObservacao());
             statement.setInt(5, conta.getCaixaMensal().getMes());
             statement.setInt(6, conta.getCaixaMensal().getAno());
@@ -77,14 +77,14 @@ public class ContaDaoJDBC implements ContaDao {
                             + "WHERE id_conta=?");
 
             try {
-                statement.setString(1, conta.getDescricao());
-                statement.setDouble(2, conta.getValor());
-                statement.setDate(3, Utils.convertToDateViaSqlDate(conta.getDataVencimento()));
-                statement.setString(4, conta.getObservacao());
-                statement.setDate(5, Utils.convertToDateViaSqlDate(conta.getDataPagamento()));
-                statement.setDouble(6, conta.getValorPagamento());
-                statement.setInt(7, conta.getCaixaMensal().getMes());
-                statement.setInt(8, conta.getCaixaMensal().getAno());
+//                statement.setString(1, conta.getDescricao());
+//                statement.setDouble(2, conta.getValor());
+//                statement.setDate(3, Utils.convertToDateViaSqlDate(conta.getDataVencimento()));
+//                statement.setString(4, conta.getObservacao());
+//                statement.setDate(5, Utils.convertToDateViaSqlDate(conta.getDataPagamento()));
+//                statement.setDouble(6, conta.getValorPagamento());
+//                statement.setInt(7, conta.getCaixaMensal().getMes());
+//                statement.setInt(8, conta.getCaixaMensal().getAno());
                 statement.setInt(9, conta.getIdConta());
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -167,14 +167,14 @@ public class ContaDaoJDBC implements ContaDao {
         Conta novaConta = new Conta();
         try {
             novaConta = new Conta(
-                    rs.getInt(1),
-                    rs.getDate(2).toLocalDate(),
-                    rs.getString(3),
-                    rs.getDouble(4),
-                    rs.getDate(5).toLocalDate(),
-                    rs.getDate(6).toLocalDate(),
-                    rs.getDouble(7),
-                    rs.getString(8),
+                    rs.getInt("idConta"),
+                    rs.getDate("dataCadastro"),
+                    rs.getString("descricao"),
+                    rs.getDouble("valor"),
+                    rs.getDate("dataPagamento"),
+                    rs.getDate("dataPagamento"),
+                    rs.getDouble("valorPagamento"),
+                    rs.getString("observacao"),
                     mapper.toEntity(financeiroService.buscarCaixaById(rs.getInt(9), rs.getInt(10)))
             );
         } catch (SQLException sqlException) {

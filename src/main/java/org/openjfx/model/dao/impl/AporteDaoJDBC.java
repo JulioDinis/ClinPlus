@@ -51,7 +51,7 @@ public class AporteDaoJDBC implements AporteDao {
         try {
             statement.setDouble(1, aporte.getValor());
             statement.setString(2, aporte.getDescricao());
-            statement.setDate(3, Utils.convertToDateViaSqlDate(aporte.getData()));
+            statement.setDate(3, aporte.getData());
             statement.setInt(4, aporte.getColaborador().getIdColaborador());
             statement.setInt(5, aporte.getCaixaMensal().getMes());
             statement.setInt(6, aporte.getCaixaMensal().getAno());
@@ -79,7 +79,7 @@ public class AporteDaoJDBC implements AporteDao {
             try {
                 statement.setDouble(1, aporte.getValor());
                 statement.setString(2, aporte.getDescricao());
-                statement.setDate(3, Utils.convertToDateViaSqlDate(aporte.getData()));
+                statement.setDate(3, aporte.getData());
                 statement.setInt(4, aporte.getColaborador().getIdColaborador());
                 statement.setInt(5, aporte.getCaixaMensal().getMes());
                 statement.setInt(6, aporte.getCaixaMensal().getAno());
@@ -170,9 +170,9 @@ public class AporteDaoJDBC implements AporteDao {
                     rs.getInt("id_aporte"),
                     rs.getDouble("valor"),
                     rs.getString("descricao"),
-                    rs.getDate("data").toLocalDate(),
+                    rs.getDate("data"),
                     colaboradorService.findById(rs.getInt("id_colaborador")),
-                    mapper.toEntity(financeiroService.buscarCaixaById(rs.getInt(9), rs.getInt(10)))
+                    mapper.toEntity(financeiroService.buscarCaixaById(rs.getInt(6), rs.getInt(7)))
             );
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

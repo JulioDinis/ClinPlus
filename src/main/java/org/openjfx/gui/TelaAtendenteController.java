@@ -7,10 +7,7 @@ import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
-import org.openjfx.model.service.AgendaService;
-import org.openjfx.model.service.ColaboradorService;
-import org.openjfx.model.service.FinanceiroService;
-import org.openjfx.model.service.PacienteService;
+import org.openjfx.model.service.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -80,6 +77,24 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
         notifyDataChangeListeners("/org/openjfx/gui/TelaFinanceiro.fxml",
                 (TelaFinanceiroController controller) -> {
                     controller.setFinanceiroService(new FinanceiroService());
+                    controller.updateTableView();
+                    controller.setCaixaAberto(this.caixaAberto);
+                });
+    }
+    @FXML
+    public void onJfxButtonAporteClick() {
+        notifyDataChangeListeners("/org/openjfx/gui/AporteList.fxml",
+                (AporteListController controller) -> {
+                    controller.setAporteDTOService(new AporteService());
+                    controller.updateTableView();
+                    controller.setCaixaAberto(this.caixaAberto);
+                });
+    }
+    @FXML
+    public void onJfxButtonContaClick() {
+        notifyDataChangeListeners("/org/openjfx/gui/ContaList.fxml",
+                (ContaListController controller) -> {
+                    controller.setContaService(new ContaService());
                     controller.updateTableView();
                     controller.setCaixaAberto(this.caixaAberto);
                 });

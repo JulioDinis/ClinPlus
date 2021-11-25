@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.openjfx.gui.listener.DataChangeListener;
+import org.openjfx.model.dto.AporteDTO;
 import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Paciente;
@@ -15,14 +16,14 @@ import java.util.function.Consumer;
 
 public class CreateDialog implements DataChangeListener {
 
-    public <T> void createDialogForm(Paciente paciente, String absolutName, Consumer<T> initialingAction, Stage parentStage) {
+    public <T> void createDialogForm(Paciente aporte , String absolutName, Consumer<T> initialingAction, Stage parentStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
             T controller = loader.getController();
             initialingAction.accept(controller);
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Insira os dados do Paciente");
+            dialogStage.setTitle("Insira os dados do Aporte");
             dialogStage.setScene(new Scene(pane));
             dialogStage.setResizable(false);
             dialogStage.initOwner(parentStage);

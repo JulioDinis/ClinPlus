@@ -42,7 +42,6 @@ public class PacienteFormController implements Initializable {
 
     private Paciente entity;
     private PacienteService service;
-    private PacienteService pacienteService;
     private List<DataChangeListener> dataChangeListener = new ArrayList<>();
     private ObservableList<String> obsListSexo;
     private ObservableList<String> obsListUF;
@@ -115,9 +114,8 @@ public class PacienteFormController implements Initializable {
         this.entity = entity;
     }
 
-    public void setServices(PacienteService service, PacienteService pacienteService) {
+    public void setServices(PacienteService service) {
         this.service = service;
-        this.pacienteService = pacienteService;
     }
 
     public void subscribeDataChangeListener(DataChangeListener listener) {
@@ -318,19 +316,4 @@ public class PacienteFormController implements Initializable {
         txtWhatsApp.setStyle(fields.contains("whatsApp") ? "-fx-border-color: red" : "-fx-border-color: light gray");
 
     }
-
-
-//    private void initializeComboBoxSexo() {
-//        Callback<ListView<String>, ListCell<String>> factory = lv -> new ListCell<String>() {
-//            @Override
-//            protected void updateItem(String item, Boolean empty) {
-//                super.updateItem(item, empty);
-//                setText(empty ? "" : item.getNome());
-//            }
-//        };
-//        comboBoxSexo.setCellFactory(factory);
-//        comboBoxSexo.setButtonCell(factory.call(null));
-//    }
-
-
 }

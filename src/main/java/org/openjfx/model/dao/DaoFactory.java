@@ -47,4 +47,8 @@ public class DaoFactory {
         return new AtendenteDaoJDBC(DB.getConnection("Dao Factory - Create Tratamento DAO  | Pedido By: " + creator)) {
         };
     }
+
+    public static ContaDao createContaDao(String creator) {
+        return new ContaDaoJDBC(DB.getConnection("Dao Factory - Create Conta DAO | Pedido by: " + creator));
+    }
 }

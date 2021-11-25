@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -16,7 +17,7 @@ public class Aporte implements Serializable {
     private Integer id;
     private Double valor;
     private String descricao;
-    private LocalDate data;
+    private Date data;
     private Colaborador colaborador;
     private CaixaMensal caixaMensal;
 }

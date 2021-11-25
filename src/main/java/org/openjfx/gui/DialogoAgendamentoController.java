@@ -163,7 +163,7 @@ public class DialogoAgendamentoController implements Initializable {
         CreateDialog createDialog = new CreateDialog();
         createDialog.createDialogForm(paciente, "/org/openjfx/gui/PacienteForm.fxml", (PacienteFormController controller) -> {
             controller.setPaciente(paciente);
-            controller.setServices(new PacienteService(), new PacienteService());
+            controller.setServices(new PacienteService());
             controller.loadComboBox();
 //            controller.subscribeDataChangeListener(this);
             controller.updateFormData();
@@ -178,7 +178,7 @@ public class DialogoAgendamentoController implements Initializable {
             // Controller
             PacienteFormController controller = loader.getController();
             controller.setPaciente(paciente);
-            controller.setServices(new PacienteService(), new PacienteService());
+            controller.setServices(new PacienteService());
             controller.loadComboBox();
 //            controller.subscribeDataChangeListener(this);
             controller.updateFormData();
