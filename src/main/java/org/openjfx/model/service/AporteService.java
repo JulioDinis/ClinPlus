@@ -5,7 +5,9 @@ import org.openjfx.model.dao.AporteDao;
 import org.openjfx.model.dao.DaoFactory;
 import org.openjfx.model.dao.impl.AporteDaoJDBC;
 import org.openjfx.model.dto.AporteDTO;
+import org.openjfx.model.dto.ContaDTO;
 import org.openjfx.model.entities.Atendente;
+import org.openjfx.model.entities.CaixaMensal;
 
 import java.util.List;
 
@@ -22,12 +24,22 @@ public class AporteService {
     }
 
     public List<AporteDTO> findAll() {
-
         return mapper.toDto(dao.findAll());
     }
 
-    public void remove(AporteDTO aporteDTO){
+    public AporteDTO findById(AporteDTO aporteDTO) {
+        return mapper.toDto(dao.findById(aporteDTO.getId()));
+    }
 
+    public List<AporteDTO> findByCaixa(CaixaMensal caixaMensal) {
+        return mapper.toDto(dao.findByCaixaMensal(caixaMensal));
+    }
+
+
+    public void remove(AporteDTO aporteDTO) {
+        if (aporteDTO.getId() != null) {
+            dao.deleteById(aporteDTO.getId());
+        }
     }
 
 }

@@ -31,10 +31,7 @@ import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.service.AporteService;
 
 import java.net.URL;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -83,7 +80,7 @@ public class AporteListController implements Initializable, DataChangeListener {
     }
 
     @FXML
-    public void onJfxButtonBuscarClick(ActionEvent event) {
+    public void onJfxButtonBuscarClick() {
         System.out.println("Buscar por: -> " + txtBusca.getText());
     }
 
@@ -113,6 +110,8 @@ public class AporteListController implements Initializable, DataChangeListener {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Locale ptBr = new Locale("pt", "BR");
+        Locale.setDefault(ptBr);
         initializeNodes();
     }
 
@@ -123,14 +122,10 @@ public class AporteListController implements Initializable, DataChangeListener {
         tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 //        // Formatar a data usando o método do utils
         Utils.formatTableColumnDate(tableColumnData, "dd/MM/yyyy");
-
-//        tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
 //        // Formata o Salario usando o método do utils
-//        Utils.formatTableColumnDouble(tableColumnBaseSalary, 2);
+        Utils.formatTableColumnDouble(tableColumnAporte, 2);
         Stage stage = (Stage) MainApp.getMainScene().getWindow();
-
         tableViewAporteDTO.prefHeightProperty().bind(stage.heightProperty());
-
     }
 
 
@@ -158,7 +153,6 @@ public class AporteListController implements Initializable, DataChangeListener {
             controller.loadComboBox();
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
-
             // Stage
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Insira os dados do aporteDTO");
@@ -229,7 +223,7 @@ public class AporteListController implements Initializable, DataChangeListener {
     private void initRemoveButtons() {
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumnREMOVE.setCellFactory(param -> new TableCell<>() {
-            private JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
+            private final JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
 
             @Override
             protected void updateItem(AporteDTO obj, boolean empty) {
@@ -247,7 +241,8 @@ public class AporteListController implements Initializable, DataChangeListener {
     private void removeEntity(AporteDTO aporteDTO) {
         Optional<ButtonType> result = Alerts.
                 showConfirmation("Confirmation", "Tem certeza que deseja excluir o AporteDTO?");
-        if (result.get() == ButtonType.OK) {
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             if (service == null) {
                 throw new IllegalStateException("Service was Null");
             }

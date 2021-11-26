@@ -5,6 +5,7 @@ import org.openjfx.db.DbException;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.mapper.CaixaMensalMapper;
 import org.openjfx.model.dao.ContaDao;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Conta;
 import org.openjfx.model.service.FinanceiroService;
 
@@ -48,7 +49,7 @@ public class ContaDaoJDBC implements ContaDao {
         try {
             statement.setString(1, conta.getDescricao());
             statement.setDouble(2, conta.getValor());
-            statement.setDate(3,conta.getDataPagamento());
+            statement.setDate(3, conta.getDataVencimento());
             statement.setString(4, conta.getObservacao());
             statement.setInt(5, conta.getCaixaMensal().getMes());
             statement.setInt(6, conta.getCaixaMensal().getAno());
@@ -77,14 +78,20 @@ public class ContaDaoJDBC implements ContaDao {
                             + "WHERE id_conta=?");
 
             try {
-//                statement.setString(1, conta.getDescricao());
-//                statement.setDouble(2, conta.getValor());
-//                statement.setDate(3, Utils.convertToDateViaSqlDate(conta.getDataVencimento()));
-//                statement.setString(4, conta.getObservacao());
-//                statement.setDate(5, Utils.convertToDateViaSqlDate(conta.getDataPagamento()));
-//                statement.setDouble(6, conta.getValorPagamento());
-//                statement.setInt(7, conta.getCaixaMensal().getMes());
-//                statement.setInt(8, conta.getCaixaMensal().getAno());
+
+                statement.setString(1, conta.getDescricao());
+                statement.setDouble(2, conta.getValor());
+                statement.setDate(3, conta.getDataVencimento());
+                statement.setString(4, conta.getObservacao());
+                if (conta.getValorPagamento() != null) {
+                    statement.setDate(5, conta.getDataPagamento());
+                    statement.setDouble(6, conta.getValorPagamento());
+                }else{
+                    statement.setNull(5,Types.DATE);
+                    statement.setNull(6,Types.DOUBLE);
+                }
+                statement.setInt(7, conta.getCaixaMensal().getMes());
+                statement.setInt(8, conta.getCaixaMensal().getAno());
                 statement.setInt(9, conta.getIdConta());
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -147,7 +154,7 @@ public class ContaDaoJDBC implements ContaDao {
             statement = connection.prepareStatement(
                     "SELECT * FROM conta ORDER BY data_cadastro");
             rs = statement.executeQuery();
-            System.out.println(list);
+            System.out.println(rs.toString());
             while (rs.next()) {
                 Conta conta = instantiateConta(rs);
                 list.add(conta);
@@ -161,20 +168,47 @@ public class ContaDaoJDBC implements ContaDao {
         }
     }
 
+    @Override
+    public List<Conta> findByCaixaMensal(CaixaMensal caixaMensal) {
+        PreparedStatement statement = null;
+        List<Conta> contas = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM conta " +
+                            "WHERE mes =? " +
+                            "and ano =? " +
+                            "ORDER BY data_cadastro");
+            statement.setInt(1, caixaMensal.getMes());
+            statement.setInt(2, caixaMensal.getAno());
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Conta conta = instantiateConta(rs);
+                contas.add(conta);
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+            return contas;
+        }
+    }
+
     private Conta instantiateConta(ResultSet rs) {
         FinanceiroService financeiroService = new FinanceiroService();
         CaixaMensalMapper mapper = new CaixaMensalMapper();
         Conta novaConta = new Conta();
         try {
             novaConta = new Conta(
-                    rs.getInt("idConta"),
-                    rs.getDate("dataCadastro"),
+                    rs.getInt("id_conta"),
+                    rs.getDate("data_cadastro"),
                     rs.getString("descricao"),
                     rs.getDouble("valor"),
-                    rs.getDate("dataPagamento"),
-                    rs.getDate("dataPagamento"),
-                    rs.getDouble("valorPagamento"),
-                    rs.getString("observacao"),
+                    rs.getDate("data_vencimento"),
+                    rs.getDate("data_pagamento"),
+                    rs.getDouble("valor_pagamento"),
+                    rs.getString("obs"),
                     mapper.toEntity(financeiroService.buscarCaixaById(rs.getInt(9), rs.getInt(10)))
             );
         } catch (SQLException sqlException) {

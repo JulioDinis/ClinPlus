@@ -28,14 +28,10 @@ import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.model.dto.ContaDTO;
 import org.openjfx.model.entities.CaixaMensal;
-import org.openjfx.model.service.AporteService;
 import org.openjfx.model.service.ContaService;
 
 import java.net.URL;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -72,6 +68,9 @@ public class ContaListController implements Initializable, DataChangeListener {
     @FXML
     private TableColumn<ContaDTO, ContaDTO> tableColumnREMOVE;
 
+    @FXML
+    private TableColumn<ContaDTO, ContaDTO> tableColumnPAGAR;
+
 
     // eventos
     @FXML
@@ -84,7 +83,7 @@ public class ContaListController implements Initializable, DataChangeListener {
             controller.setCaixaMensal(this.caixaMensal);
 //            controller.loadComboBox();
             controller.subscribeDataChangeListener(this);
-            controller.updateFormData();
+//            controller.updateFormData();
         }, parentStage);
 
     }
@@ -120,35 +119,26 @@ public class ContaListController implements Initializable, DataChangeListener {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Locale ptBr = new Locale("pt", "BR");
+        Locale.setDefault(ptBr);
         initializeNodes();
     }
 
     private synchronized void initializeNodes() {
-
         tableColumnDataCadastro.setCellValueFactory(new PropertyValueFactory<>("dataCadastro"));
         tableColumnDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
+        tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         tableColumnDataVencimento.setCellValueFactory(new PropertyValueFactory<>("dataVencimento"));
         tableColumnDataPagamento.setCellValueFactory(new PropertyValueFactory<>("dataPagamento"));
         tableColumnValorPago.setCellValueFactory(new PropertyValueFactory<>("valorPagamento"));
         tableColumnObservacao.setCellValueFactory(new PropertyValueFactory<>("observacao"));
-
-        // Formata o Salario usando o método do utils
         Utils.formatTableColumnDouble(tableColumnValor, 2);
         Utils.formatTableColumnDouble(tableColumnValorPago, 2);
-
-//        // Formatar a data usando o método do utils
         Utils.formatTableColumnDate(tableColumnDataCadastro, "dd/MM/yyyy");
         Utils.formatTableColumnDate(tableColumnDataVencimento, "dd/MM/yyyy");
         Utils.formatTableColumnDate(tableColumnDataPagamento, "dd/MM/yyyy");
-
-//        tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
-//        // Formata o Salario usando o método do utils
-//        Utils.formatTableColumnDouble(tableColumnBaseSalary, 2);
         Stage stage = (Stage) MainApp.getMainScene().getWindow();
-
         tableViewContaDTO.prefHeightProperty().bind(stage.heightProperty());
-
     }
 
 
@@ -162,30 +152,28 @@ public class ContaListController implements Initializable, DataChangeListener {
         tableViewContaDTO.setItems(obsList);
         initEditButtons();
         initRemoveButtons();
+        initPagarButton();
     }
 
     private void createDialogForm(ContaDTO contaDTO, Stage parentStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/gui/AporteForm.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/gui/ContaForm.fxml"));
             Pane pane = loader.load();
             // Controller
             ContaFormController controller = loader.getController();
-//            controller.setEntity(contaDTO);
-//            controller.setCaixaMensal(this.caixaMensal);
-//            controller.setServices(new AporteService());
-//            controller.loadComboBox();
-//            controller.subscribeDataChangeListener(this);
-//            controller.updateFormData();
-
+            controller.setEntity(contaDTO);
+            controller.setCaixaMensal(this.caixaMensal);
+            controller.setServices(new ContaService());
+            controller.subscribeDataChangeListener(this);
+            controller.updateFormData();
             // Stage
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Insira os dados do aporteDTO");
+            dialogStage.setTitle("Insira os dados da Despesa");
             dialogStage.setScene(new Scene(pane));
             dialogStage.setResizable(false);
             dialogStage.initOwner(parentStage);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
-
         } catch (Exception e) {
             System.out.println("ERRO AQUI");
             e.printStackTrace();
@@ -226,7 +214,6 @@ public class ContaListController implements Initializable, DataChangeListener {
         tableColumnEDIT.setCellFactory(param -> new TableCell<>() {
             private final FontIcon editarIcone = new FontIcon("fa-edit");
             private final JFXButton button = new JFXButton("Editar", editarIcone);
-
             @Override
             protected void updateItem(ContaDTO obj, boolean empty) {
                 super.updateItem(obj, empty);
@@ -244,11 +231,34 @@ public class ContaListController implements Initializable, DataChangeListener {
         });
     }
 
+    private void initPagarButton() {
+        tableColumnPAGAR.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        tableColumnPAGAR.setCellFactory(param -> new TableCell<>() {
+            private final FontIcon editarIcone = new FontIcon("fa-edit");
+            private final JFXButton button = new JFXButton("Pagar", editarIcone);
+
+            @Override
+            protected void updateItem(ContaDTO obj, boolean empty) {
+                super.updateItem(obj, empty);
+                if (obj == null) {
+                    setGraphic(null);
+                    return;
+                }
+                // coloca o botão na tabela
+                setGraphic(button);
+                button.setDisable(true);
+                // seta a action do button
+                button.setOnAction(
+                        event -> createDialogForm(
+                                obj, Utils.currentStage(event)));
+            }
+        });
+    }
+
     private void initRemoveButtons() {
         tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
         tableColumnREMOVE.setCellFactory(param -> new TableCell<>() {
             private JFXButton button = new JFXButton("Excluir", new FontIcon("fa-remove"));
-
             @Override
             protected void updateItem(ContaDTO obj, boolean empty) {
                 super.updateItem(obj, empty);
@@ -265,7 +275,7 @@ public class ContaListController implements Initializable, DataChangeListener {
     private void removeEntity(ContaDTO contaDTO) {
         Optional<ButtonType> result = Alerts.
                 showConfirmation("Confirmation", "Tem certeza que deseja excluir o ContaDTO?");
-        if (result.get() == ButtonType.OK) {
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             if (service == null) {
                 throw new IllegalStateException("Service was Null");
             }
@@ -296,8 +306,6 @@ public class ContaListController implements Initializable, DataChangeListener {
             dialogStage.initOwner(parentStage);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
-
-
         } catch (Exception e) {
             System.out.println("ERRO AQUI");
             e.printStackTrace();

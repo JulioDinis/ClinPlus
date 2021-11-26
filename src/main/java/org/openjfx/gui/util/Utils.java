@@ -62,7 +62,7 @@
                 @Override
                 protected void updateItem(Date item, boolean empty) {
                     super.updateItem(item, empty);
-                    if (empty) {
+                    if (empty || item ==null) {
                         setText(null);
                     } else {
                         setText(sdf.format(item));
@@ -79,7 +79,8 @@
                     if (empty) {
                         setText(null);
                     } else {
-                        Locale.setDefault(Locale.US);
+                        Locale ptBr = new Locale("pt", "BR");
+                        Locale.setDefault(ptBr);
                         setText(String.format("%." + decimalPlaces + "f", item));
                     }
                 }

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.openjfx.model.entities.CaixaMensal;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor

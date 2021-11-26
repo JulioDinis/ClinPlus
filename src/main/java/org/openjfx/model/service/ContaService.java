@@ -5,6 +5,7 @@ import org.openjfx.model.dao.ContaDao;
 import org.openjfx.model.dao.DaoFactory;
 import org.openjfx.model.dto.AporteDTO;
 import org.openjfx.model.dto.ContaDTO;
+import org.openjfx.model.entities.CaixaMensal;
 
 import java.util.List;
 
@@ -21,12 +22,19 @@ public class ContaService {
     }
 
     public List<ContaDTO> findAll() {
-
         return mapper.toDto(dao.findAll());
+    }
+    public ContaDTO findById(ContaDTO contaDTO) {
+        return mapper.toDto(dao.findById(contaDTO.getIdConta()));
+    }
+    public List<ContaDTO> findByCaixa(CaixaMensal caixaMensal){
+        return mapper.toDto(dao.findByCaixaMensal(caixaMensal));
     }
 
     public void remove(ContaDTO contaDTO) {
-
+        if(contaDTO != null){
+            dao.deleteById(contaDTO.getIdConta());
+        }
     }
 
 }

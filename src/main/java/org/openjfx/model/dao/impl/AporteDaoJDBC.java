@@ -2,11 +2,10 @@ package org.openjfx.model.dao.impl;
 
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
-import org.openjfx.gui.util.Utils;
 import org.openjfx.mapper.CaixaMensalMapper;
 import org.openjfx.model.dao.AporteDao;
 import org.openjfx.model.entities.Aporte;
-import org.openjfx.model.entities.Conta;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.service.ColaboradorService;
 import org.openjfx.model.service.FinanceiroService;
 
@@ -16,10 +15,10 @@ import java.util.List;
 
 public class AporteDaoJDBC implements AporteDao {
 
-    private Connection connection;
+    private final Connection connection;
 
-    public AporteDaoJDBC(Connection newConnetion) {
-        this.connection = newConnetion;
+    public AporteDaoJDBC(Connection newConnection) {
+        this.connection = newConnection;
     }
 
     @Override
@@ -33,7 +32,7 @@ public class AporteDaoJDBC implements AporteDao {
                     Statement.RETURN_GENERATED_KEYS
             );
             createQuery(aporte, statement);
-            Integer linhasAfetadas = statement.executeUpdate();
+            int linhasAfetadas = statement.executeUpdate();
             if (linhasAfetadas > 0) {
                 ResultSet rs = statement.getGeneratedKeys();
                 DB.closeResultSet(rs);
@@ -128,12 +127,12 @@ public class AporteDaoJDBC implements AporteDao {
             if (rs.next()) {
                 aporte = instantiateAporte(rs);
             }
+            return aporte;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
             DB.closeStatement(statement);
             DB.closeResultSet(rs);
-            return aporte;
         }
     }
 
@@ -151,12 +150,42 @@ public class AporteDaoJDBC implements AporteDao {
                 Aporte aporte = instantiateAporte(rs);
                 list.add(aporte);
             }
+            return list;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
             DB.closeStatement(statement);
             DB.closeResultSet(rs);
+
+        }
+    }
+
+    @Override
+    public List<Aporte> findByCaixaMensal(CaixaMensal caixaMensal) {
+        PreparedStatement statement = null;
+        List<Aporte> list = new ArrayList<>();
+
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * FROM aporte " +
+                            "WHERE mes =? " +
+                            "and ano =? " +
+                            "ORDER BY data");
+            statement.setInt(1, caixaMensal.getMes());
+            statement.setInt(2, caixaMensal.getAno());
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Aporte aporte = instantiateAporte(rs);
+                list.add(aporte);
+
+            }
             return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
         }
     }
 

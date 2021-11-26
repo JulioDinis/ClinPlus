@@ -48,6 +48,8 @@ public class ContaFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Locale ptBr = new Locale("pt", "BR");
+        Locale.setDefault(ptBr);
         initializeNodes();
     }
 
@@ -89,9 +91,10 @@ public class ContaFormController implements Initializable {
         if (entity.getIdConta() != null) {
             contaDTO.setIdConta(entity.getIdConta());
         }
-        contaDTO.setDataCadastro(Utils.convertToDateViaSqlDate(datePickerDataVenciemento.getValue()));
+        contaDTO.setDataVencimento(Utils.convertToDateViaSqlDate(datePickerDataVenciemento.getValue()));
         contaDTO.setCaixaMensal(caixaMensal);
         contaDTO.setDescricao(jfxTextFieldDescricao.getText());
+        contaDTO.setObservacao(jfxTextFieldObservacao.getText());
         contaDTO.setValor(Double.parseDouble(jfxTextFieldValor.getText()));
         return contaDTO;
     }
@@ -102,6 +105,9 @@ public class ContaFormController implements Initializable {
 
     public void setEntity(ContaDTO entity) {
         this.entity = entity;
+    }
+    public ContaDTO getEntity(){
+        return  this.entity;
     }
 
     public void setServices(ContaService contaService) {
@@ -116,10 +122,9 @@ public class ContaFormController implements Initializable {
         }
         jfxTextFieldDescricao.setText(entity.getDescricao() != null ? entity.getDescricao() : "");
         jfxTextFieldValor.setText(String.valueOf(entity.getValor() != null ? entity.getValor() : ""));
-        Locale.setDefault(Locale.US);
-        if (entity.getDataCadastro() != null) {
-            ;
-        }
+        jfxTextFieldObservacao.setText(entity.getObservacao());
+        datePickerDataVenciemento.setValue(entity.getDataVencimento().toLocalDate());
+
     }
 
     public void subscribeDataChangeListener(DataChangeListener listener) {

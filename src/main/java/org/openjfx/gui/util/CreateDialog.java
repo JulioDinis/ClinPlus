@@ -7,16 +7,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.openjfx.gui.listener.DataChangeListener;
-import org.openjfx.model.dto.AporteDTO;
+import org.openjfx.model.entities.Aporte;
 import org.openjfx.model.entities.CaixaMensal;
-import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Paciente;
 
 import java.util.function.Consumer;
 
 public class CreateDialog implements DataChangeListener {
 
-    public <T> void createDialogForm(Paciente aporte , String absolutName, Consumer<T> initialingAction, Stage parentStage) {
+    public <T> void createDialogForm(Paciente paciente , String absolutName, Consumer<T> initialingAction, Stage parentStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
             Pane pane = loader.load();
@@ -29,13 +28,11 @@ public class CreateDialog implements DataChangeListener {
             dialogStage.initOwner(parentStage);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
-
         } catch (Exception e) {
             System.out.println("ERRO AQUI");
             e.printStackTrace();
             Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
-
     }
 
     @Override

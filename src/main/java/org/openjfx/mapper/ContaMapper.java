@@ -27,7 +27,7 @@ public class ContaMapper {
     public Conta toEntity(ContaDTO dto) {
         Conta entity = new Conta();
         entity.setIdConta(dto.getIdConta());
-        entity.setDataCadastro(Utils.convertToDateViaInstant(dto.getDataCadastro().toInstant()));
+        entity.setDataCadastro(dto.getDataCadastro());
         entity.setValor(dto.getValor());
         entity.setDescricao(dto.getDescricao());
         entity.setDataVencimento(dto.getDataVencimento());

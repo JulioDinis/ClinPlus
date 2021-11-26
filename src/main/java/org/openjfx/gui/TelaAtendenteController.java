@@ -77,8 +77,10 @@ public class TelaAtendenteController implements Initializable, DataChangeListene
         notifyDataChangeListeners("/org/openjfx/gui/TelaFinanceiro.fxml",
                 (TelaFinanceiroController controller) -> {
                     controller.setFinanceiroService(new FinanceiroService());
-                    controller.updateTableView();
+//                    controller.updateTableView();
                     controller.setCaixaAberto(this.caixaAberto);
+                    controller.updateTableViewConta();
+                    controller.updateTableViewAporte();
                 });
     }
     @FXML

@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ContaListController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1087.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.ContaListController">
     <children>
         <Label prefHeight="69.0" prefWidth="341.0" text="Despesas Cadastradas" textAlignment="JUSTIFY">
             <font>
@@ -53,15 +53,20 @@
       </ToolBar>
         <TableView fx:id="tableViewContaDTO" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="940.0" scaleShape="false" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="tableColumnDataCadastro" prefWidth="150.0" text="Data de Cadastro" />
-                <TableColumn fx:id="tableColumnDescricao" prefWidth="85.33334350585938" text="Descrição" />
-                <TableColumn fx:id="tableColumnValor" prefWidth="84.33334350585938" text="Valor" />
-                <TableColumn fx:id="tableColumnDataVencimento" prefWidth="122.33334350585938" text="Vencimento" />
-                <TableColumn fx:id="tableColumnDataPagamento" prefWidth="117.3333740234375" text="Pago em" />
-                <TableColumn fx:id="tableColumnValorPago" minWidth="83.0" prefWidth="119.33331298828125" text="Valor Pago" />
-                <TableColumn fx:id="tableColumnObservacao" prefWidth="109.33331298828125" text="Observação" />
-                <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="94.66668701171875" />
-                <TableColumn fx:id="tableColumnREMOVE" minWidth="70.0" prefWidth="78.6666259765625" />
+                <TableColumn fx:id="tableColumnDataCadastro" minWidth="100.0" prefWidth="150.0" text="Data de Cadastro" />
+                <TableColumn fx:id="tableColumnDescricao" minWidth="100.0" prefWidth="300.0" text="Descrição" />
+                <TableColumn fx:id="tableColumnValor" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Valor" />
+                <TableColumn fx:id="tableColumnDataVencimento" maxWidth="200.0" minWidth="100.0" prefWidth="123.0" text="Vencimento" />
+                <TableColumn fx:id="tableColumnDataPagamento" maxWidth="200.0" minWidth="100.0" prefWidth="130.0" text="Pago em" />
+                <TableColumn fx:id="tableColumnValorPago" maxWidth="200.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="Valor Pago" />
+                <TableColumn fx:id="tableColumnObservacao" prefWidth="120.0" text="Observação" />
+            <TableColumn minWidth="30.0" prefWidth="300.0" resizable="false" text="Ações">
+               <columns>
+                      <TableColumn fx:id="tableColumnEDIT" maxWidth="200.0" minWidth="50.0" prefWidth="100.0" resizable="false" />
+                      <TableColumn fx:id="tableColumnREMOVE" maxWidth="200.0" minWidth="50.0" prefWidth="100.0" resizable="false" />
+                  <TableColumn fx:id="tableColumnPAGAR" maxWidth="200.0" minWidth="50.0" prefWidth="100.0" resizable="false" />
+               </columns>
+            </TableColumn>
             </columns>
             <VBox.margin>
                 <Insets left="10.0" right="10.0" top="10.0" />

@@ -20,11 +20,12 @@
             <TableView fx:id="tableViewContas" layoutX="384.0" layoutY="317.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="182.0" prefWidth="825.0" AnchorPane.rightAnchor="49.0">
               <columns>
                   <TableColumn fx:id="tableColumnDataCadastro" prefWidth="95.0" text="Data" />
-                <TableColumn fx:id="tableColumnDescricao" prefWidth="224.0" text="Descrição" />
+                <TableColumn fx:id="tableColumnContaDescricao" prefWidth="224.0" text="Descrição" />
                   <TableColumn fx:id="tableColumnValor" prefWidth="85.0" text="Valor" />
                   <TableColumn fx:id="tableColumnDataVencimento" prefWidth="134.0" text="Vencimento" />
                   <TableColumn fx:id="tableColumnDataPagamento" prefWidth="107.0" text="Pagamento" />
-                  <TableColumn prefWidth="179.0" text="Ações" />
+                  <TableColumn fx:id="tableColumnValorPago" prefWidth="99.0" text="Valor Pago" />
+                  <TableColumn fx:id="tableColumnPAGAR" prefWidth="155.0" text="Ações" />
               </columns>
             </TableView>
             <Label layoutX="60.0" layoutY="66.0" text="Caixa aberto">
@@ -64,9 +65,10 @@
             <JFXButton layoutX="60.0" layoutY="446.0" prefHeight="53.0" prefWidth="220.0" ripplerFill="#2a35b2" style="-fx-background-color: #CCC;" text="Fechar / Abrir" />
             <TableView fx:id="tableViewAportes" layoutX="384.0" layoutY="79.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="182.0" prefWidth="825.0" AnchorPane.rightAnchor="49.0">
                <columns>
-                  <TableColumn prefWidth="115.0" text="Data" />
-                  <TableColumn prefWidth="251.0" text="Descrição" />
-                  <TableColumn prefWidth="92.0" text="Valor" />
+                  <TableColumn fx:id="tableColumnData" prefWidth="83.0" text="Data" />
+                  <TableColumn fx:id="tableColumnDescricao" prefWidth="158.0" text="Descrição" />
+                  <TableColumn fx:id="tableColumnColaborador" prefWidth="224.0" text="Colaborador" />
+                  <TableColumn fx:id="tableColumnAporte" prefWidth="68.0" text="Valor" />
                   <TableColumn prefWidth="198.0" text="Ações" />
                </columns>
             </TableView>

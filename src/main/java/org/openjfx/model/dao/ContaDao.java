@@ -1,5 +1,6 @@
 package org.openjfx.model.dao;
 
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Conta;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface ContaDao {
     List<Conta> findAll();
 
 
+    List<Conta> findByCaixaMensal(CaixaMensal caixaMensal);
 }
