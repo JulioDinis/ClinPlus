@@ -23,8 +23,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.openjfx.application.MainApp;
 import org.openjfx.application.ToolbarActionCallBack;
+import org.openjfx.gui.listener.AgendaListener;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
+import org.openjfx.model.dto.AgendaDTO;
 import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
@@ -39,7 +41,7 @@ import java.util.function.Consumer;
 
 @Getter
 @Setter
-public class MainAppViewController implements Initializable, ToolbarActionCallBack, DataChangeListener {
+public class MainAppViewController implements Initializable, ToolbarActionCallBack, DataChangeListener, AgendaListener {
     private Object logado;
 
     private Colaborador colaboradorLogado;
@@ -84,6 +86,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             controller.updateTableView();
         });
     }
+
     @FXML
     public void onMenuItemAtendenteAction() {
         buttonAction("/org/openjfx/gui/AtendenteList.fxml", (AtendenteListController controller) -> {
@@ -91,6 +94,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             controller.updateTableView();
         });
     }
+
     @FXML
     public void onMenuItemProcedimentoAction() {
         buttonAction("/org/openjfx/gui/ProcedimentoList.fxml", (ProcedimentoListController controller) -> {
@@ -125,20 +129,16 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //this.carregarMenu(true);
-
     }
 
     private void carregarMenu(boolean expandido) {
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/openjfx/gui/Toolbar.fxml"));
             VBox box = loader.load();
             ToolbarController controller = loader.getController();
             controller.setActionCallBack(this);
-
             // não remover
             menuLateral.setSidePane(box);
-
         } catch (IOException ex) {
             System.out.println("Deu merda");
             System.out.println(ex);
@@ -149,7 +149,6 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             System.out.println("botão clicaddo");
             transition.setRate(transition.getRate() * -1);
             transition.play();
-
             if (menuLateral.isOpened()) {
                 menuLateral.close();
             } else {
@@ -163,7 +162,6 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
         if (this.logado != null) {
             Pessoa p = (Pessoa) this.logado;
             textNomeDoUsuarioLogado.setText(p.getNome());
-
         }
     }
 
@@ -178,7 +176,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
 
     @FXML
     public void onLogoClick() {
-        System.out.println("LOGO -> "+logado.getClass());
+        System.out.println("LOGO -> " + logado.getClass());
         if (this.logado instanceof Atendente) {
             System.out.println("ATENDENTE LOGADO!");
             Atendente atendenteLogado = (Atendente) this.getLogado();
@@ -189,7 +187,7 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
                         controller.subscribeDataChangeListener(this);
                         controller.subscribeDataChangeListener(this.parent);
                     });
-        } else if(this.logado instanceof Colaborador) {
+        } else if (this.logado instanceof Colaborador) {
             System.out.println("COLABORADOR LOGADO!!");
             Colaborador colaborador = (Colaborador) this.getLogado();
             this.setColaboradorLogado(colaborador);
@@ -207,8 +205,8 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     }
     // Carrega a view - o synchronized garante que o carregamento não será interrompido no meio
 
-    private CaixaMensal getCaixaAberto(){
-        System.out.println("CAIXA ABERTO -->> " +this.caixaAberto);
+    private CaixaMensal getCaixaAberto() {
+        System.out.println("CAIXA ABERTO -->> " + this.caixaAberto);
         return this.caixaAberto;
     }
 
@@ -275,10 +273,12 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
             Alerts.showAlert("IO Exeption", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
+
     // Listeners
     @Override
     public void onDataChange() {
     }
+
     @Override
     public void onLogin(Object obj) {
     }
@@ -291,37 +291,19 @@ public class MainAppViewController implements Initializable, ToolbarActionCallBa
     @Override
     public void onLogout() {
     }
+
     @Override
     public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
-        // Arrumar para funcionar com qualquer tela (USAR T)
         System.out.println("*********************** TELA ALTERADA ******************************");
         buttonAction(resource, initialingAction);
     }
-    private void createDialogForm(String absolutName, Stage parentStage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
-            Pane pane = loader.load();
-            OrcamentoListController controller = loader.getController();
-            controller.setServices(null, new ProcedimentoService(), new TratamentoService());
-            controller.setFuncionarioLogado(getColaboradorLogado());
-
-            controller.updateTableView();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Insira os dados do Procedimento");
-            dialogStage.setScene(new Scene(pane));
-            dialogStage.setResizable(false);
-            dialogStage.initOwner(parentStage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.showAndWait();
-        } catch (Exception e) {
-            System.out.println("ERRO EM -> " + getClass());
-            e.printStackTrace();
-            Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
-        }
-    }
-
 
     public void setCaixaAberto(CaixaMensal caixaAberto) {
-        this.caixaAberto=caixaAberto;
+        this.caixaAberto = caixaAberto;
+    }
+
+    @Override
+    public <T> void atendimentoChange(String resource, Consumer<T> initialingAction, AgendaDTO agendaDTO) {
+        System.out.println("############## ATENDER PACIENTE ##################");
     }
 }

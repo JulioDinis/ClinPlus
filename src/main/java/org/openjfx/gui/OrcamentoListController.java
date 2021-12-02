@@ -90,6 +90,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     private ItensTratamentoService serviceItensTratamento;
     private TratamentoService tratamentoService;
     private TratamentoDTO tratamento;
+    private Paciente paciente;
     ;
 
 
@@ -187,6 +188,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                         p = mapper.toEntity(tableViewProcedimento.getSelectionModel().getSelectedItem());
                         if (this.tratamento == null) {
                             this.tratamento = new TratamentoDTO();
+                            this.tratamento.setPaciente(this.paciente);
                             System.out.println("Criou Tratamento");
                             this.tratamento.setValidadeOrcamento(gc.getTime());
                             this.tratamento.setDesconto(0.0);
@@ -336,5 +338,9 @@ public class OrcamentoListController implements Initializable, DataChangeListene
         this.serviceItensTratamento = itensTratamentoService;
         this.procedimentoService = procedimentoService;
         this.tratamentoService = tratamentoService;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 }

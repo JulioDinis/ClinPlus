@@ -14,6 +14,7 @@ import lombok.Data;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
+import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.service.*;
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 @Data
-public class TelaEspecialistaController implements Initializable {
+public class TelaEspecialistaController implements Initializable, DataChangeListener {
 
     private List<DataChangeListener> dataChangeListener = new ArrayList<>();
     private Colaborador especialistaLogado;
@@ -83,12 +84,13 @@ public class TelaEspecialistaController implements Initializable {
                     controller.setServices(new AgendaService(), new ColaboradorService());
                     controller.loadComboBox();
                     controller.setEspecialista(this.especialistaLogado);
+                    controller.subscribeDataChangeListener(this);
                 });
     }
 
     @FXML
     public void onJfxButtonOrcamentoClick(ActionEvent event) {
-        createDialogForm("/org/openjfx/gui/OrcamentoList.fxml", Utils.currentStage(event));
+    //    createDialogForm("/org/openjfx/gui/OrcamentoList.fxml", Utils.currentStage(event));
     }
 
     @FXML
@@ -97,30 +99,7 @@ public class TelaEspecialistaController implements Initializable {
         notifyLogOut();
     }
 
-    private void createDialogForm(String absolutName, Stage parentStage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(absolutName));
-            Pane pane = loader.load();
-            // Controller
-            OrcamentoListController controller = loader.getController();
-            controller.setServices(new ItensTratamentoService(), new ProcedimentoService(), new TratamentoService());
-            controller.setFuncionarioLogado(this.getEspecialistaLogado());
-            controller.updateTableView();
-            // Stage
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Orçamento");
-            dialogStage.setScene(new Scene(pane));
-            dialogStage.setResizable(false);
-            dialogStage.initOwner(parentStage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.showAndWait();
 
-        } catch (Exception e) {
-            System.out.println("ERRO AQUI");
-            e.printStackTrace();
-            Alerts.showAlert("IO Exception", "Erro Loading view", e.getMessage(), Alert.AlertType.ERROR);
-        }
-    }
 
 
     public void subscribeDataChangeListener(DataChangeListener... listener) {
@@ -133,6 +112,7 @@ public class TelaEspecialistaController implements Initializable {
         for (DataChangeListener listener : dataChangeListener) {
             listener.onClickTela(resource, initialingAction);
         }
+
     }
 
     private void notifyLogOut() {
@@ -141,4 +121,28 @@ public class TelaEspecialistaController implements Initializable {
         }
     }
 
+    @Override
+    public void onDataChange() {
+
+    }
+
+    @Override
+    public void onLogin(Object logado) {
+
+    }
+
+    @Override
+    public void onCaixaAbertoChange(CaixaMensal caixaAberto) {
+
+    }
+
+    @Override
+    public void onLogout() {
+
+    }
+
+    @Override
+    public <T> void onClickTela(String resource, Consumer<T> initialingAction) {
+        notifyDataChangeListeners(resource, initialingAction);
+    }
 }

@@ -20,7 +20,8 @@ public class AgendaDTO {
     private String paciente;
     private String observacao;
     private String status;
-
+    private Paciente objPaciente;
+    private Colaborador objColaborador;
     private String especialista;
     private Integer idPaciente;
     private Integer idEspecialista;

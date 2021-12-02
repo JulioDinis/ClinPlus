@@ -23,14 +23,15 @@ public class TratamentoDaoJDBC implements TratamentoDao {
         try {
             statement = connection.prepareStatement(
                     "INSERT INTO tratamento "
-                            + "(total, desconto, validade_orcamento, status) "
-                            + "VALUES (?,?,?,'t');",
+                            + "(total, desconto, validade_orcamento, status, paciente ) "
+                            + "VALUES (?,?,?,'t',?);",
                     Statement.RETURN_GENERATED_KEYS
             );
             try {
                 statement.setDouble(1, tratamento.getTotal());
                 statement.setDouble(2, tratamento.getDesconto());
                 statement.setDate(3, new Date(tratamento.getValidadeOrcamento().getTime()));
+                statement.setInt(4, tratamento.getPaciente().getIdPaciente());
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new DbException(e.getMessage());

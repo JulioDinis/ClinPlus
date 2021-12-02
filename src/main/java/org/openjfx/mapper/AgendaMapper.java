@@ -21,11 +21,13 @@ public class AgendaMapper {
         Agenda entity = new Agenda();
         entity.setId(dto.getId());
         entity.setData(dto.getData());
-        entity.setPaciente(pacienteService.findById(dto.getIdPaciente()));
-        entity.setEspecialista(especialistaService.findById(dto.getIdEspecialista()));
+//        entity.setPaciente(pacienteService.findById(dto.getIdPaciente()));
+//        entity.setEspecialista(especialistaService.findById(dto.getIdEspecialista()));
         entity.setHorario(dto.getHorario());
         entity.setObservacao(dto.getObservacao());
         entity.setStatus(dto.getStatus());
+        entity.setEspecialista(dto.getObjColaborador());
+        entity.setPaciente(dto.getObjPaciente());
         return entity;
     }
 
@@ -42,6 +44,8 @@ public class AgendaMapper {
             if (entity.getPaciente() != null) {
                 dto.setIdPaciente(entity.getPaciente().getIdPaciente());
                 dto.setPaciente(entity.getPaciente().getNome());
+                dto.setObjColaborador(entity.getEspecialista());
+                dto.setObjPaciente(entity.getPaciente());
             } else {
                 dto.setIdPaciente(0);
                 dto.setPaciente("");

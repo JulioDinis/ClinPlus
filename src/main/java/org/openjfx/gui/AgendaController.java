@@ -29,6 +29,7 @@ import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.AgendaService;
 import org.openjfx.model.service.ColaboradorService;
+import org.openjfx.model.service.ItensTratamentoService;
 import org.openjfx.model.service.PacienteService;
 
 import java.net.URL;
@@ -198,6 +199,14 @@ public class AgendaController implements Initializable, DataChangeListener {
     @FXML
     private void onBtnIniciarAtendimentoClick(ActionEvent event) {
         System.out.println("Iniciar atendimento do paciente");
+
+        notifyDataChangeListeners("/org/openjfx/gui/TelaAtendimento.fxml",
+                (TelaAtendimentoController controller) -> {
+                    controller.setServices(new ColaboradorService(), new PacienteService(), new ItensTratamentoService());
+                    controller.updateTableView();
+                    controller.setEspecialistaLogado(this.especialista);
+                    controller.setEvento(tableEventosDoDia.getSelectionModel().getSelectedItem());
+                });
         //TODO iniciar Atendimento
     }
 
@@ -443,8 +452,8 @@ public class AgendaController implements Initializable, DataChangeListener {
 
     }
 
-    public void subscribeDataChangeListener(DataChangeListener listenner) {
-        dataChangeListener.add(listenner);
+    public void subscribeDataChangeListener(DataChangeListener listener) {
+        dataChangeListener.add(listener);
     }
 
     private void reagendarBtns(Boolean reagendar) {
@@ -463,5 +472,12 @@ public class AgendaController implements Initializable, DataChangeListener {
         this.btnIniciarAtendimento.setVisible(mostrar);
         this.btnConfirmarReagendar.setVisible(false);
         this.btnCancelarReagendar.setVisible(this.reagendar);
+    }
+
+    private <T> void notifyDataChangeListeners(String resource, Consumer<T> initialingAction) {
+        System.out.println("<< Notificado >>" + resource);
+        for (DataChangeListener listener : dataChangeListener) {
+            listener.onClickTela(resource, initialingAction);
+        }
     }
 }

@@ -12,24 +12,24 @@
 
 <VBox xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.TelaAtendimentoController">
    <children>
-      <AnchorPane prefHeight="412.0" prefWidth="695.0">
+      <AnchorPane prefHeight="584.0" prefWidth="1341.0">
          <children>
-            <TableView layoutX="14.0" layoutY="37.0" prefHeight="314.0" prefWidth="311.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="37.0">
+            <TableView layoutX="14.0" layoutY="37.0" prefHeight="441.0" prefWidth="311.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="37.0">
               <columns>
-                <TableColumn prefWidth="159.0" text="C1" />
-                <TableColumn prefWidth="151.0" text="C2" />
+                <TableColumn prefWidth="159.0" text="Procedimento" />
+                <TableColumn prefWidth="151.0" text="Data" />
               </columns>
             </TableView>
             <Text layoutX="33.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Procedimentos" />
-            <JFXButton layoutX="15.0" layoutY="362.0" prefHeight="36.0" prefWidth="133.0" style="-fx-background-color: #64A; -fx-text-fill: #FFF;" text="+ Procedimento" />
-            <TextArea layoutX="362.0" layoutY="119.0" prefHeight="232.0" prefWidth="311.0" promptText="Anotações" wrapText="true" />
-            <JFXButton layoutX="540.0" layoutY="362.0" prefHeight="36.0" prefWidth="133.0" style="-fx-background-color: #AAA;" text="Finalizar" />
-            <Label layoutX="362.0" layoutY="82.0" prefHeight="24.0" prefWidth="197.0" text="Nome do Paciente">
+            <JFXButton layoutX="14.0" layoutY="490.0" prefHeight="36.0" prefWidth="133.0" style="-fx-background-color: #64A; -fx-text-fill: #FFF;" text="+ Procedimento" />
+            <TextArea layoutX="362.0" layoutY="119.0" prefHeight="232.0" prefWidth="503.0" promptText="Anotações" wrapText="true" />
+            <JFXButton layoutX="732.0" layoutY="362.0" prefHeight="36.0" prefWidth="133.0" style="-fx-background-color: #AAA;" text="Finalizar" />
+            <Label fx:id="labelNomePaciente" layoutX="362.0" layoutY="82.0" prefHeight="24.0" prefWidth="197.0" text="Nome do Paciente">
                <font>
                   <Font size="19.0" />
                </font>
             </Label>
-            <JFXButton layoutX="158.0" layoutY="362.0" prefHeight="36.0" prefWidth="133.0" style="-fx-background-color: #64A; -fx-text-fill: #FFF;" text="Orçamento" />
+            <JFXButton fx:id="jfxButtonOrcamento" layoutX="157.0" layoutY="490.0" onAction="#onJfxButtonOrcamentoClick" prefHeight="36.0" prefWidth="168.0" style="-fx-background-color: #64A; -fx-text-fill: #FFF;" text="Orçamento" />
          </children>
       </AnchorPane>
    </children>
