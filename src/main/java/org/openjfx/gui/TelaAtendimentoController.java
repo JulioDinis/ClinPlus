@@ -35,10 +35,11 @@ public class TelaAtendimentoController implements Initializable {
     @FXML
     private JFXButton jfxButtonOrcamento;
     private Paciente paciente;
+    private ColaboradorService funcionarioService;
 
 
     public void setFuncionarioService(ColaboradorService colaboradorService) {
-
+        this.funcionarioService = colaboradorService;
     }
 
     public void updateTableView() {

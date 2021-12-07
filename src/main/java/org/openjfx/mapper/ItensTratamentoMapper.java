@@ -3,6 +3,7 @@ package org.openjfx.mapper;
 import org.openjfx.model.dto.ItensTratamentoDTO;
 import org.openjfx.model.entities.ItensTratamento;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,7 @@ public class ItensTratamentoMapper {
     }
 
     public List<ItensTratamentoDTO> toDto(List<ItensTratamento> itensTratamentoList) {
-        return itensTratamentoList.stream().map(this::toDto).collect(Collectors.toList());
+       return itensTratamentoList.stream().map(this::toDto).collect(Collectors.toList());
     }
 
 }

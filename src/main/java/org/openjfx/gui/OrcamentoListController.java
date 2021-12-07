@@ -199,6 +199,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                             itensTratamentoDto.setTratamento(tratamentoMapper.toEntity(this.tratamento));
                             itensTratamentoDto.setProcedimento(this.tratamento.getProcedimento());
                             itensTratamentoDto.setQuantidade(1);
+                            itensTratamentoDto.setNrItem(1);
                             itensTratamentoService.saveOrUpdate(itensTratamentoDto);
 //                            atualizaTableItens();
                         } else {
@@ -211,12 +212,13 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                                     itensTratamentoDto.setTratamento(tratamentoMapper.toEntity(this.tratamento));
                                     itensTratamentoDto.setProcedimento(p);
                                     itensTratamentoDto.setQuantidade(1);
+                                    itensTratamentoDto.setNrItem(1);
                                     itensTratamentoService.saveOrUpdate(itensTratamentoDto);
                                 } else {
                                     ItensTratamentoDTO itensTratamentoDto;
                                     itensTratamentoDto = itensTratamentoService.findByTratamentoIdAndProcedimentoId(this.tratamento.getIdTratamento(), p.getIdProcedimento());
-                                    System.out.println("Atualizar a lista");
-                                    itensTratamentoDto.setQuantidade(itensTratamentoDto.getQuantidade() + 1);
+                                    itensTratamentoDto.setNrItem(itensTratamentoDto.getNrItem()+1);
+                                    itensTratamentoDto.setQuantidade(1);
                                     itensTratamentoService.saveOrUpdate(itensTratamentoDto);
                                 }
                             }
@@ -224,7 +226,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                         }
                         System.out.println("NOVO ID-> " + this.tratamento.getIdTratamento());
                         atualizaTableItens();
-                        atualizaValores();
+//                        atualizaValores();
                     }
                 }
         );

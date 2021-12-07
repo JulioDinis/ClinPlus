@@ -19,9 +19,7 @@ import java.util.List;
 
 
 public class AgendaDaoJDBC implements AgendaDao {
-
     private Connection connection;
-
     public AgendaDaoJDBC(Connection newConnetion) {
         this.connection = newConnetion;
     }
@@ -55,24 +53,18 @@ public class AgendaDaoJDBC implements AgendaDao {
         }
     }
     private synchronized PreparedStatement createQuery(Agenda agenda, PreparedStatement statement) {
-
         System.out.println("Agenda Recebida"+ agenda.getHorario());
-
         try {
             statement.setDate(1, new Date(agenda.getData().getTime()));
             statement.setInt(2, agenda.getPaciente().getIdPaciente());
             statement.setInt(3, agenda.getEspecialista().getIdColaborador());
             statement.setTime(4, agenda.getHorario());
             statement.setString(5, agenda.getObservacao());
-            System.out.println("OBSERVACAOOO " + agenda.getObservacao());
-//            statement.setString(6, agenda.getStatus());
             return statement;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DbException(e.getMessage());
         }
-
-
     }
 
     @Override
@@ -84,7 +76,6 @@ public class AgendaDaoJDBC implements AgendaDao {
                             + " SET data = ?,paciente = ?,especialista = ?,"
                             + " horario = ?,observacao = ?,status = ?"
                             + " WHERE id_agenda = ?");
-
             createQuery(agenda, statement);
             System.out.println(statement);
             try {
@@ -101,7 +92,6 @@ public class AgendaDaoJDBC implements AgendaDao {
         } finally {
             DB.closeStatement(statement);
         }
-
     }
 
     @Override
@@ -110,7 +100,6 @@ public class AgendaDaoJDBC implements AgendaDao {
 
     @Override
     public Agenda findById(Integer idAgenda) {
-
         return new Agenda();
     }
 

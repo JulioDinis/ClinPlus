@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import org.openjfx.gui.listener.DataChangeListener;
 import org.openjfx.model.entities.Atendente;
 import org.openjfx.model.entities.CaixaMensal;
-import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.service.*;
 
 import java.net.URL;

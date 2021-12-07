@@ -80,7 +80,20 @@ public class TelaFinanceiroController implements Initializable, DataChangeListen
     private TableColumn<AporteDTO, String> tableColumnDescricao;
     @FXML
     private TableColumn<AporteDTO, Double> tableColumnAporte;
+    @FXML
+    private JFXButton jfxButtonFecharAbrirCaixa;
 
+    @FXML
+    private void fecharAbrirCaixa(){
+        service.fecharCaixa(this.caixaAberto);
+        //TODO ARRUMAR ISSO
+        CaixaMensal caixaMensal = new CaixaMensal(this.caixaAberto.getMes()+1, this.caixaAberto.getAno(), 0D);
+        service.abrirCaixa(caixaMensal);
+        setCaixaAberto(caixaMensal);
+        updateTableViewConta();
+        updateTableViewAporte();
+
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeTableConta();

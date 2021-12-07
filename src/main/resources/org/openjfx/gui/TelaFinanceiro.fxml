@@ -62,7 +62,7 @@
                   </GridPane>
                </children>
             </Pane>
-            <JFXButton layoutX="60.0" layoutY="446.0" prefHeight="53.0" prefWidth="220.0" ripplerFill="#2a35b2" style="-fx-background-color: #CCC;" text="Fechar / Abrir" />
+            <JFXButton fx:id="jfxButtonFecharAbrirCaixa" layoutX="60.0" layoutY="446.0" onAction="#fecharAbrirCaixa" prefHeight="53.0" prefWidth="220.0" ripplerFill="#2a35b2" style="-fx-background-color: #CCC;" text="Fechar / Abrir" />
             <TableView fx:id="tableViewAportes" layoutX="384.0" layoutY="79.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="182.0" prefWidth="825.0" AnchorPane.rightAnchor="49.0">
                <columns>
                   <TableColumn fx:id="tableColumnData" prefWidth="83.0" text="Data" />

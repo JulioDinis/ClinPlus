@@ -1,6 +1,5 @@
 package org.openjfx.gui;
 
-import com.calendarfx.view.WeekDayHeaderView;
 import com.calendarfx.view.YearMonthView;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -35,7 +34,6 @@ import org.openjfx.model.service.PacienteService;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Consumer;
@@ -79,8 +77,6 @@ public class AgendaController implements Initializable, DataChangeListener {
     @FXML
     private JFXComboBox jfxComboBoxEspecialidadeEspecialista;
     @FXML
-    private TextArea textAreaDadosEspecialista;
-    @FXML
     private Label labelNome;
     @FXML
     private Label labelEspecialista;
@@ -109,24 +105,19 @@ public class AgendaController implements Initializable, DataChangeListener {
     @FXML
     public void onClickMiniCalendario(Event event) {
         if (this.especialista != null) {
-//            Date data = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-            Optional<LocalDate> data2 = miniCalendario.getSelectedDates().stream().findFirst();
-            if (data2.isEmpty()) {
-            }
-            if (data2.isPresent()) {
-                this.updateTableView(Utils.convertToDateViaSqlDate(data2.get()));
-                this.dataLabel.setText(data2.get().toString());
+            Optional<LocalDate> data = miniCalendario.getSelectedDates().stream().findFirst();
+            if (data.isPresent()) {
+                this.updateTableView(Utils.convertToDateViaSqlDate(data.get()));
+                this.dataLabel.setText(data.get().toString());
             }
         }
     }
 
     @FXML
     private void handleRowSelect() {
-        // Cria um formatador para a data usando DateFormat:
-//        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
-//        Calendar gc = Calendar.getInstance();
         tableEventosDoDia.setOnMouseClicked(event -> {
             AgendaDTO agenda = tableEventosDoDia.getSelectionModel().getSelectedItem();
+            agenda.setObjColaborador(this.especialista);
             System.out.println(agenda);
             if (event.getClickCount() == 2) {
                 if (agenda.getId() == null) {
@@ -160,6 +151,8 @@ public class AgendaController implements Initializable, DataChangeListener {
                         agenda.setIdPaciente(this.eventoReagendado.getIdPaciente());
                         agenda.setPaciente(this.eventoReagendado.getPaciente());
                         preencherDados(agenda);
+                    }else{
+                       preencherDados(null);
                     }
                 } else {
                     this.labelDetalhes.setText("Detalhes");
@@ -199,7 +192,6 @@ public class AgendaController implements Initializable, DataChangeListener {
     @FXML
     private void onBtnIniciarAtendimentoClick(ActionEvent event) {
         System.out.println("Iniciar atendimento do paciente");
-
         notifyDataChangeListeners("/org/openjfx/gui/TelaAtendimento.fxml",
                 (TelaAtendimentoController controller) -> {
                     controller.setServices(new ColaboradorService(), new PacienteService(), new ItensTratamentoService());
@@ -207,7 +199,6 @@ public class AgendaController implements Initializable, DataChangeListener {
                     controller.setEspecialistaLogado(this.especialista);
                     controller.setEvento(tableEventosDoDia.getSelectionModel().getSelectedItem());
                 });
-        //TODO iniciar Atendimento
     }
 
     @FXML
@@ -220,7 +211,6 @@ public class AgendaController implements Initializable, DataChangeListener {
             this.eventoSelecionado = null;
             updateTableView(this.especialista);
         }
-
     }
 
     @FXML
@@ -273,13 +263,13 @@ public class AgendaController implements Initializable, DataChangeListener {
 
     @FXML
     private void onEspecialistaChange(ActionEvent event) {
-        System.out.println("Alterado");
         Colaborador especialista = (Colaborador) jfxComboBoxEspecialidadeEspecialista.getSelectionModel().getSelectedItem();
-        Date data = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
         this.updateTableView(especialista);
         this.tableEventosDoDia.setDisable(false);
         this.tableEventosDoDia.setOpacity(1D);
         this.especialista = especialista;
+        this.tableEventosDoDia.setVisible(true);
+        this.labelEspecialista.setText(especialista.getNome());
     }
 
     private synchronized void initializeNodes() {
@@ -333,6 +323,13 @@ public class AgendaController implements Initializable, DataChangeListener {
             };
         });
         // FIM DAS CORES
+        if(this.especialista==null) {
+            tableEventosDoDia.setVisible(false);
+            labelEspecialista.setText(" ");
+            labelEspecialista.setText("");
+        }
+        mostrarBtns(false);
+        preencherDados(null);
     }
 
     @Override

@@ -25,8 +25,8 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
             statement = connection.prepareStatement(
                     "INSERT INTO especialista "
                             + "(nome,cpf,rg,data_nascimento,sexo,email,logradouro,"
-                            + "cidade,bairro,cep,uf,telefone,especialidade, senha, data_admissao, conselho_regional) "
-                            + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+                            + "cidade,bairro,cep,uf,telefone,especialidade, senha, conselho_regional) "
+                            + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
                     Statement.RETURN_GENERATED_KEYS
             );
 
@@ -72,8 +72,7 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
             statement.setString(12, colaborador.getTelefone());
             statement.setString(13, colaborador.getEspecialidade());
             statement.setString(14, colaborador.getSenha());
-            statement.setDate(15, new Date(colaborador.getDataContrato().getTime()));
-            statement.setString(16, colaborador.getConselhoRegional());
+            statement.setString(15, colaborador.getConselhoRegional());
 
             return statement;
         } catch (SQLException e) {
@@ -92,13 +91,13 @@ public class ColaboradorDaoJDBC implements ColaboradorDao {
                             + " SET nome = ?,cpf = ?,rg = ?,data_nascimento = ?, "
                             + "sexo = ?,email = ?,logradouro = ?,cidade = ?,bairro = ?, "
                             + "cep = ?,uf = ?,telefone = ?, especialidade = ?, senha = ?, "
-                            + " data_admissao = ?, conselho_regional =? "
+                            + " conselho_regional =? "
                             + "WHERE id_colaborador = ?");
 
             createQuery(colaborador, statement);
 
             try {
-                statement.setInt(17, colaborador.getIdColaborador());
+                statement.setInt(16, colaborador.getIdColaborador());
             } catch (SQLException e) {
                 System.out.println(statement);
                 e.printStackTrace();

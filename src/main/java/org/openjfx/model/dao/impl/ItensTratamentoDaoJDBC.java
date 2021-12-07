@@ -30,15 +30,16 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
         try {
             statement = connection.prepareStatement(
                     "INSERT INTO itens_tratamento "
-                            + "(tratamento, procedimento, quantidade, valor) "
-                            + "VALUES (?,?,?, ?);",
+                            + "(tratamento,\"nrItem\", procedimento, quantidade, valor) "
+                            + "VALUES (?,?,?,?, ?);",
                     Statement.RETURN_GENERATED_KEYS
             );
             try {
                 statement.setInt(1, itensTratamento.getTratamento().getIdTratamento());
-                statement.setInt(2, itensTratamento.getProcedimento().getIdProcedimento());
-                statement.setInt(3, itensTratamento.getQuantidade());
-                statement.setDouble(4, itensTratamento.getProcedimento().getValor());
+                statement.setInt(2, itensTratamento.getNrItem());
+                statement.setInt(3, itensTratamento.getProcedimento().getIdProcedimento());
+                statement.setInt(4, itensTratamento.getQuantidade());
+                statement.setDouble(5, itensTratamento.getProcedimento().getValor());
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -110,8 +111,10 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
         ResultSet rs = null;
         try {
             statement = connection.prepareStatement(
-                    "SELECT * FROM itens_tratamento " +
-                            "where tratamento = ? ");
+                    "SELECT tratamento, procedimento, sum(quantidade) as quantidade " +
+                            "FROM itens_tratamento " +
+                            "where tratamento = ? " +
+                            " group by tratamento, procedimento");
 
             statement.setInt(1, idTratamento);
             rs = statement.executeQuery();
@@ -146,11 +149,14 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
             statement.setInt(2, idProcedimento);
             rs = statement.executeQuery();
 
-            List<ItensTratamentoDTO> list = new ArrayList<>();
+            List<ItensTratamento> list = new ArrayList<>();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 ItensTratamento itensTratamento = instantiateItensTratamento(rs);
-                return itensTratamento;
+                list.add(itensTratamento);
+            }
+            if(!list.isEmpty()){
+                return list.get(list.size()-1);
             }
             return null;
         } catch (SQLException e) {
@@ -171,6 +177,11 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
             itensTratamento.setTratamento(tratamentoMapper.toEntity(tratamentoService.findById(rs.getInt("tratamento"))));
             itensTratamento.setProcedimento(procedimentoMapper.toEntity(procedimentoService.findById(rs.getInt("procedimento"))));
             itensTratamento.setQuantidade(rs.getInt("quantidade"));
+            try {
+                itensTratamento.setNrItem(rs.getInt("nrItem"));
+            }catch (SQLException e){
+                System.out.println("não veio nrItem");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
