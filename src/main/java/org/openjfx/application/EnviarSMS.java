@@ -18,7 +18,7 @@ public class EnviarSMS {
         HttpURLConnection http = (HttpURLConnection) url.openConnection();
         http.setRequestMethod("POST");
         http.setDoOutput(true);
-        http.setRequestProperty("auth-key", " cd1636c0-294d-4159-acef-91a55ffe05bc");
+
         http.setRequestProperty("content-type", "application/json");
 
 
