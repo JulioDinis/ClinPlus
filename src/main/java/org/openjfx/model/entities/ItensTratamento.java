@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
 
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class ItensTratamento implements Serializable {
     private Integer nrItem;
     private Procedimento procedimento;
     private Integer quantidade;
-    private LocalDate dataExecucao;
+    private Date dataExecucao;
     private Double valor;
 
     public ItensTratamento(Procedimento procedimento, Integer quantidade) {

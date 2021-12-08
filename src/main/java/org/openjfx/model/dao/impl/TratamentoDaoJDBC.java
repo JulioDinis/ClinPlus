@@ -5,6 +5,7 @@ import org.openjfx.db.DbException;
 import org.openjfx.model.dao.TratamentoDao;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.entities.Tratamento;
+import org.openjfx.model.service.PacienteService;
 
 import java.sql.*;
 import java.util.List;
@@ -24,7 +25,7 @@ public class TratamentoDaoJDBC implements TratamentoDao {
             statement = connection.prepareStatement(
                     "INSERT INTO tratamento "
                             + "(total, desconto, validade_orcamento, status, paciente ) "
-                            + "VALUES (?,?,?,'t',?);",
+                            + "VALUES (?,?,?,'AGUARDANDO',?);",
                     Statement.RETURN_GENERATED_KEYS
             );
             try {
@@ -126,14 +127,14 @@ public class TratamentoDaoJDBC implements TratamentoDao {
 
     private Tratamento instantiateTratamento(ResultSet rs) {
         Tratamento tratamento = new Tratamento();
-
+        PacienteService pacienteService = new PacienteService();
         try {
             tratamento.setIdTratamento(rs.getInt("id_tratamento"));
             tratamento.setTotal(rs.getDouble("total"));
             tratamento.setDesconto(rs.getDouble("desconto"));
             tratamento.setDataOrcamento(rs.getDate("data_orcamento"));
             tratamento.setValidadeOrcamento(rs.getDate("validade_orcamento"));
-//            tratamento.setAtendimento(rs.getDate("data_orcamento"));
+            tratamento.setPaciente(pacienteService.findById(rs.getInt("paciente")));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

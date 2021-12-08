@@ -44,11 +44,14 @@ public class DaoFactory {
     }
 
     public static AtendenteDao createAtendenteDao(String creator) {
-        return new AtendenteDaoJDBC(DB.getConnection("Dao Factory - Create Tratamento DAO  | Pedido By: " + creator)) {
+        return new AtendenteDaoJDBC(DB.getConnection("Dao Factory - Create Atendente DAO  | Pedido By: " + creator)) {
         };
     }
 
     public static ContaDao createContaDao(String creator) {
         return new ContaDaoJDBC(DB.getConnection("Dao Factory - Create Conta DAO | Pedido by: " + creator));
+    }
+    public static AtendimentoDao createAtendimentoDao(String creator) {
+        return new AtendimentoDaoJDBC(DB.getConnection("Dao Factory - Create Conta DAO | Pedido by: " + creator));
     }
 }

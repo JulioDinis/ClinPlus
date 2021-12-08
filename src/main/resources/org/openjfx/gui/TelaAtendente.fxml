@@ -2,123 +2,140 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.gui.TelaAtendenteController">
    <children>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" style="-fx-background-color: E0E0E0;">
          <bottom>
-            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="BOTTOM_RIGHT">
+            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="115.0" prefWidth="1300.0" BorderPane.alignment="BOTTOM_RIGHT">
                <children>
-                  <JFXButton fx:id="jfxButtonPaciente" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonPacienteClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4;" text="Pacientes" textAlignment="CENTER">
+                  <Pane style="-fx-border-color: #AAA; -fx-border-radius: 10; border-color-top: red;" stylesheets="@css/style.css">
+                     <children>
+                        <JFXButton fx:id="jfxButtonPaciente" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonPacienteClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4; -fx-background-radius: 10; -fx-border-color: gray; -fx-border-radius: 10;" text="Pacientes" textAlignment="CENTER">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <graphic>
+                              <ImageView fitHeight="42.0" fitWidth="65.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/Icones/address-card.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="jfxButtonEspecialista" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonEspecialistaClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#0022ff" style="-fx-background-color: #C4C4C4; -fx-background-radius: 10; -fx-border-color: gray; -fx-border-radius: 10;" text="Especialista">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <graphic>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/Icones/doctor.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label layoutX="73.0" layoutY="83.0" text="Cadastros" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets top="10.0" />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Pane>
+                  <Pane>
+                     <HBox.margin>
+                        <Insets right="10.0" top="10.0" />
+                     </HBox.margin>
+                     <children>
+                        <JFXButton fx:id="jfxButtonAgenda" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonAgendaClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4; -fx-border-color: gray; -fx-background-radius: 10; -fx-border-radius: 10;" text="Agenda">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <graphic>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/Icones/agenda.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="0.0" prefWidth="322.0" style="-fx-border-color: #AAA; -fx-border-radius: 10; -fx-border-width: 2;">
+                     <children>
+                        <JFXButton fx:id="jfxButtonFinanceiro" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonFinanceiroClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4; -fx-border-radius: 10; -fx-border-color: gray; -fx-background-radius: 10;" text="Financeiro">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <graphic>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/Icones/finance.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="jfxButtonFinanceiro1" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonAporteClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4; -fx-border-radius: 10; -fx-border-color: gray; -fx-background-radius: 10;" text="Aporte">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <graphic>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/Icones/finance.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="jfxButtonFinanceiro11" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="220.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonContaClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4; -fx-border-radius: 10; -fx-border-color: gray; -fx-background-radius: 10;" text="Conta">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <graphic>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/Icones/finance.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label layoutX="127.0" layoutY="83.0" text="Financeiro" />
+                     </children>
+                     <HBox.margin>
+                        <Insets right="10.0" top="10.0" />
+                     </HBox.margin>
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                  </Pane>
+                  <Pane>
                      <HBox.margin>
-                        <Insets right="10.0" />
+                        <Insets top="10.0" />
                      </HBox.margin>
-                     <graphic>
-                        <ImageView fitHeight="42.0" fitWidth="65.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Icones/address-card.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="jfxButtonEspecialista" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonEspecialistaClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#0022ff" style="-fx-background-color: #C4C4C4;" text="Especialista">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Icones/doctor.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="jfxButtonAgenda" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonAgendaClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4;" text="Agenda">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Icones/agenda.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="jfxButtonFinanceiro" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonFinanceiroClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4;" text="Financeiro">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Icones/finance.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="jfxButtonFinanceiro1" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonAporteClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4;" text="Aporte">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Icones/finance.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="jfxButtonFinanceiro11" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonContaClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#5465d6" style="-fx-background-color: #C4C4C4;" text="Conta">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Icones/finance.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="jfxButtonLogout" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonLogoutClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#6f30d9" style="-fx-background-color: #C4C4C4;" text="Sair">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/Icones/sair.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
+                     <children>
+                        <JFXButton fx:id="jfxButtonLogout" alignment="BOTTOM_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" onAction="#onJfxButtonLogoutClick" prefHeight="80.0" prefWidth="100.0" ripplerFill="#6f30d9" style="-fx-background-color: #C4C4C4; -fx-border-color: gray; -fx-background-radius: 10; -fx-border-radius: 10;" text="Sair">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <graphic>
+                              <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/Icones/sair.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </Pane>
                </children>
                <opaqueInsets>
                   <Insets />

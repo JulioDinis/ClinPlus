@@ -26,6 +26,7 @@ import org.openjfx.mapper.AgendaMapper;
 import org.openjfx.model.dto.AgendaDTO;
 import org.openjfx.model.entities.CaixaMensal;
 import org.openjfx.model.entities.Colaborador;
+import org.openjfx.model.enums.Status;
 import org.openjfx.model.service.AgendaService;
 import org.openjfx.model.service.ColaboradorService;
 import org.openjfx.model.service.ItensTratamentoService;
@@ -151,8 +152,8 @@ public class AgendaController implements Initializable, DataChangeListener {
                         agenda.setIdPaciente(this.eventoReagendado.getIdPaciente());
                         agenda.setPaciente(this.eventoReagendado.getPaciente());
                         preencherDados(agenda);
-                    }else{
-                       preencherDados(null);
+                    } else {
+                        preencherDados(null);
                     }
                 } else {
                     this.labelDetalhes.setText("Detalhes");
@@ -192,12 +193,13 @@ public class AgendaController implements Initializable, DataChangeListener {
     @FXML
     private void onBtnIniciarAtendimentoClick(ActionEvent event) {
         System.out.println("Iniciar atendimento do paciente");
+        agendaService.setStatus(this.eventoSelecionado, Status.ATENDENDO.getDescription());
         notifyDataChangeListeners("/org/openjfx/gui/TelaAtendimento.fxml",
                 (TelaAtendimentoController controller) -> {
                     controller.setServices(new ColaboradorService(), new PacienteService(), new ItensTratamentoService());
-                    controller.updateTableView();
-                    controller.setEspecialistaLogado(this.especialista);
+                    controller.setEspecialistaLogado(especialista);
                     controller.setEvento(tableEventosDoDia.getSelectionModel().getSelectedItem());
+                    controller.updateTableView();
                 });
     }
 
@@ -207,7 +209,7 @@ public class AgendaController implements Initializable, DataChangeListener {
         if (this.eventoSelecionado == null) {
             System.out.println("Está nulo");
         } else {
-            agendaService.cancelar(this.eventoSelecionado);
+            agendaService.setStatus(this.eventoSelecionado, "CANCELADO");
             this.eventoSelecionado = null;
             updateTableView(this.especialista);
         }
@@ -255,7 +257,7 @@ public class AgendaController implements Initializable, DataChangeListener {
         if (this.eventoSelecionado == null) {
             System.out.println("Está nulo");
         } else {
-            agendaService.setAusente(this.eventoSelecionado);
+            agendaService.setStatus(this.eventoSelecionado, Status.ATENDENDO.getDescription());
             this.eventoSelecionado = null;
             updateTableView(this.especialista);
         }
@@ -296,16 +298,16 @@ public class AgendaController implements Initializable, DataChangeListener {
                         } else if (auxAgenda.getStatus().equals("LIVRE")) {
                             setTextFill(Color.BLACK); //The text in red
                             setStyle("-fx-background-color: lightgreen"); //The background of the cell in yellow
-                        } else if (auxAgenda.getStatus().equals("CANCELADO")) {
+                        } else if (auxAgenda.getStatus().equals(Status.CANCELADO.getDescription())) {
                             setTextFill(Color.WHITE); //The text in red
                             setStyle("-fx-background-color: RED"); //The background of the cell in yellow
-                        } else if (auxAgenda.getStatus().equals("REAGENDADO")) {
+                        } else if (auxAgenda.getStatus().equals(Status.REAGENDADO.getDescription())) {
                             setTextFill(Color.WHITE); //The text in red
                             setStyle("-fx-background-color: brown"); //The background of the cell in yellow
-                        } else if (auxAgenda.getStatus().equals("ATENDENDO")) {
+                        } else if (auxAgenda.getStatus().equals(Status.ATENDENDO.getDescription())) {
                             setTextFill(Color.BLACK); //The text in red
                             setStyle("-fx-background-color: blue"); //The background of the cell in yellow
-                        } else if (auxAgenda.getStatus().equals("ATENDIDO")) {
+                        } else if (auxAgenda.getStatus().equals(Status.ATENDIDO.getDescription())) {
                             setTextFill(Color.WHITE); //The text in red
                             setStyle("-fx-background-color: lightblue"); //The background of the cell in yellow
                         } else if (auxAgenda.getStatus().equals("AGENDADO")) {
@@ -323,11 +325,11 @@ public class AgendaController implements Initializable, DataChangeListener {
             };
         });
         // FIM DAS CORES
-        if(this.especialista==null) {
-            tableEventosDoDia.setVisible(false);
-            labelEspecialista.setText(" ");
-            labelEspecialista.setText("");
-        }
+//        if(this.especialista==null) {
+//            tableEventosDoDia.setVisible(false);
+//            labelEspecialista.setText(" ");
+//            labelEspecialista.setText("");
+//        }
         mostrarBtns(false);
         preencherDados(null);
     }

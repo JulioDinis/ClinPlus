@@ -57,4 +57,14 @@ public class AgendaService {
             dao.update(mapper.toEntity(eventoSelecionado));
         }
     }
+
+    public void setStatus(AgendaDTO eventoSelecionado, String status) {
+        if ((eventoSelecionado == null)|| (eventoSelecionado.getIdPaciente() ==null)) {
+            System.out.println("Evento is Null");
+        } else {
+            System.out.println("EVENTO" + eventoSelecionado);
+            eventoSelecionado.setStatus(status);
+            dao.update(mapper.toEntity(eventoSelecionado));
+        }
+    }
 }

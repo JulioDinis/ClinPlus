@@ -6,20 +6,21 @@ import lombok.NoArgsConstructor;
 import org.openjfx.model.entities.Procedimento;
 import org.openjfx.model.entities.Tratamento;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ItensTratamentoDTO {
-    private static final long serialVersionUID = 1L;
+
     private String descricao;
     private Tratamento tratamento;
     private Integer nrItem;
     private Procedimento procedimento;
     private Integer quantidade;
-    private LocalDate dataExecucao;
+    private Date dataExecucao;
     private Double valor;
+    private boolean executado;
 
     public ItensTratamentoDTO(Procedimento procedimento, Tratamento tratamento, Integer quantidade) {
         this.procedimento = procedimento;
@@ -27,5 +28,12 @@ public class ItensTratamentoDTO {
         this.tratamento = tratamento;
         this.valor = procedimento.getValor();
         this.descricao = procedimento.getDescricao();
+    }
+    public void setExecutado(){
+        if(dataExecucao != null){
+            executado = true;
+        }else{
+            executado = false;
+        }
     }
 }

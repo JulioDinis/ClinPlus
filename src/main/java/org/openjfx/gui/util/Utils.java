@@ -196,6 +196,13 @@
                     .atZone(ZoneId.systemDefault())
                     .toInstant());
         }
+
+        public static Date getDataAtual() {
+
+            long miliseconds = System.currentTimeMillis();
+            Date date = new Date(miliseconds);
+            return date;
+        }
     }
 
 

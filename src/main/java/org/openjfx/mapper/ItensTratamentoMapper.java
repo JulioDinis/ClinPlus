@@ -30,6 +30,7 @@ public class ItensTratamentoMapper {
            dto.setValor(entity.getValor());
            dto.setDataExecucao(entity.getDataExecucao());
            dto.setDescricao(entity.getProcedimento().getDescricao());
+           dto.setExecutado();
            return dto;
        }catch (NullPointerException ex){
            return null;

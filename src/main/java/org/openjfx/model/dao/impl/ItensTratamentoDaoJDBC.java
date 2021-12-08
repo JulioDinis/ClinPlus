@@ -2,6 +2,7 @@ package org.openjfx.model.dao.impl;
 
 import org.openjfx.db.DB;
 import org.openjfx.db.DbException;
+import org.openjfx.gui.util.Utils;
 import org.openjfx.mapper.ProcedimentoMapper;
 import org.openjfx.mapper.TratamentoMapper;
 import org.openjfx.model.dao.ItensTratamentoDao;
@@ -65,18 +66,22 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
 
     @Override
     public void update(ItensTratamento itensTratamentoDao) {
-        System.out.println("Chegou aqui");
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(
                     "UPDATE itens_tratamento "
-                            + "SET quantidade = ?"
+                            + "SET data_execucao = ?"
                             + "WHERE procedimento = ? "
-                            + "and tratamento = ?");
+                            + "and tratamento = ? " +
+                            "and \"nrItem\" = ? ");
             try {
-                statement.setInt(1, itensTratamentoDao.getQuantidade());
+                if (itensTratamentoDao.getDataExecucao() != null)
+                    statement.setDate(1, new Date(itensTratamentoDao.getDataExecucao().getTime()));
+                else
+                    statement.setNull(1, Types.DATE);
                 statement.setInt(2, itensTratamentoDao.getProcedimento().getIdProcedimento());
                 statement.setInt(3, itensTratamentoDao.getTratamento().getIdTratamento());
+                statement.setInt(4, itensTratamentoDao.getNrItem());
             } catch (SQLException e) {
                 System.out.println(statement);
                 e.printStackTrace();
@@ -136,6 +141,37 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
     }
 
     @Override
+    public List<ItensTratamento> findByPaciente(Integer idPaciente) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = connection.prepareStatement(
+                    "SELECT * " +
+                            "FROM itens_tratamento, tratamento " +
+                            "where public.tratamento.paciente = ? and " +
+                            "itens_tratamento.tratamento = public.tratamento.id_tratamento " +
+                            "and public.tratamento.status = \'APROVADO\' ");
+
+            statement.setInt(1, idPaciente);
+            rs = statement.executeQuery();
+
+            List<ItensTratamento> list = new ArrayList<>();
+
+            while (rs.next()) {
+
+                ItensTratamento itensTratamento = instantiateItensTratamento(rs);
+                list.add(itensTratamento);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(statement);
+            DB.closeResultSet(rs);
+        }
+    }
+
+    @Override
     public ItensTratamento findByTratamentoIdAndProcedimentoId(Integer idTratamento, Integer idProcedimento) {
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -155,8 +191,8 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
                 ItensTratamento itensTratamento = instantiateItensTratamento(rs);
                 list.add(itensTratamento);
             }
-            if(!list.isEmpty()){
-                return list.get(list.size()-1);
+            if (!list.isEmpty()) {
+                return list.get(list.size() - 1);
             }
             return null;
         } catch (SQLException e) {
@@ -177,9 +213,10 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
             itensTratamento.setTratamento(tratamentoMapper.toEntity(tratamentoService.findById(rs.getInt("tratamento"))));
             itensTratamento.setProcedimento(procedimentoMapper.toEntity(procedimentoService.findById(rs.getInt("procedimento"))));
             itensTratamento.setQuantidade(rs.getInt("quantidade"));
+            itensTratamento.setDataExecucao(rs.getDate("data_execucao"));
             try {
                 itensTratamento.setNrItem(rs.getInt("nrItem"));
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 System.out.println("não veio nrItem");
             }
         } catch (SQLException throwables) {

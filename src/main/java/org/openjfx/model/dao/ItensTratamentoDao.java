@@ -13,6 +13,7 @@ public interface ItensTratamentoDao {
     List<ItensTratamento> findByDescricao(String descricao);
 
     List<ItensTratamento> findByTratamentoId(Integer idTratamento);
+    List<ItensTratamento> findByPaciente(Integer idPaciente);
 
     ItensTratamento findByTratamentoIdAndProcedimentoId(Integer idTratamento, Integer idProcedimento);
 }

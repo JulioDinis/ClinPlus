@@ -80,8 +80,6 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     @FXML
     private TableColumn<ProcedimentoDTO, Double> tableColumValor;
     @FXML
-    JFXButton jFxBtNew;
-    @FXML
     JFXButton jFxBtImprirOrcamento;
 
     @FXML
@@ -91,18 +89,6 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     private TratamentoService tratamentoService;
     private TratamentoDTO tratamento;
     private Paciente paciente;
-    ;
-
-
-    // eventos
-//    @FXML
-//    public void onBtNewAction(ActionEvent event) {
-//        Procedimento procedimento = new Procedimento();
-//        procedimento.setColaborador(colaboradorLogado);
-//        Stage parentStage = Utils.currentStage(event);
-//        createDialogForm(procedimento, "/org/openjfx/gui/ProcedimentoForm.fxml", parentStage);
-//
-//    }
 
     @FXML
     public void onBtAddAction(ActionEvent event) {
@@ -217,7 +203,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                                 } else {
                                     ItensTratamentoDTO itensTratamentoDto;
                                     itensTratamentoDto = itensTratamentoService.findByTratamentoIdAndProcedimentoId(this.tratamento.getIdTratamento(), p.getIdProcedimento());
-                                    itensTratamentoDto.setNrItem(itensTratamentoDto.getNrItem()+1);
+                                    itensTratamentoDto.setNrItem(itensTratamentoDto.getNrItem() + 1);
                                     itensTratamentoDto.setQuantidade(1);
                                     itensTratamentoService.saveOrUpdate(itensTratamentoDto);
                                 }
@@ -271,9 +257,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             this.tableColumnEspecialista.setVisible(false);
-            System.out.println("Colaborador");
         } else {
-            System.out.println("Outro -> " + this.getFuncionarioLogado().getClass());
             List<ProcedimentoDTO> list = procedimentoService.findAll();
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
@@ -329,7 +313,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     }
 
     public Object getFuncionarioLogado() {
-        return colaboradorLogado;
+        return this.colaboradorLogado;
     }
 
     public void setFuncionarioLogado(Colaborador colaboradorLogado) {
@@ -344,5 +328,6 @@ public class OrcamentoListController implements Initializable, DataChangeListene
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+        System.out.println("PACIENTE ID ...: " + this.paciente.getIdPaciente());
     }
 }
