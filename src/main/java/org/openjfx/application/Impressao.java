@@ -1,6 +1,8 @@
 package org.openjfx.application;
 
 import javax.print.*;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -67,22 +69,25 @@ public class Impressao {
 
             try {
 
-                DocPrintJob dpj = impressora.createPrintJob();
                 InputStream stream = new ByteArrayInputStream(texto.getBytes());
 
+                PrintService[] servicoImpressao = PrintServiceLookup.lookupPrintServices(DocFlavor.INPUT_STREAM.AUTOSENSE, null);
                 DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
                 Doc doc = new SimpleDoc(stream, flavor, null);
-                dpj.print(doc, null);
-
+                //  dpj.print(doc, null);
+                PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+                PrintService printService = ServiceUI.printDialog(null, 300, 200, servicoImpressao, impressora,
+                        flavor, printRequestAttributeSet);
+                if (printService != null) {
+                    DocPrintJob dpj = impressora.createPrintJob();
+                    dpj.print(doc, printRequestAttributeSet);
+                }
                 System.out.println("0la");
                 return true;
-
             } catch (PrintException e) {
                 System.out.println("ola");
                 e.printStackTrace();
-
             }
-
         }
 
         return false;

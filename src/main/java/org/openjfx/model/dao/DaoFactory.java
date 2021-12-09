@@ -54,4 +54,8 @@ public class DaoFactory {
     public static AtendimentoDao createAtendimentoDao(String creator) {
         return new AtendimentoDaoJDBC(DB.getConnection("Dao Factory - Create Conta DAO | Pedido by: " + creator));
     }
+
+    public static PagamentoDao createPagamentoDao(String creator) {
+        return  new PagamentoDaoJDBC(DB.getConnection("Dao Factory - Create Pagamento DAO | Pedido by: "+creator));
+    }
 }

@@ -116,7 +116,7 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
         ResultSet rs = null;
         try {
             statement = connection.prepareStatement(
-                    "SELECT tratamento, procedimento, sum(quantidade) as quantidade " +
+                    "SELECT tratamento, procedimento, sum(valor) as valor, sum(quantidade) as quantidade " +
                             "FROM itens_tratamento " +
                             "where tratamento = ? " +
                             " group by tratamento, procedimento");
@@ -213,7 +213,13 @@ public class ItensTratamentoDaoJDBC implements ItensTratamentoDao {
             itensTratamento.setTratamento(tratamentoMapper.toEntity(tratamentoService.findById(rs.getInt("tratamento"))));
             itensTratamento.setProcedimento(procedimentoMapper.toEntity(procedimentoService.findById(rs.getInt("procedimento"))));
             itensTratamento.setQuantidade(rs.getInt("quantidade"));
-            itensTratamento.setDataExecucao(rs.getDate("data_execucao"));
+            itensTratamento.setValor(rs.getDouble("valor"));
+            try {
+                itensTratamento.setDataExecucao(rs.getDate("data_execucao"));
+            } catch (Exception ex){
+                System.out.println("não se aplica");
+            }
+
             try {
                 itensTratamento.setNrItem(rs.getInt("nrItem"));
             } catch (SQLException e) {
