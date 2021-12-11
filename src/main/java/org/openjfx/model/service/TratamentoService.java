@@ -5,6 +5,7 @@ import org.openjfx.model.dao.DaoFactory;
 import org.openjfx.model.dao.TratamentoDao;
 import org.openjfx.model.dto.TratamentoDTO;
 import org.openjfx.model.entities.Procedimento;
+import org.openjfx.model.entities.Tratamento;
 
 import java.util.List;
 
@@ -39,5 +40,12 @@ public class TratamentoService {
 
     public TratamentoDTO findById(Integer idTratamento) {
         return mapper.toDto(dao.findById(idTratamento));
+    }
+
+    public TratamentoDTO findOrcamentoAberto(Integer idPaciente, Integer idColaborador) {
+        Tratamento tratamento = dao.findOrcamentoAberto(idPaciente, idColaborador);
+        if(tratamento == null)
+            return null;
+        return mapper.toDto(tratamento);
     }
 }

@@ -3,6 +3,7 @@ package org.openjfx.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.openjfx.model.entities.Colaborador;
 import org.openjfx.model.entities.Paciente;
 import org.openjfx.model.entities.Procedimento;
 
@@ -18,9 +19,10 @@ public class TratamentoDTO {
     private Double desconto;
     private Date dataOrcamento;
     private Date validadeOrcamento;
-    private Boolean status;
+    private String status;
     private Integer quantidadeParcelas;
     private Date dataAprovacao;
     private Paciente paciente;
     private Procedimento procedimento;
+    private Colaborador especialista;
 }

@@ -130,7 +130,7 @@ public class TelaAtendimentoController implements Initializable {
             controller.setServices(new ItensTratamentoService(), new ProcedimentoService(), new TratamentoService());
             controller.setFuncionarioLogado(this.getEspecialistaLogado());
             controller.setPaciente(this.paciente);
-            controller.updateTableView();
+            controller.updateTableViewProcedimento();
             // Stage
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Orçamento");

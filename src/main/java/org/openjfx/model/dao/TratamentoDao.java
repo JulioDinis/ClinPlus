@@ -16,4 +16,5 @@ public interface TratamentoDao {
     List<Tratamento> findAll();
 
 
+    Tratamento findOrcamentoAberto(Integer idPaciente, Integer idEspecialista);
 }

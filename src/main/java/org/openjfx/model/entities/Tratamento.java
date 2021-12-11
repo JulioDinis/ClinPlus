@@ -22,8 +22,9 @@ public class Tratamento implements Serializable {
     private Double desconto;
     private Date dataOrcamento;
     private Date validadeOrcamento;
-    private Boolean status;
+    private String status;
     private Integer quantidadeParcelas;
     private Date dataAprovacao;
     private Paciente paciente;
+    private Colaborador especialista;
 }

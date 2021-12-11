@@ -10,6 +10,7 @@ import org.openjfx.model.entities.ItensTratamento;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ItensTratamentoService {
 
@@ -68,4 +69,6 @@ public class ItensTratamentoService {
         itensTratamentoDTO.setExecutado();
         dao.update(mapper.toEntity(itensTratamentoDTO));
     }
+
+
 }

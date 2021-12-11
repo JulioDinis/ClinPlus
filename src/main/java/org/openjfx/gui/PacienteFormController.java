@@ -5,6 +5,7 @@
  */
 package org.openjfx.gui;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -77,9 +78,9 @@ public class PacienteFormController implements Initializable {
 
 
     @FXML
-    private Button btSalve;
+    private JFXButton btSalve;
     @FXML
-    private Button btCancel;
+    private JFXButton btCancel;
 
     @FXML
     public void onBtSaveAction(ActionEvent event) {

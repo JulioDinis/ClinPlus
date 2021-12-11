@@ -7,20 +7,18 @@ package org.openjfx.gui;
 
 
 import com.jfoenix.controls.JFXButton;
+import impl.com.calendarfx.view.NumericTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.openjfx.gui.listener.DataChangeListener;
-import org.openjfx.gui.util.Alerts;
 import org.openjfx.gui.util.Utils;
 import org.openjfx.mapper.ProcedimentoMapper;
 import org.openjfx.mapper.TratamentoMapper;
@@ -34,6 +32,7 @@ import org.openjfx.model.service.TratamentoService;
 
 import java.net.URL;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -45,11 +44,12 @@ import java.util.function.Consumer;
 public class OrcamentoListController implements Initializable, DataChangeListener {
 
     private ProcedimentoService procedimentoService;
-    private Object colaboradorLogado;
+    private Colaborador colaboradorLogado;
     private TratamentoMapper tratamentoMapper = new TratamentoMapper();
     private ItensTratamentoService itensTratamentoService = new ItensTratamentoService();
     private ObservableList<ProcedimentoDTO> obsList;
     private ObservableList<ItensTratamentoDTO> observableListItensTratamentoDTO;
+    private DecimalFormat decimalFormat = new DecimalFormat("#,###.00");
     Map<Procedimento, Integer> procedimentosSelecionados = new HashMap<>();
     private ObservableList<Tratamento> obsSelecionados;
     @FXML
@@ -75,7 +75,15 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     @FXML
     private TableColumn<ProcedimentoDTO, Double> tableColumValor;
     @FXML
-    JFXButton jFxBtImprirOrcamento;
+    private JFXButton jFxBtImprirOrcamento;
+    @FXML
+    private JFXButton jFxBtRecusarOrcamento;
+    @FXML
+    private JFXButton jFxBtAprovarOrcamento;
+    @FXML
+    private NumericTextField numericTextFieldNumeroParcelas;
+    @FXML
+    private Label labelParcelamento;
 
     private List<ItensTratamentoDTO> itensTratamentoDTOList = new ArrayList<>();
     private ItensTratamentoService serviceItensTratamento;
@@ -106,6 +114,23 @@ public class OrcamentoListController implements Initializable, DataChangeListene
     }
 
     @FXML
+    public void onNumericQuantidadeChange() {
+        System.out.println("Alterou a quantidade");
+        if (numericTextFieldNumeroParcelas.getText() == "") {
+            numericTextFieldNumeroParcelas.setText("1");
+        }
+        if (Integer.parseInt(numericTextFieldNumeroParcelas.getText()) > 12) {
+            numericTextFieldNumeroParcelas.setText("12");
+        }
+
+
+        String parcelamento = numericTextFieldNumeroParcelas.
+                getText() + "X de " + decimalFormat.format((double) tratamento.getTotal() /
+                Integer.parseInt(numericTextFieldNumeroParcelas.getText()));
+        labelParcelamento.setText(numericTextFieldNumeroParcelas.getText() != "1" ? parcelamento : "A vista");
+    }
+
+    @FXML
     public void atualizaValores() {
         if (procedimentoService == null) {
             throw new IllegalStateException("Service was Null");
@@ -116,15 +141,18 @@ public class OrcamentoListController implements Initializable, DataChangeListene
             for (ItensTratamentoDTO itensTratamento : list) {
                 total = total + (itensTratamento.getValor());
             }
-            this.valorBruto.setText(total.toString());
+            this.valorBruto.setText(decimalFormat.format(total));
             if (txtDesconto.getText().isBlank() || txtDesconto.getText().isEmpty()) {
                 valorComDesconto = total;
             } else {
                 valorComDesconto = total - Double.parseDouble(this.txtDesconto.getText());
+                // TODO ler com  . com virgula
             }
-            this.total.setText(valorComDesconto.toString());
+            this.total.setText(decimalFormat.format(valorComDesconto));
             this.tratamento.setDesconto(total - valorComDesconto);
             this.tratamento.setTotal(total);
+            this.txtDesconto.setText(tratamento.getDesconto().toString());
+            this.numericTextFieldNumeroParcelas.setText(tratamento.getQuantidadeParcelas().toString());
             tratamentoService.saveOrUpdate(this.tratamento);
         }
     }
@@ -150,6 +178,18 @@ public class OrcamentoListController implements Initializable, DataChangeListene
         }
     }
 
+    @FXML
+    public void onRecusarOrcamentoClick(ActionEvent event) {
+        System.out.println("RECUSAR ORCAMENTO");
+        //TODO recusar orçamento
+    }
+
+    @FXML
+    public void onAprovarOrcamentoClick(ActionEvent event) {
+        System.out.println("APROVAR ORCAMENTO");
+        // TODO aprovar orçamento
+    }
+
 
     @FXML
     private void handleRowSelect() {
@@ -172,6 +212,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                             this.tratamento.setDesconto(0.0);
                             this.tratamento.setTotal(0.0);
                             this.tratamento.setProcedimento(p);
+                            this.tratamento.setEspecialista(this.colaboradorLogado);
                             this.tratamento.setIdTratamento(tratamentoService.saveOrUpdate(this.tratamento));
                             ItensTratamentoDTO itensTratamentoDto = new ItensTratamentoDTO();
                             itensTratamentoDto.setTratamento(tratamentoMapper.toEntity(this.tratamento));
@@ -179,9 +220,8 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                             itensTratamentoDto.setQuantidade(1);
                             itensTratamentoDto.setNrItem(1);
                             itensTratamentoService.saveOrUpdate(itensTratamentoDto);
-//                            atualizaTableItens();
                         } else {
-                            if (this.tratamento.getIdTratamento() == null && p.getIdProcedimento() == null) {
+                            if (this.tratamento.getIdTratamento() == null || p.getIdProcedimento() == null) {
                                 System.out.println("Nulos");
                             } else {
                                 if (itensTratamentoService.findByTratamentoIdAndProcedimentoId(this.tratamento.getIdTratamento(), p.getIdProcedimento()) == null) {
@@ -201,21 +241,20 @@ public class OrcamentoListController implements Initializable, DataChangeListene
                                 }
                             }
                         }
-                        System.out.println("NOVO ID-> " + this.tratamento.getIdTratamento());
                         atualizaTableItens();
-                        atualizaValores();
                     }
                 }
         );
     }
 
     private synchronized void atualizaTableItens() {
-        if (this.tratamento == null) {
-            System.out.println("Nenhum valor");
-        } else {
+        this.tratamento = tratamentoService.findOrcamentoAberto(paciente.getIdPaciente(), colaboradorLogado.getIdColaborador());
+        if (tratamento != null) {
             List<ItensTratamentoDTO> list = itensTratamentoService.findByTratamentoId(this.tratamento.getIdTratamento());
             this.observableListItensTratamentoDTO = FXCollections.observableArrayList(list);
             this.tableViewItensTratamento.setItems(this.observableListItensTratamentoDTO);
+            atualizaValores();
+            onNumericQuantidadeChange();
         }
     }
 
@@ -236,15 +275,17 @@ public class OrcamentoListController implements Initializable, DataChangeListene
 
     }
 
-    public void updateTableView() {
+    public void updateTableViewProcedimento() {
         if (procedimentoService == null) {
             throw new IllegalStateException("Service was Null");
         }
         if (this.getFuncionarioLogado() instanceof Colaborador) {
+
             List<ProcedimentoDTO> list = procedimentoService.findByEspecialista(((Colaborador) this.getFuncionarioLogado()).getIdColaborador());
             obsList = FXCollections.observableArrayList(list);
             tableViewProcedimento.setItems(obsList);
             this.tableColumnEspecialista.setVisible(false);
+            atualizaTableItens();
         } else {
             List<ProcedimentoDTO> list = procedimentoService.findAll();
             obsList = FXCollections.observableArrayList(list);
@@ -254,7 +295,7 @@ public class OrcamentoListController implements Initializable, DataChangeListene
 
     @Override
     public void onDataChange() {
-        updateTableView();
+        updateTableViewProcedimento();
     }
 
     @Override

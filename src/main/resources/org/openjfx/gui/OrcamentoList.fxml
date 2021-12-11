@@ -2,7 +2,10 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import impl.com.calendarfx.view.NumericTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -25,12 +28,12 @@
                         <TableColumn fx:id="tableColumnEspecialista" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="123.0" text="Especialista" />
                     </columns>
                   </TableView>
-                  <JFXTextField fx:id="txtBusca" labelFloat="true" layoutX="15.0" layoutY="14.0" onKeyTyped="#onTxtBuscaChange" prefHeight="26.0" prefWidth="354.0" promptText="Busca" />
+                  <JFXTextField fx:id="txtBusca" labelFloat="true" layoutX="15.0" layoutY="14.0" onKeyTyped="#onTxtBuscaChange" prefHeight="26.0" prefWidth="354.0" promptText="Buscar Procedimento" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="-Infinity" prefHeight="324.0" prefWidth="349.0">
+          <AnchorPane minHeight="-Infinity" prefHeight="275.0" prefWidth="348.0">
                <children>
-                  <TableView fx:id="tableViewItensTratamento" layoutX="7.0" layoutY="49.0" prefHeight="317.0" prefWidth="330.0">
+                  <TableView fx:id="tableViewItensTratamento" accessibleText="oi" layoutX="7.0" layoutY="49.0" prefHeight="317.0" prefWidth="330.0">
                     <columns>
                       <TableColumn fx:id="tableColumnProcedimento" prefWidth="196.0" text="Descriçao" />
                       <TableColumn fx:id="tableColumnQuantidade" prefWidth="133.0" text="Quantidade" />
@@ -48,14 +51,14 @@
                   <Font size="22.0" />
                </font>
             </Text>
-            <JFXTextField fx:id="txtDesconto" labelFloat="true" layoutX="14.0" layoutY="23.0" onKeyTyped="#onTxtDescontoChange" prefHeight="26.0" prefWidth="209.0" promptText="Desconto" />
-            <JFXTextField alignment="TOP_RIGHT" labelFloat="true" layoutX="14.0" layoutY="76.0" prefHeight="26.0" prefWidth="103.0" promptText="Validade" />
-            <Label fx:id="total" layoutX="560.0" layoutY="73.0" prefHeight="35.0" prefWidth="166.0" text="0.00" textFill="#4d40dd">
+            <JFXTextField fx:id="txtDesconto" labelFloat="true" layoutX="14.0" layoutY="23.0" onKeyTyped="#onTxtDescontoChange" prefHeight="26.0" prefWidth="121.0" promptText="Desconto" />
+            <JFXTextField alignment="TOP_RIGHT" labelFloat="true" layoutX="14.0" layoutY="76.0" prefHeight="26.0" prefWidth="77.0" promptText="Validade" />
+            <Label fx:id="total" layoutX="579.0" layoutY="73.0" prefHeight="35.0" prefWidth="147.0" text="0,00" textFill="#4d40dd">
                <font>
                   <Font size="29.0" />
                </font>
             </Label>
-            <Label fx:id="valorBruto" layoutX="565.0" layoutY="35.0" prefHeight="20.0" prefWidth="166.0" text="0.00" textFill="#dd6969">
+            <Label fx:id="valorBruto" layoutX="579.0" layoutY="36.0" prefHeight="26.0" prefWidth="147.0" text="0,00" textFill="#dd6969">
                <font>
                   <Font size="16.0" />
                </font>
@@ -65,12 +68,45 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <Text layoutX="135.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dias" wrappingWidth="53.361328125" />
+            <Text layoutX="97.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dias" wrappingWidth="31.0" />
+            <Label layoutX="554.0" layoutY="41.0" text="R$" />
+            <Label layoutX="546.0" layoutY="78.0" prefHeight="26.0" prefWidth="31.0" text="R$">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Pane layoutX="155.0" layoutY="24.0" prefHeight="78.0" prefWidth="232.0" style="-fx-background-color: #CDCDCD; -fx-background-radius: 5; -fx-border-color: #BCBCBC; -fx-border-radius: 5;">
+               <children>
+                  <NumericTextField fx:id="numericTextFieldNumeroParcelas" layoutX="8.0" layoutY="51.0" onKeyTyped="#onNumericQuantidadeChange" prefHeight="26.0" prefWidth="62.0" text="1" viewOrder="1.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="232.0" text="Parcelamento">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelParcelamento" alignment="CENTER" contentDisplay="CENTER" layoutX="87.0" layoutY="34.0" prefHeight="43.0" prefWidth="139.0" text="A vista" />
+                  <Label layoutX="14.0" layoutY="31.0" text="Qtd." />
+               </children>
+            </Pane>
          </children>
       </Pane>
-      <ToolBar layoutX="17.0" layoutY="493.0" prefHeight="58.0" prefWidth="743.0">
+      <ToolBar depthTest="ENABLE" layoutX="20.0" layoutY="493.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="false" prefHeight="58.0" prefWidth="743.0">
          <items>
-            <JFXButton fx:id="jFxBtImprirOrcamento" onAction="#onInprimirOrcamentoClick" prefHeight="43.0" prefWidth="87.0" style="-fx-background-color: #AAB;" text="Imprimir" />
+            <JFXButton fx:id="jFxBtAprovarOrcamento" onAction="#onAprovarOrcamentoClick" pickOnBounds="false" prefHeight="45.0" prefWidth="90.0" ripplerFill="#bf7f4b" style="-fx-background-color: #6F9;" text="Aprovar">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXButton>
+            <Separator disable="true" prefHeight="46.0" prefWidth="74.0" visible="false" />
+            <JFXButton fx:id="jFxBtImprirOrcamento" onAction="#onInprimirOrcamentoClick" prefHeight="45.0" prefWidth="90.0" ripplerFill="#bf7f4b" style="-fx-background-color: #AAB;" text="Imprimir">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></JFXButton>
+            <Separator prefHeight="46.0" prefWidth="74.0" visible="false" />
+            <JFXButton fx:id="jFxBtRecusarOrcamento" onAction="#onRecusarOrcamentoClick" prefHeight="45.0" prefWidth="90.0" ripplerFill="#bf7f4b" style="-fx-background-color: #F13;" text="Recusar">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </JFXButton>
          </items>
       </ToolBar>
    </children>

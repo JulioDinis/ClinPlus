@@ -6,6 +6,7 @@
 package org.openjfx.gui;
 
 import com.google.common.hash.Hashing;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -101,9 +102,9 @@ public class ColaboradorFormController implements Initializable {
             labelErrorWhatsApp;
 
     @FXML
-    private Button btSalve;
+    private JFXButton btSalve;
     @FXML
-    private Button btCancel;
+    private JFXButton btCancel;
 
 
     @FXML
@@ -113,7 +114,7 @@ public class ColaboradorFormController implements Initializable {
             throw new IllegalStateException("Entity was null");
         }
         if (service == null) {
-            throw new IllegalStateException("Entity was null");
+            throw new IllegalStateException("Service was null");
         }
         try {
             entity = getFormData();

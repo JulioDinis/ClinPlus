@@ -19,6 +19,8 @@ public class TratamentoMapper {
         entity.setTotal(dto.getTotal());
         entity.setValidadeOrcamento(dto.getValidadeOrcamento());
         entity.setStatus(dto.getStatus());
+        entity.setEspecialista(dto.getEspecialista());
+        entity.setQuantidadeParcelas(dto.getQuantidadeParcelas());
         return entity;
     }
 
@@ -33,6 +35,8 @@ public class TratamentoMapper {
         dto.setTotal(entity.getTotal());
         dto.setValidadeOrcamento(entity.getValidadeOrcamento());
         dto.setStatus(entity.getStatus());
+        dto.setEspecialista(entity.getEspecialista());
+        dto.setQuantidadeParcelas(entity.getQuantidadeParcelas());
         return dto;
     }
 

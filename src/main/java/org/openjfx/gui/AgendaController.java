@@ -257,7 +257,7 @@ public class AgendaController implements Initializable, DataChangeListener {
         if (this.eventoSelecionado == null) {
             System.out.println("Está nulo");
         } else {
-            agendaService.setStatus(this.eventoSelecionado, Status.ATENDENDO.getDescription());
+            agendaService.setStatus(this.eventoSelecionado, Status.AUSENTE.getDescription());
             this.eventoSelecionado = null;
             updateTableView(this.especialista);
         }

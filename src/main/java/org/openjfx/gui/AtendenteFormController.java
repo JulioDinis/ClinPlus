@@ -6,6 +6,7 @@
 package org.openjfx.gui;
 
 import com.google.common.hash.Hashing;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -82,9 +83,9 @@ public class AtendenteFormController implements Initializable {
     @FXML
     private JFXPasswordField txtSenha;
     @FXML
-    private Button btSalve;
+    private JFXButton btSalve;
     @FXML
-    private Button btCancel;
+    private JFXButton btCancel;
 
 
     @FXML
